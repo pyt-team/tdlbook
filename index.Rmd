@@ -1,5 +1,5 @@
 --- 
-title: "A Chapman & Hall/CRC Book Example Using bookdown"
+title: "Topological Deep Learning: Going Beyond Graph Data"
 author: "Frida Gomam"
 date: "`r Sys.Date()`"
 documentclass: krantz
