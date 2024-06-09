@@ -10,7 +10,7 @@ colorlinks: yes
 lot: yes
 lof: yes
 site: bookdown::bookdown_site
-description: "A book example for a Chapman & Hall book."
+description: "A book on topological deep learning."
 github-repo: pyt-team/tdl_book_bookdown
 graphics: yes
 #cover-image: images/cover.jpg
@@ -29,32 +29,26 @@ lapply(c('xfun'), function(pkg) {
 
 # Preface {-}
 
-This book is under construction.
+This book is under construction. Chapters will be released incrementally. Feedback is welcome, and it will be acknowledged in the book.
 
 ## Why read this book {-}
 
-It is very important...
+To be completed.
 
 ## Structure of the book {-}
 
-Chapters \@ref(introduction) introduces a new topic, and ...
+To be completed.
 
 ## Software information and conventions {-}
 
-I used the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@R-bookdown] to compile my book. My R session information is shown below:
+To be completed.
 
-```{r}
-xfun::session_info()
-```
-
-Package names are in bold text (e.g., **rmarkdown**), and inline code and filenames are formatted in a typewriter font (e.g., `knitr::knit('foo.Rmd')`). Function names are followed by parentheses (e.g., `bookdown::render_book()`).
+This book has been compiled using the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@R-bookdown].
 
 ## Acknowledgments {-}
 
-A lot of people helped me when I was writing the book.
+To be completed.
 
 ```{block2, type='flushright', html.tag='p'}
-Frida Gomam  
-on the Mars
+The authors
 ```
-
