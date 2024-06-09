@@ -20,5 +20,10 @@ install.packages("usethis")
 library(usethis)
 
 use_github_action("bookdown.yaml")
-```
 
+install.packages("renv")
+
+library(renv)
+
+renv::snapshot()
+```
