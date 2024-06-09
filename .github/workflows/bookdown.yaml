@@ -9,7 +9,7 @@ on:
 
 name: bookdown
 
-permissions: read-all
+permissions: write-all
 
 jobs:
   bookdown:
