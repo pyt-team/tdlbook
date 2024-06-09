@@ -11,8 +11,14 @@ rstudio tdl_book.Rproj
 
 bookdown::serve_book()
 
-install.packages("rsconnect")
+# install.packages("rsconnect")
 
-bookdown::publish_book()
+# bookdown::publish_book()
+
+install.packages("usethis")
+
+library(usethis)
+
+use_github_action("bookdown.yaml")
 ```
 
