@@ -11,7 +11,7 @@ lot: yes
 lof: yes
 site: bookdown::bookdown_site
 description: "A book on topological deep learning."
-github-repo: pyt-team/tdl_book_bookdown
+github-repo: pyt-team/tdlbook
 graphics: yes
 #cover-image: images/cover.jpg
 ---

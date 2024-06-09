@@ -8,8 +8,8 @@ devtools::install_github('rstudio/bookdown')
 
 install.packages("servr")
 
-cd tdl_book_bookdown
-rstudio tdl_book.Rproj
+cd tdlbook
+rstudio tdlbook.Rproj
 
 bookdown::serve_book()
 
