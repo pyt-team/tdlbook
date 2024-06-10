@@ -3,8 +3,9 @@ title: "Topological Deep Learning: Going Beyond Graph Data"
 author: "Mustafa Hajij, Ghada Zamzmi, Theodore Papamarkou, Nina Miolane, Aldo Guzmán-Sáenz, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen, Michael T. Schaub"
 date: "`r Sys.Date()`"
 documentclass: krantz
-bibliography: [book.bib, packages.bib]
+bibliography: [references.bib]
 biblio-style: apalike
+fontsize: 11pt
 link-citations: yes
 colorlinks: yes
 lot: yes
@@ -43,7 +44,7 @@ To be completed.
 
 To be completed.
 
-This book has been compiled using the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@R-bookdown].
+This book has been compiled using the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@xie2024].
 
 ## Acknowledgments {-}
 
