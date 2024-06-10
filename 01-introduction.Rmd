@@ -5,12 +5,3 @@
 # Introduction
 
 To be completed.
-
-Table \@ref(tab:iris) is an example.
-
-```{r iris}
-knitr::kable(
-  head(iris), caption = 'The boring iris data.',
-  booktabs = TRUE
-)
-```
