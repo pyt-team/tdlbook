@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  css: css/style.css
+  css: [css/style.css, css/glossarybox.css]
   config:
     toc:
       collapse: none
@@ -14,7 +14,7 @@ bookdown::gitbook:
       facebook: false
 bookdown::pdf_book:
   includes:
-    in_header: latex/preamble.tex
+    in_header: [latex/preamble.tex, latex/glossarybox.tex]
     before_body: latex/before_body.tex
     after_body: latex/after_body.tex
   keep_tex: true

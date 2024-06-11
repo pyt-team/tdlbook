@@ -13,6 +13,63 @@ Despite the success of GDL and GNNs, seeing graphs through a purely geometric vi
 
 One approach to extract more global information from data is to go beyond graph-based abstractions and consider extensions of graphs, such as simplicial complexes, cell complexes, and hypergraphs, generalizing most data domains encountered in scientific computations [@bick2021higher; @battiston2020networks; @benson2021higher; @torres2021and]. The development of machine learning models to learn from data supported on these topological domains [@feng2019hypergraph; @bunch2020simplicial; @roddenberry2021signal; @schaub2020random; @billings2019simplex2vec; @hacker2020k; @hajijcell; @ebli2020simplicial; @schaub2021signal; @roddenberry2021principled; @giusti2022cell; @yang2023convolutional] is a rapidly growing new frontier, to which we refer hereafter as *topological deep learning (TDL)*. TDL intertwines several research areas, including topological data analysis (TDA) [@edelsbrunner2010computational; @carlsson2009topology; @dey22; @love2023topological; @ghrist2014elementary], topological signal processing [@schaub2018denoising; @yang2021finite; @schaub2022signal; @roddenberry2021signal; @barbarossa2020topological; @robinson2014topological; @sardellitti2022topological], network science [@skardal2021higher; @lambiotte2019networks; @barabasi2013network; @battiston2020networks; @bick2021higher; @bianconi2021higher; @benson2016higher; @de2016physics; @bao2022impact; @oballe2021bayesian}, and geometric deep learning [@zhang2020deep; @cao2020comprehensive; @fey2019fast; @loukas2019graph; @battaglia2018relational; @morris2019weisfeiler; @battaglia2016interaction].
 
-```{r, echo=FALSE, fig.align="center", fig.cap="A graphical abstract that visualizes our main contributions. (a): Different mathematical structures can be used to represent relations between abstract entities. Sets have entities with no connections, graphs encode binary relations between vertices, simplicial and cell complexes model hierarchical higher-order relations, and hypergraphs accommodate arbitrary set-type relations with no hierarchy. We introduce combinatorial complexes (CCs), which generalize graphs, simplicial and cell complexes, and hypergraphs. CCs are equipped with set-type relations as well as with a hierarchy of these relations. (b): By utilizing the hierarchical and topological structure of CCs, we introduce the push-forward operation, a fundamental building block for higher-order message-passing protocols and for (un)pooling operations on CCs. Our push-forward operations on CCs enable us to construct combinatorial complex neural networks (CCNNs), which provide a general conceptual framework for topological deep learning on higher-order domains."}
+Despite the growing interest in TDL, a broader synthesis of the foundational principles of these ideas has not been established so far. We argue that this is a deficiency that inhibits progress in TDL, as it makes it challenging to draw connections between different concepts, impedes comparisons, and makes it difficult for researchers of other fields to find an entry point to TDL. Hence, in this paper, we aim to provide a foundational overview over the principles of TDL, serving not only as a unifying framework for the many exciting ideas that have emerged in the literature over recent years, but also as a conceptual starting point to promote the exploration of new ideas. Ultimately, we hope that this work will contribute to the accelerated growth in TDL, which we believe would be a key enabler of transferring deep learning successes to an enlarged range of application scenarios.
+
+By drawing inspiration from traditional topological notions in algebraic topology [@ghrist2014elementary; @hatcher2005algebraic] and recent advancements in higher-order networks [@battiston2020networks; @torres2021and; @bick2021higher; @battiston2021physics], we first introduce *combinatorial complexes (CCs)* as the major building blocks of our TDL framework. CCs constitute a novel topological domain that unifies graphs, simplicial and cell complexes, and hypergraphs as special cases, as illustrated in Figure \@ref(fig:main-figure)^[All figures in this paper should be displayed in color, as different colors communicate different pieces of information.]. 
+Similar to hypergraphs, CCs can encode arbitrary set-like relations between collections of abstract entities. Moreover, CCs permit the construction of hierarchical higher-order relations, analogous to those found in simplicial and cell complexes. Hence, CCs generalize and combine the desirable traits of hypergraphs and cell complexes. 
+
+```{r main-figure, echo=FALSE, fig.align="center", fig.cap="A graphical abstract that visualizes our main contributions. (a): Different mathematical structures can be used to represent relations between abstract entities. Sets have entities with no connections, graphs encode binary relations between vertices, simplicial and cell complexes model hierarchical higher-order relations, and hypergraphs accommodate arbitrary set-type relations with no hierarchy. We introduce combinatorial complexes (CCs), which generalize graphs, simplicial and cell complexes, and hypergraphs. CCs are equipped with set-type relations as well as with a hierarchy of these relations. (b): By utilizing the hierarchical and topological structure of CCs, we introduce the push-forward operation, a fundamental building block for higher-order message-passing protocols and for (un)pooling operations on CCs. Our push-forward operations on CCs enable us to construct combinatorial complex neural networks (CCNNs), which provide a general conceptual framework for topological deep learning on higher-order domains."}
 knitr::include_graphics('figures/main_figure.png', dpi=NA)
 ```
+
+In addition, we introduce the necessary operators to construct deep neural networks for learning features and abstract summaries of input anchored on CCs. Such operators provide convolutions, attention mechanisms, message-passing schemes as well as the means for incorporating invariances, equivariances, or other geometric regularities. Specifically, our novel *push-forward operation* allows pushing data across different dimensions, thus forming an elementary building block upon which *higher-order message-passing protocols* and *(un)pooling operations* are defined on CCs. The resulting learning machines, which we call *combinatorial complex neural networks (CCNNs)*, are capable of learning abstract higher-order data structures, as clearly demonstrated in our experimental evaluation. 
+
+We envisage our contributions to be a platform encouraging researchers and practitioners to extend our CCNNs, and invite the community to build upon our work to expand TDL on higher-order domains. Our contributions, which are also visually summarized in Figure \@ref(fig:main-figure), are the following:
+
+* First, we introduce CCs as domains for TDL. We characterize CCs and their properties, and explain how
+they generalize major existing domains, such as graphs, hypergraphs, simplicial and cell complexes. CCs can thus serve as a unifying starting point that enables the learning of expressive representations of topological data. 
+* Second, using CCs as domains, we construct CCNNs, an abstract class of higher-order message-passing neural networks that provide a unifying blueprint for TDL models based on hypergraphs and cell complexes.
+  + Based upon a push-forward operator defined on CCs, we introduce convolution, attention, pooling and unpooling operators for CCNNs. 
+  + We formalize and investigate *permutation and orientation equivariance* of CCNNs, paving the way to future work on geometrization of CCNNs.
+  + We show how CCNNs can be intuitively constructed via graphical notation.
+* Third, we evaluate our ideas in practical scenarios.
+  + We release the source code of our framework as three supporting Python libraries: *TopoNetX*, *TopoEmbedX* and *TopoModelX*.
+  + We show that CCNNs attain competing predictive performance against state-of-the-art task-specific neural networks in various applications, including shape analysis and graph learning.
+  + We establish connections between our work and classical constructions in TDA, such as the *mapper* [@singh2007topological]. Particularly, we realize the mapper construction in terms of our TDL framework and demonstrate how it can be utilized in higher-order (un)pooling on CCs.
+  + We demonstrate the reducibility of any CC to a special graph called the *Hasse graph*. This enables the characterization of certain aspects of CCNNs in terms of graph-based models, allowing us to reduce higher-order representation learning to graph representation learning (using an enlarged computational graph).
+
+**Glossary**. Prior to delving into more details, we present the elementary terminologies of already established concepts used throughout the paper. Some of these terms are revisited formally in Chapter \@ref(preliminaries). Appendix \@ref(glossary) provides notation and terminology glossaries for novel ideas put forward by the paper.
+
+:::: {.glossarybox data-latex=""}
+[**Cell complex**](https://app.vectary.com/p/3EBiRiJcYjFNvkbbWszQ0Z): a topological space obtained as a disjoint union of topological disks (cells), with each of these cells being homeomorphic to the interior of a Euclidean ball. These cells are attached together via attaching maps in a locally reasonable manner.
+
+**Domain**: the underlying space where data is typically supported.
+
+**Entity** or **vertex**: an abstract point; it can be thought as an element of a set.
+
+**Graph** or **network**: a set of entities (vertices) together with a set of edges representing binary relations between the vertices.
+
+**Hierarchical structure** on a topological domain: an integer-valued function that assigns a positive integer (rank) to every relation in the domain such that higher-order relations are assigned higher rank values. For instance, a simplicial complex admits a hierarchical structure induced by the cardinality of its simplices.
+
+**Higher-order network**/**topological domain**: generalization of a graph that captures (binary and) higher-order relations between entities. Simplicial/cell complexes and hypergraphs are examples of higher-order networks.
+
+**Hypergraph**: a set of entities (vertices) and a set of hyperedges representing binary or higher-order relations between the vertices.
+
+**Message passing**: a computational framework that involves passing data, `messages', among neighbor entities in a domain to update the representation of each entity based on the messages received from its neighbors.
+
+**Relation** or **cell**: a subset of a set of entities (vertices).
+A relation is called **binary** if its cardinality is equal to two.
+A relation is called **higher-order** if its cardinality is greater than two.
+
+**Set-type relation**: a higher-order network is said to have set-type relations if the existence of a relation is not implied by another relation in the network; e.g., hypergraphs admit set-type relations.
+
+**Simplex**: a generalization of a triangle or tetrahedron to arbitrary dimensions; e.g., a simplex of dimension zero, one, two, or three is a point, line segment, triangle, or tetrahedron, respectively.
+
+[**Simplicial complex**](https://app.vectary.com/p/4HZRioKH7lZ2jWESIBrjhf): a collection of simplices such that every face of each simplex in the collection is also in the collection, and the intersection of any two simplices in the collection is either empty or a face of both simplices.
+
+**Topological data**: feature vectors supported on relations in a topological domain.
+
+**Topological deep learning**: the study of topological domains using deep learning techniques, and the use of topological domains to represent data in deep learning models.
+
+**Topological neural network**: a deep learning model that processes data supported on a topological domain. 
+::::

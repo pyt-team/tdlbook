@@ -1,13 +1,17 @@
 % Custom preamble
-\usepackage{geometry}
-\geometry{
- % a4paper,
- % total={170mm,257mm},
- left=20mm,
- right=20mm,
- top=15mm,
- % bottom=
- }
+
+% https://stackoverflow.com/questions/44568113/avoid-setting-margin-via-geometry
+
+% \usepackage{geometry}
+% \geometry{
+%  inner=20mm,
+%  outer=30mm,
+%  top=15mm,
+%  bottom=15mm
+% }
+
+% \setlength{\oddsidemargin}{0mm}
+% \setlength{\evensidemargin}{0mm}
 
 % Default preamble
 
@@ -19,7 +23,9 @@
 \usepackage[scale=.8]{sourcecodepro}
 
 \usepackage{framed,color}
-\definecolor{shadecolor}{RGB}{248,248,248}
+
+% https://www.rapidtables.com/web/color/blue-color.html
+\definecolor{shadecolor}{RGB}{230,230,250}
 
 \renewcommand{\textfraction}{0.05}
 \renewcommand{\topfraction}{0.8}

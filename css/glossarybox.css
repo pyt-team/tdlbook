@@ -1,0 +1,7 @@
+.glossarybox {
+  padding: 1em;
+  background: lavender;
+  color: black;
+  border: 2px solid orange;
+  border-radius: 10px;
+}
