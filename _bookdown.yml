@@ -1,5 +1,5 @@
 book_filename: bookdown
-clean: [packages.bib, bookdown.bbl]
+clean: [bookdown.bbl]
 delete_merged_file: true
 language:
   label:
