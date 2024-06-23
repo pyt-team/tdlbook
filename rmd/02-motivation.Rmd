@@ -1,3 +1,13 @@
 # Motivation
 
-To be completed.
+Combinatorial complex neural networks (CCNNs), as presented in this work, generalize graph neural networks (GNNs) and their higher-order analogues via topological constructions. In this section, we provide the motivation for the use of topological constructions in machine learning, and specifically in deep learning from three angles. First, *data modeling*: how topological abstraction can help us to reason and compute with various data types supported on topological spaces. Second, *utility*: how accounting for topology improves performance. Third, *unification*: how topology can be used to synthesize and abstract disparate concepts.
+
+## Modeling and learning from data on topological spaces
+
+In the context of machine learning, the domain on which the data is supported is typically a (linear) vector space. This underlying vector space facilitates many computations and is often implicitly assumed. However, as has been recognized within geometric deep learning, it is often essential to consider data supported on different domains. Indeed, explicitly considering and modeling the domain on which the data is supported can be crucial for various reasons.
+
+First, different domains can have distinct characteristics and properties that require different types of deep learning models to effectively process and analyze the data. For example, a graph domain may require a graph convolutional network [@kipf2016semi] to account for the non-Euclidean structure, while a point cloud domain may require a PointNet-like architecture [@qi2017pointnet; @zaheer2017deep] to handle unordered sets of points.
+
+Second, the specific data within each domain can vary widely in terms of size, complexity and noise. By understanding specific data properties within a given domain, researchers can develop models that are tailored to those particular properties. For example, a model designed for point clouds with high levels of noise may incorporate techniques such as outlier removal or local feature aggregation.
+
+Third, accurately distinguishing between domain and data is important for developing models that generalize well to new, unseen data. By identifying the underlying structure of the domain, researchers can develop models that are robust to variations in the data while still being able to capture relevant geometric features. To summarize, by considering both the domain and data together, researchers can develop models that are better suited to handle the specific challenges and complexities of different geometric learning tasks.
