@@ -6,3 +6,5 @@
 _book/
 bookdown_files/
 rsconnect/
+
+bookdown.log
