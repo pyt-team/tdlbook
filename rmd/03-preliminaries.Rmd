@@ -72,3 +72,19 @@ A *hypergraph* on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathca
 ```
 
 A hyperedge of cardinality two is called an *edge*. Hypergraphs can be considered as a generalization of simplicial and cell complexes. However, hypergraphs do not directly entail the notion of the dimension of a cell (or of a relation), which is explicitly encoded in the definition of cell complex and is also indicated by the cardinality of a relation in a simplicial complex. As we demonstrate in Section \@ref(motivation-for-ccs), the dimensionality of cells and relations in simplicial and cell complexes can be used to endow these complexes with hierarchical structures, which can be utilized for (un)pooling type computations on these structures.
+
+## Hierarchical structure and set-type relations
+
+The properties of simplicial complexes, cell complexes and hypergraphs, as outlined in Section \@ref(bridging-the-gap-among-higher-order-networks), give rise to two main features of relations on higher-order domains, namely hierarchies of relations and set-type relations. In the present subsection, we formalize these two features.
+
+```{definition, rank, name="Rank function"}
+A *rank function* on a higher-order domain $\mathcal{X}$ is an order-preserving function $\mbox{rk}\colon \mathcal{X}\to \mathbb{Z}_{\ge 0}$; i.e., $x\subseteq  y$ implies $\mbox{rk}(x) \leq \mbox{rk}(y)$ for all $x,y\in\mathcal{X}$. 
+```
+
+Intuitively, a rank function $\mbox{rk}$ on a higher-order domain $\mathcal{X}$ attaches a ranking, represented by a non-negative integer value, to every relation in $\mathcal{X}$ such that set inclusion in $\mathcal{X}$ is preserved via $\mbox{rk}$. Effectively, a rank function induces a *hierarchical structure* on  $\mathcal{X}$. Cell and simplicial complexes are common examples of higher-order domains equipped with rank functions and therefore with hierarchies of relations. 
+
+```{definition, strelations, name="Set-type relations"}
+Relations in a higher-order domain are called *set-type relations* if the existence of a relation is not implied by another relation in the domain.
+```
+
+Hypergraphs constitute examples of higher-order domains equipped with set-type relations. Given the modeling limitations of simplicial complexes, cell complexes, and hypergraphs, we develop the combinatorial complex in Chapter \@ref(combinatorial-complexes), a higher-order domain that features both hierarchies of relations and set-type relations.
