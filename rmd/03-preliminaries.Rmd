@@ -19,12 +19,12 @@ Upon generalizing graphs to higher-order networks, it is natural to also general
 There are several equivalent ways to define a topological space. For example, topological spaces are commonly defined in terms of 'open' or 'closed' sets; for example, see [@munkres1974]. In this work, we opt to define topological spaces in terms of 'neighborhoods'. This definition is more compatible with the message-passing paradigm that is usually defined on graphs [@gilmer2017neural], and it can be generalized to higher-order networks. We refer the reader to [@brown2006] for an explanation of why the definition in terms of neighborhoods is equivalent to the definition in terms of open sets.
 
 ```{definition, ns, name="Neighborhood function"}
-Let $S$ be a nonempty set. A **neighborhood function** on $S$ is a function $\mathcal{N}\colon S\to\mathcal{P}(\mathcal{P}(S))$ that assigns to each point $x$ in $S$ a nonempty collection $\mathcal{N}(x)$ of subsets of $S$. The elements of $\mathcal{N}(x)$ are called **neighborhoods** of $x$ with respect to $\mathcal{N}$.
+Let $S$ be a nonempty set. A *neighborhood function* on $S$ is a function $\mathcal{N}\colon S\to\mathcal{P}(\mathcal{P}(S))$ that assigns to each point $x$ in $S$ a nonempty collection $\mathcal{N}(x)$ of subsets of $S$. The elements of $\mathcal{N}(x)$ are called *neighborhoods* of $x$ with respect to $\mathcal{N}$.
 ```
 
 ```{definition, nt, name="Neighborhood topology"}
 Let $\mathcal{N}$ be a neighborhood function on a set $S$.
-$\mathcal{N}$ is called a **neighborhood topology** on $S$ if it satisfies the following axioms:
+$\mathcal{N}$ is called a *neighborhood topology* on $S$ if it satisfies the following axioms:
 
 1. If $N$ is a neighborhood of $x$, then $x\in N$.
 2. If $N$ is a subset of $S$ containing a neighborhood of $x$, then $N$ is a neighborhood of $x$.
@@ -33,7 +33,7 @@ $\mathcal{N}$ is called a **neighborhood topology** on $S$ if it satisfies the f
 ```
 
 ```{definition, topospace, name="Topological space"}
-A pair $(S,\mathcal{N})$ consisting of a nonempty set $S$ and a neighborhood topology $\mathcal{N}$ on $S$ is called a **topological space**.
+A pair $(S,\mathcal{N})$ consisting of a nonempty set $S$ and a neighborhood topology $\mathcal{N}$ on $S$ is called a *topological space*.
 ```
 
 Hence, a topological space is a set $S$ equipped with a neighborhood function $\mathcal{N}$, which satisfies the properties specified in Definition \@ref(def:nt). In Section \@ref(neighborhood-functions-on-ccs), we introduce a similar notion of proximity in the context of higher-order networks. Further, the choice of neighborhood function $\mathcal{N}$ is the first and most fundamental step in the construction of a deep learning model supported on a higher-order domain (see Chapter \@ref(combinatorial-complex-neural-networks).
@@ -48,16 +48,16 @@ Simplicial complexes are one of the simplest higher-order domains with many desi
 graphs [@barbarossa2020topological; @schaub2020random; @schaub2021signal].
 
 ```{definition, scmain, name="Simplicial complex"}
-An **abstract simplicial complex** on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S) \setminus \{\emptyset\}$ such that $x \in \mathcal{X}$ and $y \subseteq x$ imply $y \in \mathcal{X}$. Elements of $\mathcal{X}$ are called **simplices**.
+An *abstract simplicial complex* on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S) \setminus \{\emptyset\}$ such that $x \in \mathcal{X}$ and $y \subseteq x$ imply $y \in \mathcal{X}$. Elements of $\mathcal{X}$ are called *simplices*.
 ```
 
 Figure \@ref(fig:unifying)(c) displays examples of triangular meshes, which are special cases of simplicial complexes with many applications in computer graphics. The reader is referred to [@schaub2021signal; @crane2013digital] for a relevant introduction to simplicial complexes. As it is evident from Definition \@ref(def:scmain), each relation $x$ on $S$ must contain all relations $y$ with $y\subseteq x$. Hence, a simplicial complex may encode a relatively large amount of data, taking up a lot of memory [@roddenberry2021signal]. Further, real-world higher-order data (e.g., traffic-flows on a rectangular street network) may not admit a meaningful simplicial complex structure due to the inherent lack of available simplices on the underlying data space. To address this limitation, cell complexes [@hatcher2005algebraic; @hansen2019toward] can generalize simplicial complexes, and overcome many of their drawbacks.
 
 ```{definition, rccmain, name="Regular cell complex"}
-A **regular cell complex** is a topological space $S$ with a partition into subspaces (**cells**) $\{x_\alpha\}_{\alpha \in P_{S} }$, where $P_{S}$ is an index set, satisfying the following conditions:
+A *regular cell complex* is a topological space $S$ with a partition into subspaces (*cells*) $\{x_\alpha\}_{\alpha \in P_{S} }$, where $P_{S}$ is an index set, satisfying the following conditions:
 
 1. $S= \cup_{\alpha \in P_{S}} \mbox{int}(x_{\alpha})$, where $\mbox{int}(x)$ denotes the interior of cell $x$.
-2. For each $\alpha \in P_S$, there exists a homeomorphism $\psi_{\alpha}$, called an **attaching map**, from $x_\alpha$ to $\mathbb{R}^{n_\alpha}$ for some $n_\alpha\in \mathbb{N}$, called the **dimension** $n_\alpha$ of cell $x_\alpha$.
+2. For each $\alpha \in P_S$, there exists a homeomorphism $\psi_{\alpha}$, called an *attaching map*, from $x_\alpha$ to $\mathbb{R}^{n_\alpha}$ for some $n_\alpha\in \mathbb{N}$, called the *dimension* $n_\alpha$ of cell $x_\alpha$.
 3. For each cell $x_{\alpha}$, the boundary $\partial x_{\alpha}$ is a union of finitely many cells, each having dimension less than the dimension of $x_{\alpha}$.
 ```
 
@@ -68,7 +68,7 @@ Condition 3 in Definition \@ref(def:rccmain) is known as the *regularity conditi
 Definition \@ref(def:rccmain) implies that the boundary cells of each cell in a cell complex are also cells in the cell complex. Hence, one may think about a cell complex as a collection of cells of varying dimensions, which are related via their boundaries. In terms of relations, this implies that the boundary of a cell in a cell complex must also be a cell in the cell complex. While cell complexes form a general class of higher-order networks, this property sets a constraint on the relations of a cell complex. Such a constraint may not be desirable in certain applications if the data do not satisfy it. To remove all constraints on the relations among entities of a set, hypergraphs are typically considered.
 
 ```{definition, hgmain, name="Hypergraph"}
-A **hypergraph** on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S)\setminus\{\emptyset\}$. Elements of $\mathcal{X}$ are called **hyperedges**.
+A *hypergraph* on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S)\setminus\{\emptyset\}$. Elements of $\mathcal{X}$ are called *hyperedges*.
 ```
 
 A hyperedge of cardinality two is called an *edge*. Hypergraphs can be considered as a generalization of simplicial and cell complexes. However, hypergraphs do not directly entail the notion of the dimension of a cell (or of a relation), which is explicitly encoded in the definition of cell complex and is also indicated by the cardinality of a relation in a simplicial complex. As we demonstrate in Section \@ref(motivation-for-ccs), the dimensionality of cells and relations in simplicial and cell complexes can be used to endow these complexes with hierarchical structures, which can be utilized for (un)pooling type computations on these structures.
