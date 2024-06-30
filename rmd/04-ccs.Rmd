@@ -11,3 +11,7 @@ To be completed.
 ## Motivation for CCs
 
 ## Neighborhood functions on CCs
+
+### Incidence in a CC
+
+### Adjacency in a CC
