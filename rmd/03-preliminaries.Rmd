@@ -13,3 +13,26 @@ Defining binary relations (edges) among the entities of set $S$ provides one way
 The choice of neighborhood $\mathcal{N}(x)$ in Figure \@ref(fig:proximity)(b) is arbitrary. For example, an alternative valid notion of neighborhood is given by defining $\mathcal{N}(x)$ to contain all vertices whose distance from the red vertex $x$ is at most two, represented by all vertices colored in yellow in Figure\@ref(fig:proximity)(c). In Figure \@ref(fig:proximity)(d), the neighborhood $\mathcal{N}(x)$ is chosen to consist of all yellow vertices that form triangles incident to red vertex $x$. In Figure \@ref(fig:proximity)(e), the neighborhood $\mathcal{N}(x)$ is chosen to consist of all yellow vertices that form trapezoids incident to the red vertex $x$. It becomes clear from Figures \@ref(fig:proximity)(d) and (e) that additional auxiliary structures, such as triangles and trapezoids, can be used to define the notion of neighborhood. In practice, the choice of neighborhood typically depends on the application. Recent research has explored using graph geometry to obtain richer neighborhood notions, as seen in [@morris2019weisfeiler; @hajijcell; @zhao2022from]. However, the fundamental concept remains the same: one starts by introducing an auxiliary structure defined on a vertex set, and then utilizes the auxiliary structure to induce a well-defined notion of proximity.
 
 Upon generalizing graphs to higher-order networks, it is natural to also generalize the notion of neighborhood for graphs to higher-order networks. The precise notion of neighborhood or proximity among entities of a set $S$ has been studied in topology [@munkres1974]. A topology defined on $S$ allows us to meaningfully describe the proximity of the elements in $S$ to each other. This section introduces topological notions and definitions with the aim of generalizing graphs to higher-order networks.
+
+## Neighborhood functions and topological spaces
+
+There are several equivalent ways to define a topological space. For example, topological spaces are commonly defined in terms of 'open' or 'closed' sets; for example, see [@munkres1974]. In this work, we opt to define topological spaces in terms of 'neighborhoods'. This definition is more compatible with the message-passing paradigm that is usually defined on graphs [@gilmer2017neural], and it can be generalized to higher-order networks. We refer the reader to [@brown2006] for an explanation of why the definition in terms of neighborhoods is equivalent to the definition in terms of open sets.
+
+```{definition, ns, name="Neighborhood function"}
+Let $S$ be a nonempty set. A **neighborhood function** on $S$ is a function $\mathcal{N}\colon S\to\mathcal{P}(\mathcal{P}(S))$ that assigns to each point $x$ in $S$ a nonempty collection $\mathcal{N}(x)$ of subsets of $S$. The elements of $\mathcal{N}(x)$ are called **neighborhoods** of $x$ with respect to $\mathcal{N}$.
+```
+
+```{definition, nt, name="Neighborhood topology"}
+Let $\mathcal{N}$ be a neighborhood function on a set $S$.
+$\mathcal{N}$ is called a **neighborhood topology** on $S$ if it satisfies the following axioms:
+1. If $N$ is a neighborhood of $x$, then $x\in N$.
+2. If $N$ is a subset of $S$ containing a neighborhood of $x$, then $N$ is a neighborhood of $x$.
+3. The intersection of two neighborhoods of a point $x$ in $S$ is a neighborhood of $x$.
+4. Any neighborhood $N$ of a point $x$ in $S$ contains a neighborhood $M$ of $x$ such that $N$ is a neighborhood of each point of $M$.
+```
+
+```{definition, topospace, name="Topological space"}
+A pair $(S,\mathcal{N})$ consisting of a nonempty set $S$ and a neighborhood topology $\mathcal{N}$ on $S$ is called a **topological space**.
+```
+
+Hence, a topological space is a set $S$ equipped with a neighborhood function $\mathcal{N}$, which satisfies the properties specified in Definition \@ref(def:nt). In Section \@ref(neighborhood-functions-on-ccs), we introduce a similar notion of proximity in the context of higher-order networks. Further, the choice of neighborhood function $\mathcal{N}$ is the first and most fundamental step in the construction of a deep learning model supported on a higher-order domain (see Chapter \@ref(combinatorial-complex-neural-networks).

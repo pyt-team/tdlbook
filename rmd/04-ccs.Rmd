@@ -1,5 +1,7 @@
 # (PART\*) Part II: Combinatorial complexes {-}
 
-# Combinatorial complexes (CCs)
+# Combinatorial complexes
 
 To be completed.
+
+## Neighborhood functions on CCs
