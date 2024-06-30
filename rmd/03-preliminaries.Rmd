@@ -25,6 +25,7 @@ Let $S$ be a nonempty set. A **neighborhood function** on $S$ is a function $\ma
 ```{definition, nt, name="Neighborhood topology"}
 Let $\mathcal{N}$ be a neighborhood function on a set $S$.
 $\mathcal{N}$ is called a **neighborhood topology** on $S$ if it satisfies the following axioms:
+
 1. If $N$ is a neighborhood of $x$, then $x\in N$.
 2. If $N$ is a subset of $S$ containing a neighborhood of $x$, then $N$ is a neighborhood of $x$.
 3. The intersection of two neighborhoods of a point $x$ in $S$ is a neighborhood of $x$.
@@ -36,3 +37,38 @@ A pair $(S,\mathcal{N})$ consisting of a nonempty set $S$ and a neighborhood top
 ```
 
 Hence, a topological space is a set $S$ equipped with a neighborhood function $\mathcal{N}$, which satisfies the properties specified in Definition \@ref(def:nt). In Section \@ref(neighborhood-functions-on-ccs), we introduce a similar notion of proximity in the context of higher-order networks. Further, the choice of neighborhood function $\mathcal{N}$ is the first and most fundamental step in the construction of a deep learning model supported on a higher-order domain (see Chapter \@ref(combinatorial-complex-neural-networks).
+
+## Bridging the gap among higher-order networks
+
+Given a finite set $S$ of abstract entities, a neighborhood function $\mathcal{N}$ on $S$ can be induced by equipping $S$ with an auxiliary structure, such as edges, as demonstrated in Figure \@ref(fig:proximity)(b). Edges provide one way of defining relations among the entities of $S$^[Recall that a relation on $S$ is a nonempty subset of $S$.]. Specifically, each edge defines a binary relation (i.e., a relation between two entities) in $S$. In many applications, it is desirable to permit relations that incorporate more than two entities. The idea of using relations that involve more than two entities is central to higher-order networks. Such higher-order relations allow for a broader range of neighborhood functions to be defined on $S$ to capture multi-way interactions among entities of $S$.
+
+To describe more intricate multi-way interactions, it is necessary to employ more intricate neighborhood functions and topologies. With an eye towards defining a general higher-order network in Chapter \@ref(combinatorial-complexes) (as motivated in Chapter \@ref(motivation)), this section reviews the definitions, advantages, and disadvantages of some commonly studied higher-order networks, including (abstract) simplicial complexes, regular cell complexes, and hypergraphs. In Chapter \@ref(combinatorial-complexes), we introduce combinatorial complexes, which generalize and bridge the gaps between all of these commonly studied topological domains.
+
+Simplicial complexes are one of the simplest higher-order domains with many desirable properties, extending the corresponding properties of graphs. For instance, Hodge theory is naturally defined on simplicial complexes, extending similar notions on 
+graphs [@barbarossa2020topological; @schaub2020random; @schaub2021signal].
+
+```{definition, scmain, name="Simplicial complex"}
+An **abstract simplicial complex** on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S) \setminus \{\emptyset\}$ such that $x \in \mathcal{X}$ and $y \subseteq x$ imply $y \in \mathcal{X}$. Elements of $\mathcal{X}$ are called **simplices**.
+```
+
+Figure \@ref(fig:unifying)(c) displays examples of triangular meshes, which are special cases of simplicial complexes with many applications in computer graphics. The reader is referred to [@schaub2021signal; @crane2013digital] for a relevant introduction to simplicial complexes. As it is evident from Definition \@ref(def:scmain), each relation $x$ on $S$ must contain all relations $y$ with $y\subseteq x$. Hence, a simplicial complex may encode a relatively large amount of data, taking up a lot of memory [@roddenberry2021signal]. Further, real-world higher-order data (e.g., traffic-flows on a rectangular street network) may not admit a meaningful simplicial complex structure due to the inherent lack of available simplices on the underlying data space. To address this limitation, cell complexes [@hatcher2005algebraic; @hansen2019toward] can generalize simplicial complexes, and overcome many of their drawbacks.
+
+```{definition, rccmain, name="Regular cell complex"}
+A **regular cell complex** is a topological space $S$ with a partition into subspaces (\textbf{cells}) $\{x_\alpha\}_{\alpha \in P_{S} }$, where $P_{S}$ is an index set, satisfying the following conditions:
+
+1. $S= \cup_{\alpha \in P_{S}} \Int(x_{\alpha})$, where $\Int(x)$ denotes the interior of cell $x$.
+2. For each $\alpha \in P_S$, there exists a homeomorphism $\psi_{\alpha}$, called an \textbf{attaching map}, from $x_\alpha$ to $\mathbb{R}^{n_\alpha}$ for some $n_\alpha\in \N$, called the \textbf{dimension} $n_\alpha$ of cell $x_\alpha$.
+3. For each cell $x_{\alpha}$, the boundary $\partial x_{\alpha}$ is a union of finitely many cells, each having dimension less than the dimension of $x_{\alpha}$.
+```
+
+For the sake of brevity, we henceforth refer to a 'regular cell complex' as a 'cell complex'. Cell complexes encompass a wide range of higher-order networks. Several types of higher-order networks can be viewed as instances of cell complexes. For instance, cell complexes are a natural generalization of graphs, simplicial complexes, and cubical complexes [@hajijcell]. Figure \@ref(fig:unifying)(d) shows examples of cell complexes. Intuitively, a cell complex is a disjoint union of cells, with each of these cells being homeomorphic to the interior of a $k$-dimensional Euclidean ball for some $k$. These cells are attached together via attaching maps in a locally suitable manner. The information of attaching maps of a regular cell-complex can be stored combinatorially in a sequence of matrices, called the *incidence matrices* [@hatcher2005algebraic]. These matrices are described in detail in Section~\ref{inc-nbhd}.
+
+Condition 3 in Definition \@ref(def:rccmain) is known as the *regularity condition* for regular cell complexes. The regularity condition implies that the topological information of a cell complex can be realized combinatorially by equipping the index set $P_{S}$ with a poset structure given by $\alpha\leq\beta$ if and only if $x_{\alpha} \subseteq \overline{x_{\beta}}$, where $\overline{x}$ denotes the closure of a cell $x$. This poset structure is typically called the *face poset* [@hansen2019toward]. It can be shown that the topological information encoded in a cell complex is completely determined by the face poset structure [@hansen2019toward], which allows cell complexes to be represented combinatorially in practice via a poset [@aschbacher1996combinatorial; @klette2000cell; @basak2010combinatorial; @savoy2022combinatorial].
+
+Definition \@ref(def:rccmain) implies that the boundary cells of each cell in a cell complex are also cells in the cell complex. Hence, one may think about a cell complex as a collection of cells of varying dimensions, which are related via their boundaries. In terms of relations, this implies that the boundary of a cell in a cell complex must also be a cell in the cell complex. While cell complexes form a general class of higher-order networks, this property sets a constraint on the relations of a cell complex. Such a constraint may not be desirable in certain applications if the data do not satisfy it. To remove all constraints on the relations among entities of a set, hypergraphs are typically considered.
+
+```{definition, hgmain, name="Hypergraph"}
+A **hypergraph** on a nonempty set $S$ is a pair $ (S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S)\setminus\{\emptyset\}$. Elements of $\mathcal{X}$ are called **hyperedges**.
+```
+
+A hyperedge of cardinality two is called an *edge*. Hypergraphs can be considered as a generalization of simplicial and cell complexes. However, hypergraphs do not directly entail the notion of the dimension of a cell (or of a relation), which is explicitly encoded in the definition of cell complex and is also indicated by the cardinality of a relation in a simplicial complex. As we demonstrate in Section~\ref(motivation-for-ccs), the dimensionality of cells and relations in simplicial and cell complexes can be used to endow these complexes with hierarchical structures, which can be utilized for (un)pooling type computations on these structures.

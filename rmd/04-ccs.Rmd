@@ -4,4 +4,10 @@
 
 To be completed.
 
+## CC definition
+
+## CC-homomorphisms and sub-CCs
+
+## Motivation for CCs
+
 ## Neighborhood functions on CCs
