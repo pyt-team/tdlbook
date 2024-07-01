@@ -1,5 +1,17 @@
 # (PART\*) Part II: Combinatorial complexes {-}
 
-# Combinatorial complexes (CCs)
+# Combinatorial complexes
 
 To be completed.
+
+## CC definition
+
+## CC-homomorphisms and sub-CCs
+
+## Motivation for CCs
+
+## Neighborhood functions on CCs
+
+### Incidence in a CC
+
+### Adjacency in a CC
