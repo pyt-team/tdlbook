@@ -48,13 +48,13 @@ Simplicial complexes are one of the simplest higher-order domains with many desi
 graphs [@barbarossa2020topological; @schaub2020random; @schaub2021signal].
 
 ```{definition, scmain, name="Simplicial complex"}
-An *abstract simplicial complex* on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S) \setminus \{\emptyset\}$ such that $x \in \mathcal{X}$ and $y \subseteq x$ imply $y \in \mathcal{X}$. Elements of $\mathcal{X}$ are called *simplices*.
+An [*abstract simplicial complex*](https://app.vectary.com/p/4HZRioKH7lZ2jWESIBrjhf) on a nonempty set $S$ is a pair $(S,\mathcal{X})$, where $\mathcal{X}$ is a subset of $\mathcal{P}(S) \setminus \{\emptyset\}$ such that $x \in \mathcal{X}$ and $y \subseteq x$ imply $y \in \mathcal{X}$. Elements of $\mathcal{X}$ are called *simplices*.
 ```
 
 Figure \@ref(fig:unifying)(c) displays examples of triangular meshes, which are special cases of simplicial complexes with many applications in computer graphics. The reader is referred to [@schaub2021signal; @crane2013digital] for a relevant introduction to simplicial complexes. As it is evident from Definition \@ref(def:scmain), each relation $x$ on $S$ must contain all relations $y$ with $y\subseteq x$. Hence, a simplicial complex may encode a relatively large amount of data, taking up a lot of memory [@roddenberry2021signal]. Further, real-world higher-order data (e.g., traffic-flows on a rectangular street network) may not admit a meaningful simplicial complex structure due to the inherent lack of available simplices on the underlying data space. To address this limitation, cell complexes [@hatcher2005algebraic; @hansen2019toward] can generalize simplicial complexes, and overcome many of their drawbacks.
 
 ```{definition, rccmain, name="Regular cell complex"}
-A *regular cell complex* is a topological space $S$ with a partition into subspaces (*cells*) $\{x_\alpha\}_{\alpha \in P_{S} }$, where $P_{S}$ is an index set, satisfying the following conditions:
+A [*regular cell complex*](https://app.vectary.com/p/3EBiRiJcYjFNvkbbWszQ0Z) is a topological space $S$ with a partition into subspaces (*cells*) $\{x_\alpha\}_{\alpha \in P_{S} }$, where $P_{S}$ is an index set, satisfying the following conditions:
 
 1. $S= \cup_{\alpha \in P_{S}} \mbox{int}(x_{\alpha})$, where $\mbox{int}(x)$ denotes the interior of cell $x$.
 2. For each $\alpha \in P_S$, there exists a homeomorphism $\psi_{\alpha}$, called an *attaching map*, from $x_\alpha$ to $\mathbb{R}^{n_\alpha}$ for some $n_\alpha\in \mathbb{N}$, called the *dimension* $n_\alpha$ of cell $x_\alpha$.
