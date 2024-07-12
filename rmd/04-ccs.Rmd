@@ -28,6 +28,35 @@ In Section \@ref(cc-definition), we introduce the definition of CC and provide e
 
 ## CC definition
 
+We seek to define a structure that bridges the gap between simplicial/cell complexes and hypergraphs, as discussed in Section \@ref(hierarchical-structure-and-set-type-relations). To this end, we introduce the combinatorial complex (CC), a higher-order domain that can be viewed from three perspectives: as a simplicial complex whose cells and simplices are allowed to be missing; as a generalized cell complex with relaxed structure; or as a hypergraph enriched through the inclusion of a rank function.
+
+```{definition, cc, name="Combinatorial complex"}
+A *combinatorial complex (CC)* is a triple $(S, \mathcal{X}, \mbox{rk})$ consisting of a set $S$, a subset $\mathcal{X}$ of $\mathcal{P}(S)\setminus\{\emptyset\}$, and a function
+$\mbox{rk} \colon \mathcal{X}\to \mathbb{Z}_{\ge 0}$ with the following properties:
+
+1. for all $s\in S$, $\{s\}\in\mathcal{X}$, and
+2. the function $\mbox{rk}$ is order-preserving, which means that if $x,y\in \mathcal{X}$ satisfy $x\subseteq  y$, then $\mbox{rk}(x) \leq \mbox{rk}(y)$.
+
+Elements of $S$ are called *entities* or *vertices*, elements of $\mathcal{X}$ are called *relations* or *cells*, and $\mbox{rk}$ is called the *rank function* of the CC.
+```
+
+For brevity, $\mathcal{X}$ is used as shorthand notation for a CC $(S,\mathcal{X},\mbox{rk})$. Definition \@ref(def:cc) sets up a framework to construct higher-order networks upon which we can define general purpose higher-order deep learning architectures. Observe that CCs exhibit both hierarchical and set-type relations. Particularly, the rank function $\mbox{rk}$ of a CC induces a hierarchy of relations in the CC. Further, CCs encompass set-type relations as there are no relation constraints in Definition \@ref(def:cc). Thus, CCs subsume cell complexes and hypergraphs in the sense that they combine the relation-related features of both. Table \@ref(tab:complexsummary) provides a comparative summary of relation-related features among CCs and common higher-order networks and graphs.
+
+```{remark}
+We typically require that $\mbox{rk}(\{s\})=0$ for each singleton cell $\{s\}$ in a CC. Such a convention aligns CCs naturally with simplicial and cellular complexes. 
+```
+
+The rank of a cell $x\in\mathcal{X}$ is the value $\mbox{rk}(x)$ of the rank function $\mbox{rk}$ at $x$. The *dimension* $\mbox{dim}(\mathcal{X})$ of a CC $\mathcal{X}$ is the maximal rank among its cells. A cell of rank $k$ is called a *$k$-cell* and is denoted by $x^k$. The *$k$-skeleton* of a CC $\mathcal{X}$, denoted $\mathcal{X}^{(k)}$, is the set of cells of rank at most $k$ in $\mathcal{X}$. The set of cells of rank exactly $k$ is denoted by $\mathcal{X}^k$. Note that this set corresponds to $\mathcal{X}^k=\mbox{rk}^{-1}(\{k\})$. The $1$-cells are called the *edges* of $\mathcal{X}$. In general, an edge of a CC may contain more than two nodes. CCs whose edges have exactly two nodes are called *graph-based* CCs. In this paper, we primarily work with graph-based CCs.
+
+```{example, name="CCs of dimension two and three"}
+Figure \@ref(fig:ccexother) shows four examples of CCs. For instance, Figure \@ref(fig:ccexother)(a) shows a 2-dimensional CC on a vertex set $S=\{s_0,s_1,s_2\}$,
+consisting of $0$-cells $\{s_0\}$, $\{s_1\}$, and $\{s_2\} $ (shown in orange), $1$-cell $\{s_0, s_1\}$ (purple), and $2$-cell $\{s_0, s_1, s_2\} = S$ (blue).
+```
+
+```{r ccexother, echo=FALSE, fig.align="center", fig.cap="Examples of CCs. Orange circles represent vertices. Pink, blue, and green colors represent cells of rank one, two, and three, respectively. Each of the CCs in (a), (b), and (d) has dimension equal to two, whereas the CC in (c) has dimension equal to three."}
+knitr::include_graphics('figures/cc_examples.png', dpi=NA)
+```
+
 ## CC-homomorphisms and sub-CCs
 
 ## Motivation for CCs
