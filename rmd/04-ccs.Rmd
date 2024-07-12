@@ -2,7 +2,29 @@
 
 # Combinatorial complexes
 
-To be completed.
+This section introduces combinatorial complexes (CCs), a novel class of higher-order domains that generalizes graphs, simplicial complexes, cell complexes, and hypergraphs. Figure \@ref(fig:hon) shows a first illustration of the generalization that CCs provide over such domains. Moreover, Table \@ref(tab:complexsummary) enlists the relation-related features of higher-order domains and graphs, thus summarizing the relation-related generalization attained by CCs.
+
+```{r hon, echo=FALSE, fig.align="center", fig.cap="Illustration of how CCs generalize various domains. (a): A set $S$ consists of abstract entities (vertices) with no relations. (b): A graph models binary relations between its vertices (i.e., elements of $S$). (c): A simplicial complex models a hierarchy of higher-order relations (i.e., relations between the relations) but with rigid constraints on the 'shape' of its relations. (d): Similar to simplicial complexes, a cell complex models a hierarchy of higher-order relations, but with more flexibility in the shape of the relations (i.e., 'cells'). (f): A hypergraph models arbitrary set-type relations between elements of $S$, but these relations do not have a hierarchy among them. (e): A CC combines features of cell complexes (hierarchy among its relations) and of hypergraphs (arbitrary set-type relations), generalizing both domains."}
+knitr::include_graphics('figures/hon.png', dpi=NA)
+```
+
+```{r complexsummary, echo=FALSE}
+feats <- c(
+  'Hierarcy of relations',
+  'Set-type relations',
+  'Multi-relation coupling',
+  'Rank not cardinality'
+)
+coc <- c('√', '√', '√', '√')
+hg <- c('', '√', '', '√')
+cec <- c('√', '', '√', '√')
+sc <- c('√', '', '√', '')
+domains <- data.frame(feats, coc, hg, cec, sc)
+colnames(domains) <- c('Relation-related features', 'CC', 'Hypergraph', 'Cell complex', 'Simplicial complex')
+knitr::kable(domains, align=c('l', 'c', 'c', 'c', 'c'), booktabs=TRUE, caption="Tabular summary of relation-related features of topological domains and of graphs. Recall that a relation is an element of a domain. A domain is specified via its relations and via the way these relations are related to each other. Desirable relation-related features are indicated in the first column. A *hierarchy of relations* implies that relations of the higher-order domain can have different rankings. *Set-type relations* are free from constraints among relations or their lengths. *Multi-relation coupling* implies that each relation can have other neighboring relations via multiple neighborhood functions defined on the higher-order domain. '*Rank not cardinality*' indicates that relations with the same ranking in a given hierarchy on the higher-order domain do not need to have the same cardinality.")
+```
+
+In Section \@ref(cc-definition), we introduce the definition of CC and provide examples of CCs. In Section \@ref(cc-homomorphisms-and-sub-ccs), we define the notion of CC-homomorphism and present relevant examples. In Section \@ref(motivation-for-ccs), we present the motivation behind the CC structure from a practical point of view. In Section \@ref(neighborhood-functions-on-ccs), we demonstrate the computational version of neighborhood functions on neighborhood matrices. Finally, in Section \@ref(data-on-ccs), we introduce the notion of CC-cochain.
 
 ## CC definition
 
@@ -15,3 +37,5 @@ To be completed.
 ### Incidence in a CC
 
 ### Adjacency in a CC
+
+## Data on CCs
