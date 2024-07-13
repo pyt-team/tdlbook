@@ -117,6 +117,34 @@ In addition to the realization of graph-based pooling, CCs offer several structu
 
 ## Neighborhood functions on CCs
 
+We introduce the notion of a CC-neighborhood function on a CC as a mechanism of exploiting the topological information stored in the CC. In practice, crafting a neighborhood function is usually a part of the learning task. For our purposes, we restrict the discussion to two types of generalized neighborhood functions, namely those specifying adjacency and incidence. From a deep learning perspective, CC-neighborhood functions set the foundations to extend the general message-passing schemes of deep learning models, thus subsuming several state-of-the-art GNNs [@battaglia2016interaction; @kipf2016semi; @battaglia2018relational; @fey2019fast; @loukas2019graph; @morris2019weisfeiler].
+
+Given a CC, we aim to describe cells in the local proximity of a sub-CC of the CC. To this end, we define the CC-neighborhood function, an analogue of Definition \@ref(def:ns) in the context of CCs.
+
+```{definition, cc-neighborhood-function, name="CC-neighborhood function"}
+A *CC-neighborhood function* on a CC $(S,\mathcal{X}, \mbox{rk})$ is a function $\mathcal{N}$ that assigns to every sub-CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ of the CC a nonempty collection $\mathcal{N}(\mathcal{Y})$ of subsets of $S$.
+```
+
+Without loss of generality, we assume that the elements of the neighborhood $\mathcal{N}(\mathcal{Y})$ are cells or sub-CCs of $\mathcal{X}$. Intuitively, the neighborhood $\mathcal{N}(\mathcal{Y})$ of the sub-CC $\mathcal{Y}$ is a set of subsets of $S$ that are in the 'local vicinity' of $\mathcal{Y}$. The term 'local vicinity' is generally stated here, since it is typically context-specific.
+
+Definition \@ref(def:cc-neighborhood-function) is a discrete analogue of the well-known Definition \@ref(def:ns). The correspondence between these two definitions is demonstrated in Figure \@ref(fig:cc-neighborhood). For the rest of the paper, CC-neighborhood functions are succinctly called neighborhood functions. In practice, the information encoded in CC-neighborhood functions is represented in terms of matrices as described next.
+
+```{r cc-neighborhood, echo=FALSE, fig.align="center", fig.cap="A visual comparison between neighborhood functions with continuous domains and CC-neighborhood functions. (a): A neighborhood function with a continuous domain $S$ assigns to $x\\in S$ a set $\\mathcal{N}(x)$ of subsets of $S$ that are in the local vicinity of $x$. (b): Similarly, a CC-neighborhood function on a CC $(S,\\mathcal{X}, \\mbox{rk})$ assigns to $x\\in S$ a set $\\mathcal{N}(x)$ of subsets of $\\mathcal{X}$ that are in the local vicinity of $x$."}
+knitr::include_graphics('figures/cts_discrete_nbhd.png', dpi=NA)
+```
+
+**Neighborhood matrix induced by a neighborhood function**. For the purposes of computation, it is convenient to represent neighborhood functions as matrices. Incidence, adjacency, and coadjacency matrices are well-known examples of matrices that encode respective neighborhood functions. In Definition \@ref(def:neighborhood-matrix), we introduce a generalization of these matrices called the `neighborhood matrix'. In this definition and henceforth, we denote the cardinality of a set $S$ by $|S|$.
+
+```{definition, neighborhood-matrix, name="Neighborhood matrix"}
+Let $\mathcal{N}$ be a neighborhood function defined on a CC $\mathcal{X}$. Moreover, let $\mathcal{Y}=\{y_1,\ldots,y_n\}$ and $\mathcal{Z}=\{z_1,\ldots,z_m\}$ be two collections of cells in $\mathcal{X}$ such that $\mathcal{N}(y_{i}) \subseteq \mathcal{Z}$ for all $1\leq i \leq n$. The \textbf{neighborhood matrix of $\mathcal{N}$ with respect to $\mathcal{Y}$ and $\mathcal{Z}$} is the $|\mathcal{Z}| \times |\mathcal{Y}|$ binary matrix $G$ whose $(i,j)$-th entry $[G]_{ij}$ has value $1$ if $z_i \in \mathcal{N}(y_j)$ and $0$ otherwise.
+```
+
+```{remark}
+In Definition \@ref(def:neighborhood-matrix), $\mathcal{N}(y_j)$ is stored in the $j$-th column of the associated neighborhood matrix $G$. For this reason, we denote by $\mathcal{N}_{G}(j)$ the neighborhood function of the cell $y_j$ when we work with the neighborhood matrix $G$.
+```
+
+There are many ways to define useful neighborhood functions on a CC. In this work, we constrain ourselves to the most immediate neighborhood functions: the incidence and adjacency neighborhood functions. 
+
 ### Incidence in a CC
 
 ### Adjacency in a CC
