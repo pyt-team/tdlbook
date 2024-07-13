@@ -31,8 +31,7 @@ In Section \@ref(cc-definition), we introduce the definition of CC and provide e
 We seek to define a structure that bridges the gap between simplicial/cell complexes and hypergraphs, as discussed in Section \@ref(hierarchical-structure-and-set-type-relations). To this end, we introduce the combinatorial complex (CC), a higher-order domain that can be viewed from three perspectives: as a simplicial complex whose cells and simplices are allowed to be missing; as a generalized cell complex with relaxed structure; or as a hypergraph enriched through the inclusion of a rank function.
 
 ```{definition, cc, name="Combinatorial complex"}
-A *combinatorial complex (CC)* is a triple $(S, \mathcal{X}, \mbox{rk})$ consisting of a set $S$, a subset $\mathcal{X}$ of $\mathcal{P}(S)\setminus\{\emptyset\}$, and a function
-$\mbox{rk} \colon \mathcal{X}\to \mathbb{Z}_{\ge 0}$ with the following properties:
+A *combinatorial complex (CC)* is a triple $(S, \mathcal{X}, \mbox{rk})$ consisting of a set $S$, a subset $\mathcal{X}$ of $\mathcal{P}(S)\setminus\{\emptyset\}$, and a function $\mbox{rk} \colon \mathcal{X}\to \mathbb{Z}_{\ge 0}$ with the following properties:
 
 1. for all $s\in S$, $\{s\}\in\mathcal{X}$, and
 2. the function $\mbox{rk}$ is order-preserving, which means that if $x,y\in \mathcal{X}$ satisfy $x\subseteq  y$, then $\mbox{rk}(x) \leq \mbox{rk}(y)$.
@@ -50,7 +49,7 @@ The rank of a cell $x\in\mathcal{X}$ is the value $\mbox{rk}(x)$ of the rank fun
 
 ```{example, name="CCs of dimension two and three"}
 Figure \@ref(fig:ccexother) shows four examples of CCs. For instance, Figure \@ref(fig:ccexother)(a) shows a 2-dimensional CC on a vertex set $S=\{s_0,s_1,s_2\}$,
-consisting of $0$-cells $\{s_0\}$, $\{s_1\}$, and $\{s_2\} $ (shown in orange), $1$-cell $\{s_0, s_1\}$ (purple), and $2$-cell $\{s_0, s_1, s_2\} = S$ (blue).
+consisting of $0$-cells $\{s_0\}$, $\{s_1\}$, and $\{s_2\}$ (shown in orange), $1$-cell $\{s_0, s_1\}$ (purple), and $2$-cell $\{s_0, s_1, s_2\} = S$ (blue).
 ```
 
 ```{r ccexother, echo=FALSE, fig.align="center", fig.cap="Examples of CCs. Orange circles represent vertices. Pink, blue, and green colors represent cells of rank one, two, and three, respectively. Each of the CCs in (a), (b), and (d) has dimension equal to two, whereas the CC in (c) has dimension equal to three."}
@@ -58,6 +57,39 @@ knitr::include_graphics('figures/cc_examples.png', dpi=NA)
 ```
 
 ## CC-homomorphisms and sub-CCs
+
+CC-homomorphisms are maps relating CCs to one another. CC-homomorphisms play an important role in delineating the process of lifting graphs or other higher-order domains to CCs. Intuitively, a lifting map is a well-defined procedure that converts a domain of certain type, such as a graph, to a domain of another type, such as a CC. The usefulness of lifting maps lie in their ability to enable the application of deep learning models defined on CCs to more common domains, such as graphs, cell complexes or simplicial complexes. We study lifting maps in detail and provide examples of them in Appendix \@ref(lifting-maps). Definition \@ref(def:maps) formalizes the notion of CC-homomorphism.
+
+```{definition, maps, name="CC-homomorphism"}
+A homomorphism from a CC $(S_1, \mathcal{X}_1, \mbox{rk}_1)$ to a CC $(S_2, \mathcal{X}_2, \mbox{rk}_2)$, also called a *CC-homomorphism*, is a function $f \colon \mathcal{X}_1 \to \mathcal{X}_2$ that satisfies the following conditions:
+
+1. If $x,y\in\mathcal{X}_1$ satisfy $x\subseteq y$, then $f(x) \subseteq f(y)$. 
+2. If $x\in\mathcal{X}_1$, then $\mbox{rk}_1(x)\geq \mbox{rk}_2(f(x))$.
+```
+
+The second condition in Definition \@ref(def:maps) assures that a CC-homomorphism may only map a $k$-cell in $\mathcal{X}_1$ to a cell in $\mathcal{X}_2$ with rank no greater than $k$. When $\mbox{rk}_1(x) = \mbox{rk}_2(f(x))$ for all $x \in \mathcal{X}_1$ and $f$ is injective, then we call the homomorphism $f$ a *CC-embedding*. CC-embeddings are useful in practice as they can be used to 'lift' a domain, such as a graph, to a CC by augmenting that domain with higher-order cells. Example \@ref(exm:augmentation) displays three CC-embeddings, while Example \@ref(exm:homomorphism) presents a CC-homomorphism that is not a CC-embedding.
+
+```{example, augmentation, name="CC-embeddings"}
+Figures \@ref(fig:non-embedd-hom)(a) and (b) show two CC-embeddings. In Figure \@ref(fig:non-embedd-hom)(a), each cell in the graph on the left-hand side is sent to its corresponding cell in the CC on the right-hand side. Similarly, in Figure \@ref(fig:non-embedd-hom)(b), each cell in the cell complex on the left is sent to its corresponding cell in the CC on the right. It is easy to verify that each of these two maps is a CC-embedding.
+```
+
+```{r non-embedd-hom, echo=FALSE, fig.align="center", fig.cap="Examples of CC-homomorphisms. Pink, blue, and green colors represent cells of rank one, two, and three, respectively. (a): An embedding of a $1$-dimensional CC into a $2$-dimensional CC. (b): An embedding of a $2$-dimensional CC into a $3$-dimensional CC. (c) An example of a CC-homomorphism. The CC $\\mathcal{X}_1$ is on the left, $\\mathcal{X}_2$ is on the right, and the homomorphism $f$ is represented by the black arrow. Intuitively, the CC-homomorphism $f$ can be viewed as a combinatorial analogue to a continuous function between $S_1 = \\{1, 2, 3,4\\}$ and $S_2 = \\{a, b, c\\}$ that 'collapses' the cell $\\{1,2,3\\}$ to the cell $\\{a,b\\}$, and the cell $\\{1,2,3,4\\}$ to the cell $\\{a,b,c\\}$. Observe that CC-homomorphisms generalize simplicial maps [@munkres2018elements} from this perspective."}
+knitr::include_graphics('figures/cc_map.png', dpi=NA)
+```
+
+```{example, homomorphism, name="A CC-homomorphism"}
+We present an example of a CC-homomorphism that is not a CC-embedding. Consider the sets $S_1 = \{1, 2, 3,4\}$ and $S_2 = \{a, b, c\}$. Let $\mathcal{X}_1$ denote the CC on $S_1$ consisting of one 3-cell $\{1,2,3,4\}$, one 2-cell $\{1,2,3\}$, and four 0-cells corresponding to the elements of $S_1$. Likewise, let $\mathcal{X}_2$ denote the CC on $S_2$ consisting of one 3-cell $\{a,b,c\}$, one 2-cell $\{a,b\}$, and three 0-cells corresponding to the elements of $S_2$. CCs $\mathcal{X}_1$ and $\mathcal{X}_2$ are visualized in Figure \@ref(fig:non-embedd-hom)(c).  Consider the function $f \colon S_1 \to S_2$ defined as $f(1) = f(2) = a,~f(3) = b$ and $f(4) = c$. It is easy to verify that $f$ induces a CC-homomorphism from $\mathcal{X}_1$ to $\mathcal{X}_2$.
+```
+
+```{definition, sub-cc, name="Sub-CC"}
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. A \textbf{sub-combinatorial complex (sub-CC)} of a CC $(S,\mathcal{X}, \mbox{rk})$ is a CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ such that $A\subseteq S$, $\mathcal{Y}\subseteq\mathcal{X}$ and $\mbox{rk}^{\prime} = \mbox{rk}|_{\mathcal{Y}}$ is the restriction of $\mbox{rk}$ on $\mathcal{Y}$.
+```
+
+For brevity, we refer to the sub-CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ as $\mathcal{Y}$. Any subset of $A \subseteq S$ can be used to induce a sub-CC as follows. Consider the set $\mathcal{X}_A = \{x \in \mathcal{X}  \mid x \subseteq A\}$ together with the restriction $\mbox{rk}|_{\mathcal{X}_A}$. It is easy to see that the triple $(A,\mathcal{X}_A,\mbox{rk}|_{\mathcal{X}_A})$ constitutes a CC, which we call the *sub-CC of $\mathcal{X}$ induced by $A$*. Note that any cell in the set $\mathcal{X}$ induces a sub-CC obtained by considering all the cells that are contained in it. Finally, for any $k$, it is easy to see that the skeleton $\mathcal{X}^{k}$ of a CC $\mathcal{X}$ is a sub-CC.
+
+```{example, sub-cc-ex, name="Sub-CC"}
+Recall the CC $\mathcal{X}= \{\{s_0\}, \{s_1\}, \{s_2\}, \{s_0, s_1\}, \{s_0, s_1, s_2\}\}$ displayed in Figure \@ref(fig:ccexother)(a). The set $A = \{s_0, s_1\}$ induces the sub-CC $\mathcal{X}_A = \{\{s_0\}, \{s_1\}, \{s_0, s_1\}\}$ of $\mathcal{X}$.
+```
 
 ## Motivation for CCs
 
