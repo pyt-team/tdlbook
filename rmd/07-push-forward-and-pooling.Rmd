@@ -1,8 +1,8 @@
-# Push-forward and (un)pooling
+# Push-forward, pooling and unpooling
 
 To be completed.
 
-## CC-(un)pooling
+## CC-pooling and unpooling
 
 ## Formulating common pooling operations as CC-pooling
 

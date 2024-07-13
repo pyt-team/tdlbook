@@ -220,3 +220,33 @@ knitr::include_graphics('figures/structure_adj.png', dpi=NA)
 ```
 
 ## Data on CCs
+
+As we are interested in processing the data defined over a CC $(S,\mathcal{X},\mbox{rk})$, we introduce $k$-cochain spaces, $k$-cochains and cochain maps.
+
+```{definition, k-cochain-spaces, name="k-cochain spaces"}
+Let $\mathcal{C}^k(\mathcal{X},\mathbb{R}^d )$ be the $\mathbb{R}$-vector space of functions $\mathbf{H}_k\colon\mathcal{X}^k\to \mathbb{R}^d$ for a rank $k \in \mathbb{Z}_{\ge 0}$ and dimension $d$. $d$ is called the *data dimension*. $\mathcal{C}^k(\mathcal{X},\mathbb{R}^d)$ is called the *$k$-cochain space*. Elements $\mathbf{H}_k$ in $\mathcal{C}^k(\mathcal{X},\mathbb{R}^d)$ are called *$k$-cochains* or *$k$-signals*.
+```
+
+We use the notation $\mathcal{C}^k(\mathcal{X})$ or $\mathcal{C}^k$ when the underlying CC is clear. Moreover, we say that a $k$-cochain space $\mathcal{C}^k(\mathcal{X})$ is defined on $\mathcal{X}$. Intuitively, a $k$-cochain can be interpreted as a signal defined on the $k$-cells of $\mathcal{X}$ [@grady2010discrete]. Figure \@ref(fig:cc-cochain)(a) shows an example of a cochain supported on 0, 1, and 2-rank cells of a simplicial complex.
+
+```{r cc-cochain, echo=FALSE, fig.align="center", fig.cap="Examples of $k$-cochains (left) and cochain maps (right) supported on a CC of dimension four. Left: a $k$-cochain can be interpreted as a signal or a feature vector defined on the $k$-cells. In the figure, a 3-dimensional cochain is attached to the vertices, 2-dimensional cochains are attached to the 1-cells, and 4-dimensional cochains to the 2-cells. Right: each of $coA_{r,k}$ and $A_{r,k}$ defines a cochain map between cochain spaces of equal dimension, whereas each $B_{r,k}$ defines a cochain map between cochain spaces of different dimensions."}
+knitr::include_graphics('figures/mapping_cochain.png', dpi=NA)
+```
+
+When $\mathcal{X}$ is a graph, $0$-cochains correspond to graph signals [@ortega2018graph]. Ordering the cells in $\mathcal{X}^k$, we canonically identify $\mathcal{C}^k(\mathcal{X},\mathbb{R}^d )$ with the Euclidean vector space $\mathbb{R}^{ |\mathcal{X}^k| \times d}$ and explicitly write $\mathbf{H}_k$ as the vector $[ \mathbf{h}_{x^k_1},\ldots,\mathbf{h}_{x^k_{|\mathcal{X}^k|} }]$, where $\mathbf{h}_{x^k_j} \in \mathbb{R}^d$ is a feature vector associated with the cell $x^k_j$. The notation $\mathbf{H}_{k,j}$ refers to the feature vector $\mathbf{h}_{x^k_j}$ to avoid explicit reference to cell $x^k_j$. We also work with maps between cochain spaces, which we call cochain maps.
+
+```{definition, cochain-maps, name="Cochain maps"}
+For $r< k$, an incidence matrix $B_{r,k}$ induces a map
+\begin{align*}
+B_{r,k}\colon \mathcal{C}^k(\mathcal{X}) &\to   \mathcal{C}^r(\mathcal{X}),\\
+\mathbf{H}_k &\to  B_{r,k}(\mathbf{H}_k),
+\end{align*}
+where $B_{r,k}(\mathbf{H}_k)$ denotes the usual product $B_{r,k} \mathbf{H}_k$ of matrix $B_{r,k}$ with vector $\mathbf{H}_k$. Similarly, an $(r,k)$-adjacency matrix $A_{r,k}$ induces a map
+\begin{align*}
+A_{r,k}\colon \mathcal{C}^r(\mathcal{X}) &\to   \mathcal{C}^r(\mathcal{X}),\\
+\mathbf{H}_r &\to  A_{r,k}(\mathbf{H}_r).
+\end{align*}
+These two types of maps between cochain spaces are called *cochain maps*.
+```
+
+Cochain maps serve as operators that 'shuffle' and 'redistribute' the data on the underlying CC. In the context of TDL, cochain maps are the main tools for defining higher-order message passing (Section \@ref(definition-of-higher-order-message-passing)) as well as (un)pooling operations (Section \@ref(cc-pooling-and-unpooling)). Each adjacency matrix $A_{r,k}$ or coadjacency matrix $coA_{r,k}$ defines a cochain map between cochain spaces of equal dimension, while each incidence matrix $B_{r,k}$ defines a cochain map between different dimensions. Figure \@ref(fig:cc-cochain)(b) shows examples of cochain maps on a CC of dimension 4.
