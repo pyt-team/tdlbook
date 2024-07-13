@@ -1,3 +1,11 @@
 # Push-forward and (un)pooling
 
 To be completed.
+
+## CC-(un)pooling
+
+## Formulating common pooling operations as CC-pooling
+
+### Graph pooling as CC-pooling
+
+### Image pooling as CC-pooling
