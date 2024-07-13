@@ -82,7 +82,7 @@ We present an example of a CC-homomorphism that is not a CC-embedding. Consider 
 ```
 
 ```{definition, sub-cc, name="Sub-CC"}
-Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. A \textbf{sub-combinatorial complex (sub-CC)} of a CC $(S,\mathcal{X}, \mbox{rk})$ is a CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ such that $A\subseteq S$, $\mathcal{Y}\subseteq\mathcal{X}$ and $\mbox{rk}^{\prime} = \mbox{rk}|_{\mathcal{Y}}$ is the restriction of $\mbox{rk}$ on $\mathcal{Y}$.
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. A *sub-combinatorial complex (sub-CC)* of a CC $(S,\mathcal{X}, \mbox{rk})$ is a CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ such that $A\subseteq S$, $\mathcal{Y}\subseteq\mathcal{X}$ and $\mbox{rk}^{\prime} = \mbox{rk}|_{\mathcal{Y}}$ is the restriction of $\mbox{rk}$ on $\mathcal{Y}$.
 ```
 
 For brevity, we refer to the sub-CC $(A,\mathcal{Y},\mbox{rk}^{\prime})$ as $\mathcal{Y}$. Any subset of $A \subseteq S$ can be used to induce a sub-CC as follows. Consider the set $\mathcal{X}_A = \{x \in \mathcal{X}  \mid x \subseteq A\}$ together with the restriction $\mbox{rk}|_{\mathcal{X}_A}$. It is easy to see that the triple $(A,\mathcal{X}_A,\mbox{rk}|_{\mathcal{X}_A})$ constitutes a CC, which we call the *sub-CC of $\mathcal{X}$ induced by $A$*. Note that any cell in the set $\mathcal{X}$ induces a sub-CC obtained by considering all the cells that are contained in it. Finally, for any $k$, it is easy to see that the skeleton $\mathcal{X}^{k}$ of a CC $\mathcal{X}$ is a sub-CC.
@@ -136,7 +136,7 @@ knitr::include_graphics('figures/cts_discrete_nbhd.png', dpi=NA)
 **Neighborhood matrix induced by a neighborhood function**. For the purposes of computation, it is convenient to represent neighborhood functions as matrices. Incidence, adjacency, and coadjacency matrices are well-known examples of matrices that encode respective neighborhood functions. In Definition \@ref(def:neighborhood-matrix), we introduce a generalization of these matrices called the `neighborhood matrix'. In this definition and henceforth, we denote the cardinality of a set $S$ by $|S|$.
 
 ```{definition, neighborhood-matrix, name="Neighborhood matrix"}
-Let $\mathcal{N}$ be a neighborhood function defined on a CC $\mathcal{X}$. Moreover, let $\mathcal{Y}=\{y_1,\ldots,y_n\}$ and $\mathcal{Z}=\{z_1,\ldots,z_m\}$ be two collections of cells in $\mathcal{X}$ such that $\mathcal{N}(y_{i}) \subseteq \mathcal{Z}$ for all $1\leq i \leq n$. The \textbf{neighborhood matrix of $\mathcal{N}$ with respect to $\mathcal{Y}$ and $\mathcal{Z}$} is the $|\mathcal{Z}| \times |\mathcal{Y}|$ binary matrix $G$ whose $(i,j)$-th entry $[G]_{ij}$ has value $1$ if $z_i \in \mathcal{N}(y_j)$ and $0$ otherwise.
+Let $\mathcal{N}$ be a neighborhood function defined on a CC $\mathcal{X}$. Moreover, let $\mathcal{Y}=\{y_1,\ldots,y_n\}$ and $\mathcal{Z}=\{z_1,\ldots,z_m\}$ be two collections of cells in $\mathcal{X}$ such that $\mathcal{N}(y_{i}) \subseteq \mathcal{Z}$ for all $1\leq i \leq n$. The *neighborhood matrix of $\mathcal{N}$ with respect to $\mathcal{Y}$ and $\mathcal{Z}$* is the $|\mathcal{Z}| \times |\mathcal{Y}|$ binary matrix $G$ whose $(i,j)$-th entry $[G]_{ij}$ has value $1$ if $z_i \in \mathcal{N}(y_j)$ and $0$ otherwise.
 ```
 
 ```{remark}
@@ -151,19 +151,19 @@ We define three notions of incidence to capture different facets of incidence st
 Third, in Definition \@ref(def:inc-mat), we introduce $(r, k)$-incidence matrices to describe the incidence structures of cells of particular ranks $r$ and $k$. In what follows, we assume that the cells in the set $\mathcal{X}$ of a CC $(S,\mathcal{X}, \mbox{rk})$ are given a fixed order.
 
 ```{definition, nstruct, name="Down/up-incidence neighborhood functions"}
-Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. Two cells $x, y\in\mathcal{X}$ of the CC are called \textbf{incident} if either $x \subsetneq y$ or $y \subsetneq x$. In particular, the \textbf{down-incidence neighborhood function} $\mathcal{N}_{\searrow}(x)$ of a cell $x\in\mathcal{X}$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x\}$, while the \textbf{up-incidence neighborhood function} $\mathcal{N}_{\nearrow}(x)$ of $x$ is defined to be the set $\{ y\in \mathcal{X} \mid x \subsetneq y\}$.
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. Two cells $x, y\in\mathcal{X}$ of the CC are called *incident* if either $x \subsetneq y$ or $y \subsetneq x$. In particular, the *down-incidence neighborhood function* $\mathcal{N}_{\searrow}(x)$ of a cell $x\in\mathcal{X}$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x\}$, while the *up-incidence neighborhood function* $\mathcal{N}_{\nearrow}(x)$ of $x$ is defined to be the set $\{ y\in \mathcal{X} \mid x \subsetneq y\}$.
 ```
 
 Definition \@ref(def:filtered-incidence) provides a more granular specification of incidence than Definition \@ref(def:nstruct). In particular, Definitions \@ref(def:filtered-incidence) and \@ref(def:nstruct) describe the incidence structure of a cell with respect to cells of a particular rank or of arbitrary rank, respectively.
 
 ```{definition, filtered-incidence, name="k-down/up incidence neighborhood functions"}
-Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. For any $k\in\mathbb{N}$, the \textbf{$k$-down incidence neighborhood function} $\mathcal{N}_{\searrow,k}(x)$ of a cell $x\in\mathcal{X}$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x, \mbox{rk}(y)=\mbox{rk}(x)-k \}$. The \textbf{$k$-up incidence neighborhood function} $\mathcal{N}_{\nearrow,k}(x)$ of $x$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x, \mbox{rk}(y)=\mbox{rk}(x)+k \}$.
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. For any $k\in\mathbb{N}$, the *$k$-down incidence neighborhood function* $\mathcal{N}_{\searrow,k}(x)$ of a cell $x\in\mathcal{X}$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x, \mbox{rk}(y)=\mbox{rk}(x)-k \}$. The *$k$-up incidence neighborhood function* $\mathcal{N}_{\nearrow,k}(x)$ of $x$ is defined to be the set $\{ y\in \mathcal{X} \mid y \subsetneq x, \mbox{rk}(y)=\mbox{rk}(x)+k \}$.
 ```
 
 Clearly, $\mathcal{N}_{\searrow}(x)= \bigcup_{k\in \mathbb{N}} \mathcal{N}_{\searrow,k}(x)$ and $\mathcal{N}_{\nearrow}(x)= \bigcup_{k\in\mathbb{N}} \mathcal{N}_{\nearrow,k}(x)$. Immediate incidence is particularly important. To this end, the set of *faces* of a cell $x \in \mathcal{X}$ is defined to be $\mathcal{N}_{\searrow,1} (x)$, and the set of *cofaces* of a cell $x$ is defined to be $\mathcal{N}_{\nearrow,1} (x)$. An illustration of $k$-down and $k$-up incidence neighborhood functions is given in Figure \@ref(fig:structure-inc).
 
 ```{definition, inc-mat, name="Neighborhood matrix"}
-Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. For any $r,k \in \mathbb{Z}{\ge 0}$ with $0\leq r<k \leq \dim(\mathcal{X})$, the \textbf{$(r,k)$-incidence matrix} $B_{r,k}$ between $\mathcal{X}^{r}$ and $\mathcal{X}^{k}$ is defined to be the $|\mathcal{X}^r| \times |\mathcal{X}^k|$ binary matrix whose $(i, j)$-th entry $[B_{r,k}]_{ij}$ equals one if $x^r_i$ is incident to $x^k_j$ and zero otherwise.
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. For any $r,k \in \mathbb{Z}{\ge 0}$ with $0\leq r<k \leq \dim(\mathcal{X})$, the *$(r,k)$-incidence matrix* $B_{r,k}$ between $\mathcal{X}^{r}$ and $\mathcal{X}^{k}$ is defined to be the $|\mathcal{X}^r| \times |\mathcal{X}^k|$ binary matrix whose $(i, j)$-th entry $[B_{r,k}]_{ij}$ equals one if $x^r_i$ is incident to $x^k_j$ and zero otherwise.
 ```
 
 ```{r structure-inc, echo=FALSE, fig.align="center", fig.cap="Illustration of $k$-down and $k$-up incidence neighborhood functions on a CC of dimension three. (a): Illustration of $k$-down incidence neighborhood functions. The target orange cell $x$ has rank three. From left to right, the red cells represent $\\mathcal{N}_{\\searrow,1}(x)$, $\\mathcal{N}_{\\searrow,2}(x)$ and $\\mathcal{N}_{\\searrow,3}(x)$. (b): Illustration of $k$-up incidence neighborhood functions. The target orange cell $x$ has rank zero. From left to right, the red cells represent $\\mathcal{N}_{\\nearrow,1}(x)$, $\\mathcal{N}_{\\nearrow,2}(x)$ and $\\mathcal{N}_{\\nearrow,3}(x)$."}
@@ -173,5 +173,50 @@ knitr::include_graphics('figures/structure_inc.png', dpi=NA)
 The incidence matrices $B_{r,k}$ of Definition \@ref(def:inc-mat) determine a neighborhood function on the underlying CC. Neighborhood functions induced by incidence matrices are utilized to construct a higher-order message passing scheme on CCs, as described in Chapter \@ref(combinatorial-complex-neural-networks).
 
 ### Adjacency in a CC
+
+CCs admit incidence as well as other neighborhood functions. For instance, for a CC that is reduced to a graph, a more natural neighborhood function is based on the notion of adjacency relation. Incidence defines relations among cells of different ranks, while adjacency defines relations among cells of similar ranks. Definitions \@ref(def:coa-nf), \@ref(def:k-coa-nf) and \@ref(def:adj-mat)/\@ref(def:coadj-mat) introduce the (co)adjacency analogues of the respective incidence-related Definitions \@ref(def:nstruct), \@ref(def:filtered-incidence), and \@ref(def:inc-mat).
+
+```{definition, coa-nf, name="(Co)adjacency neighborhood functions"}
+Let $(S,\mathcal{X}, \mbox{rk})$ be a CC. The *adjacency neighborhood function* $\mathcal{N}_{a}(x)$ of a cell $x\in \mathcal{X}$ is defined to be the set
+\begin{equation*}
+\{  y \in \mathcal{X} \mid \mbox{rk}(y)=\mbox{rk}(x), \exists z \in \mathcal{X} \text{ with } \mbox{rk}(z)>\mbox{rk}(x) \text{ such that } x,y\subsetneq z\}.
+\end{equation*}
+The *coadjacency neighborhood function* $\mathcal{N}_{co}(x)$ of $x$ is defined to be the set
+\begin{equation*}
+\{ y \in \mathcal{X} \mid \mbox{rk}(y)=\mbox{rk}(x), \exists z \in \mathcal{X}
+\text{ with } \mbox{rk}(z)<\mbox{rk}(x) \text{ such that } z\subsetneq y\text{ and }z\subsetneq x \}.
+\end{equation*}
+A cell $z$ satisfying the conditions of either $\mathcal{N}_{a}(x)$ or $\mathcal{N}_{co}(x)$ is called a *bridge cell*.
+```
+
+```{definition, k-coa-nf, name="[k-(co)adjacency neighborhood functions"}
+Let $(S, \mathcal{X}, \mbox{rk})$ be a CC. For any $k\in\mathbb{N}$, the *$k$-adjacency neighborhood function* $\mathcal{N}_{a,k}(x)$ of a cell $x \in \mathcal{X}$ is defined to be the set
+\begin{equation*}
+\{ y \in \mathcal{X} \mid \mbox{rk}(y)=\mbox{rk}(x),
+\exists z \in \mathcal{X}
+\text{ with } \mbox{rk}(z)=\mbox{rk}(x)+k \text{ such that } x,y\subsetneq z \}.
+\end{equation*}
+The *$k$-coadjacency neighborhood function* $\mathcal{N}_{co,k}(x)$ of $x$ is defined to be the set
+\begin{equation*}
+\{ y \in \mathcal{X} \mid \mbox{rk}(y)=\mbox{rk}(x),
+\exists z \in \mathcal{X}
+\text{ with } \mbox{rk}(z)=\mbox{rk}(x)-k
+\text{ such that } z\subsetneq y\text{ and }z\subsetneq x \}.
+\end{equation*}
+```
+
+```{definition, adj-mat, name="Adjacency matrix"}
+For any $r\in\mathbb{Z}_{\ge 0}$ and $k\in \mathbb{Z}_{>0}$ with $0\leq r<r+k \leq \dim(\mathcal{X})$, the *$(r,k)$-adjacency matrix* $A_{r,k}$ among the cells of $\mathcal{X}^{r}$ with respect to the cells of $\mathcal{X}^{k}$ is defined to be the $|\mathcal{X}^r| \times |\mathcal{X}^r|$ binary matrix whose $(i, j)$-th entry $[A_{r,k}]_{ij}$ equals one if $x^r_i$ is $k$-adjacent to $x^r_j$ and zero otherwise.
+```
+
+```{definition, coadj-mat, name="Coadjacency matrix"}
+For any $r\in \mathbb{Z}_{\ge 0}$ and $k\in\mathbb{N}$ with $0\leq r-k<r \leq \dim(\mathcal{X})$, the *$(r,k)$-coadjacency matrix* $coA_{r,k}$ among the cells of $\mathcal{X}^{r}$ with respect to the cells of $\mathcal{X}^{k}$ is defined to be the $|\mathcal{X}^r| \times |\mathcal{X}^r|$ binary matrix whose $(i, j)$-th entry $[coA_{r,k}]_{ij}$ has value $1$ if $x^r_i$ is $k$-coadjacent to $x^r_j$ and $0$ otherwise.
+```
+
+Clearly, $\mathcal{N}_{a}(x)= \cup_{k\in\mathbb{N}} \mathcal{N}_{a,k}(x)$ and $\mathcal{N}_{co}(x)= \cup_{k\in\mathbb{N}} \mathcal{N}_{co,k}(x)$. An illustration of $k$-adjacency and $k$-coadjacency neighborhood functions is given in Figure \@ref(fig:structure-adj).
+
+```{r structure-adj, echo=FALSE, fig.align="center", fig.cap="Illustration of $k$-(co)adjacency neighborhood functions on a CC of dimension three. (a): Illustration of $k$-adjacency neighborhood functions. The target orange cell $x$ has rank zero. From left to right, the red cells represent $\\mathcal{N}_{a,1}(x)$, $\\mathcal{N}_{a,2}(x)$ and $\\mathcal{N}_{a,3}(x)$. (b): Illustration of $k$-coadjacency neighborhood functions. The target orange cell $x$ has rank two. From left to right, the red cells represent $\\mathcal{N}_{co,1}(x)$, $\\mathcal{N}_{co,2}(x)$ and $\\mathcal{N}_{co,3}(x)$."}
+knitr::include_graphics('figures/structure_adj.png', dpi=NA)
+```
 
 ## Data on CCs
