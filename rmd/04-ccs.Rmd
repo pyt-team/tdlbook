@@ -189,7 +189,7 @@ The *coadjacency neighborhood function* $\mathcal{N}_{co}(x)$ of $x$ is defined 
 A cell $z$ satisfying the conditions of either $\mathcal{N}_{a}(x)$ or $\mathcal{N}_{co}(x)$ is called a *bridge cell*.
 ```
 
-```{definition, k-coa-nf, name="[k-(co)adjacency neighborhood functions"}
+```{definition, k-coa-nf, name="k-(co)adjacency neighborhood functions"}
 Let $(S, \mathcal{X}, \mbox{rk})$ be a CC. For any $k\in\mathbb{N}$, the *$k$-adjacency neighborhood function* $\mathcal{N}_{a,k}(x)$ of a cell $x \in \mathcal{X}$ is defined to be the set
 \begin{equation*}
 \{ y \in \mathcal{X} \mid \mbox{rk}(y)=\mbox{rk}(x),
