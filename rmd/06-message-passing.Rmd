@@ -5,3 +5,5 @@
 To be completed.
 
 ## Definition of higher-order message passing
+
+## Higher-order message-passing neural networks are CCNNs
