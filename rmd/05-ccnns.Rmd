@@ -1,3 +1,31 @@
 # Combinatorial complex neural networks
 
-To be completed.
+The modelling flexibility of CCs enables the exploration and analysis of a wide spectrum of CC-based neural network architectures. A CC-based neural network can exploit all neighborhood matrices or a subset of them, thus accounting for multi-way interactions among various cells in the CC to solve a learning task. In this section, we introduce the blueprint for TDL by developing the general principles of CC-based TDL models. We utilize our TDL blueprint framework for examining current approaches and offer directives for designing novel models.
+
+The learning tasks in TDL can be broadly classified into three categories: cell classification, complex classification, and cell prediction. See Figure \@ref(fig:tdl-tasks). Our numerical experiments in Chapter \@ref(equivariances-of-ccnns) provide examples on cell and complex classification. In more detail, the learning tasks of the three categories are the following:
+
+- *Cell classification*: the goal is to predict targets for each cell in a complex. To accomplish this, we can utilize a TDL classifier that takes into account the topological neighbors of the target cell and their associated features. An example of cell classification is triangular mesh segmentation, in which the task is to predict the class of each face or edge in a given mesh.
+- *Complex classification*: the aim is to predict targets for an entire complex. To achieve this, we can reduce the topology of the complex into a common representation using higher-order cells, such as pooling, and then learn a TDL classifier over the resulting flat vector. An example of complex classification is class prediction for each input mesh.
+- *Cell prediction*: the objective is to predict properties of cell-cell interactions in a complex, and, in some cases, to predict whether a cell exists in the complex. This can be achieved by utilizing the topology and associated features of the cells. A relevant example is the prediction of linkages among entities in hyperedges of a hypergraph.
+
+```{r tdl-tasks, echo=FALSE, fig.align="center", fig.cap="Learning on topological spaces can be broadly classified in three main tasks. (1) *Cell classification*: this task predicts targets for individual cells within a complex. An example of this tasks is mesh segmentation where the topological neural network outputs a segmentation label for every face in the input mesh. (2) *Complex classification*: predicting targets for entire complexes involves reducing topology into a common representation. An example of this task is class prediction for input meshes. (3) *Cell prediction*: forecasting properties of cell-cell interactions, sometimes including predicting cell existence, by leveraging topology of the underlying complex and associated features. An example of this task is predicting linkages in hypergraph hyperedges."}
+knitr::include_graphics('figures/tasks.png', dpi=NA)
+```
+
+Figure \@ref(fig:tdl) outlines our general setup for TDL. Initially, a higher-order domain, represented by a CC, is constructed on a set $S$. A set of neighborhood functions defined on the domain is then selected. The neighborhood functions are usually selected based on the learning problem at hand and they are used to build a topological neural network. To develop our general TDL framework, we introduce *combinatorial complex neural networks (CCNNs)*, an abstract class of neural networks supported on CCs that effectively captures the pipeline of Figure \@ref(fig:tdl). CCNNs can be thought of as a *template* that generalizes many popular architectures, such as convolutional and attention-based neural networks. The abstraction of CCNNs offers many advantages. First, any result that holds for CCNNs is immediately applicable to any particular instance of CCNN architecture. Indeed, the theoretical analysis and results in this paper are applicable to any CC-based neural network as long as it satisfies the CCNN definition. Second, working with a particular parametrization might be cumbersome if the neural network has a complicated architecture. In Section \@ref(building-ccnns-tensor-diagrams), we elaborate on the intricate architectures of
+parameterized TDL models. The more abstract high-level representation of CCNNs simplifies the notation and the general purpose of the learning process, thereby making TDL modelling more intuitive to handle.
+
+```{r tdl, echo=FALSE, fig.align="center", fig.cap="A TDL blueprint. (a): A set of abstract entities. (b): A CC $(S, \\mathcal{X}, \\mbox{rk})$ is defined on $S$. (c): For an element $x \\in \\mathcal{X}$, we select a collection of neighborhood functions defined on the CC. (d): We build a neural network on the CC using the neighborhood functions selected in (c). The neural network exploits the neighborhood functions selected in (c) to update the data supported on $x$."}
+knitr::include_graphics('figures/tdl_blue_print.png', dpi=NA)
+```
+
+```{definition, hoans-definition, name="Combinatorial complex neural networks"}
+Let $\mathcal{X}$ be a CC. Let $\mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \ldots \times  \mathcal{C}^{i_m}$ and $\mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \ldots \times  \mathcal{C}^{j_n}$ be a Cartesian product of $m$ and $n$ cochain spaces defined on $\mathcal{X}$. A *combinatorial complex neural network (CCNN)* is a function of the form
+\begin{equation*}
+\mbox{CCNN}: \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \ldots \times  \mathcal{C}^{i_m} \longrightarrow \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \ldots \times \mathcal{C}^{j_n}.
+\end{equation*}
+```
+
+Intuitively, a CCNN takes a vector of cochains $(\mathbf{H}_{i_1},\ldots, \mathbf{H}_{i_m})$ as input and returns a vector of cochains $(\mathbf{K}_{j_1},\ldots, \mathbf{K}_{j_n})$ as output. In Section \@ref(building-ccnns-tensor-diagrams), we show how neighborhood functions play a central role in the construction of a general CCNN. Definition \@ref(def:hoans-definition) does not show how a CCNN can be computed in general. Chapters \@ref(message-passing) and \@ref(push-forward-pooling-and-unpooling) formalize the computational workflow in CCNNs.
+
+## Building CCNNs: tensor diagrams
