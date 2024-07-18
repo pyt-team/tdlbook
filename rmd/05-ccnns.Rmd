@@ -64,4 +64,48 @@ where $G_k \colon C^{i_k}(\mathcal{X})\to C^{j}(\mathcal{X}), k=1,\ldots,m$, are
 
 ## Push-forward operator and merge node
 
-To be completed.
+We introduce the push-forward operation, a computational scheme that enables sending a cochain supported on $i$-cells to $j$-cells. The push-forward operation is a computational building block used to formalize the definition of the merge nodes given in Equation \@ref(eq:sum), the higher-order message passing introduced in Chapter \@ref(message-passing), and the (un)pooling operations introduced in Section \@ref(push-forward-pooling-and-unpooling).
+
+```{definition, pushing-exact-definition, name="Cochain push-forward"}
+Consider a CC $\mathcal{X}$, a cochain map $G\colon\mathcal{C}^i(\mathcal{X})\to \mathcal{C}^j(\mathcal{X})$, and a cochain $\mathbf{H}_i$ in $\mathcal{C}^i(\mathcal{X})$. A *(cochain) push-forward* induced by $G$ is an operator $\mathcal{F}_G \colon \mathcal{C}^i(\mathcal{X})\to \mathcal{C}^j(\mathcal{X})$ defined via
+\begin{equation}
+\mathbf{H}_i \to \mathbf{K}_j=[ \mathbf{k}_{y^j_1},\ldots,\mathbf{k}_{y^j_{|\mathcal{X}^j|} }] = \mathcal{F}_G(\mathbf{H}_i),
+\end{equation}
+such that for $k=1,\ldots,|\mathcal{X}^j|$,
+\begin{equation}
+\mathbf{k}_{y_k^j}= \bigoplus_{x_l^i \in \mathcal{N}_{G^T(y_k^j)}} \alpha_{G} ( \mathbf{ \mathbf{h}_{x_l^i}}),
+(\#eq:functional)
+\end{equation}
+where $\bigoplus$ is a permutation-invariant aggregation function and $\alpha_G$ is a differentiable function.
+```
+
+The operator $\mathcal{F}_{G}$ pushes forward an $i$-cochain $\mathbf{H}_i$ supported on $\mathcal{X}^i$ to a $j$-cochain $\mathcal{F}_{G}(\mathbf{H}_i)$ supported on $\mathcal{X}^j$. For every cell $y \in \mathcal{X}^j$, Equation \@ref(eq:functional) constructs the vector $\mathbf{k}_y$ by aggregating all vectors $\mathbf{h}_x$ attached to the neighbors $x \in \mathcal{X}^i$ of $y$ with respect to the neighborhood function $\mathcal{N}_{G^T}$, and by then applying a differentiable function $\alpha_G$ on the set of aggregated vectors $\{ \mathbf{h}_x| x\in \mathcal{N}_{G^T}(y)\}$.
+
+Figure \@ref(fig:push-forward) visualizes two examples of push-forward operators. Example \@ref(exm:non-trainable-pushforward) provides a push-forward function induced by an indicence matrix. The push-forward function in Example \@ref(exm:non-trainable-pushforward) does not contain any parameters, therefore it is not trainable. In Section \@ref(definition-of-combinatorial-complex-convolutional-networks),
+we give examples of parameterized push-forward operations, whose parameters can be learnt.
+
+```{r push-forward, echo=FALSE, fig.align="center", fig.cap="Examples of push-forward operators. (a): Let $G_1\\colon \\mathcal{C}^1\\to \\mathcal{C}^2$ be a cochain map. A push-forward $\\mathcal{F}_{G_1}$ induced by $G_1$ takes as input a 1-cochain $\\textbf{H}_{1}$ defined on the edges of the underlying CC $\\mathcal{X}$ and 'pushes-forward' this cochain to a 2-cochain $\\mathbf{K}_2$ defined on $\\mathcal{X}^2$. The cochain $\\mathbf{K}_2$ is formed by aggregating the information in $\\mathbf{H}_1$ using the neighborhood function $\\mathcal{N}_{G_1^T}$. In this case, the neighbors of the 2-rank (blue) cell with respect to $G_1$ are the four (pink) edges on the boundary of this cell. (b): Similarly, $G_2\\colon \\mathcal{C}^0\\to \\mathcal{C}^2$ induces a push-forward map  $\\mathcal{F}_{G_2}\\colon \\mathcal{C}^0\\to \\mathcal{C}^2$ that sends a 0-cochain $\\mathbf{H}_0$ to a 2-cochain $\\mathbf{K}_2$. The cochain $\\mathbf{K}_2$ is defined by aggregating the information in $\\mathbf{H}_0$ using the neighborhood function $\\mathcal{N}_{G_2^T}$."}
+knitr::include_graphics('figures/push_forward.png', dpi=NA)
+```
+
+```{example, non-trainable-pushforward, name="Push-forward of a CC of dimension two"}
+Consider a CC $\mathcal{X}$ of dimension 2. Let $B_{0,2}\colon \mathcal{C}^2 (\mathcal{X})\to \mathcal{C}^0 (\mathcal{X})$ be an incidence matrix. The function $\mathcal{F}^{m}_{B_{0,2}}\colon\mathcal{C}^2 (\mathcal{X})\to \mathcal{C}^0 (\mathcal{X})$ defined by $\mathcal{F}^{m}_{B_{0,2}}(\mathbf{H_{2}})= B_{0,2} (\mathbf{H}_{2})$ is a push-forward induced by $B_{0,2}$. $\mathcal{F}^{m}_{B_{0,2}}$ pushes forward the cochain $\mathbf{H}_{2}\in \mathcal{C}^2$ to cochain $B_{0,2} (\mathbf{H}_{2}) \in \mathcal{C}^0$.
+```
+
+In Definition \@ref(def:exact-definition-merge-node), we formulate the notion of merge node using push-forward operators. Figure \@ref(fig:merge-node) visualizes Definition \@ref(def:exact_definition-merge-node) of merge node via a tensor diagram.
+
+```{definition, exact-definition-merge-node, name="Merge node"}
+Let $\mathcal{X}$ be a CC. Moreover, let $G_1\colon\mathcal{C}^{i_1}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ and $G_2\colon\mathcal{C}^{i_2}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ be two cochain maps. Given a cochain vector $(\mathbf{H}_{i_1},\mathbf{H}_{i_2}) \in \mathcal{C}^{i_1}\times \mathcal{C}^{i_2}$, a \textbf{merge node} $\mathcal{M}_{G_1,G_2}\colon\mathcal{C}^{i_1} \times \mathcal{C}^{i_2} \to \mathcal{C}^j$ is defined as
+\begin{equation}
+    \mathcal{M}_{G_1,G_2}(\mathbf{H}_{i_1},\mathbf{H}_{i_2})= \beta\left( \mathcal{F}_{G_1}(\mathbf{H}_{i_1})  \bigotimes \mathcal{F}_{G_2}(\mathbf{H}_{i_2}) \right),
+\end{equation}
+where $\bigotimes \colon \mathcal{C}^j \times \mathcal{C}^j \to \mathcal{C}^j$ is an aggregation function, $\mathcal{F}_{G_1}$ and $\mathcal{F}_{G_2}$ are push-forward operators induced by $G_1$ and $G_2$, and $\beta$ is an activation function.
+```
+
+```{r merge-node, echo=FALSE, fig.align="center", fig.cap="Visualization of the definition of merge node."}
+knitr::include_graphics('figures/merge_node.png', dpi=NA)
+```
+
+## The main three tensor operations
+
+## Definition of combinatorial complex convolutional networks
