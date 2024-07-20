@@ -39,7 +39,7 @@ jobs:
           restore-keys: bookdown-
 
       - name: Build site
-        run: bookdown::render_book("index.Rmd", quiet = TRUE)
+        run: bookdown::render_book("index.rmd", quiet = TRUE)
         shell: Rscript {0}
 
       - name: Deploy to Netlify
