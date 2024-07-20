@@ -95,7 +95,7 @@ Consider a CC $\mathcal{X}$ of dimension 2. Let $B_{0,2}\colon \mathcal{C}^2 (\m
 In Definition \@ref(def:exact-definition-merge-node), we formulate the notion of merge node using push-forward operators. Figure \@ref(fig:merge-node) visualizes Definition \@ref(def:exact_definition-merge-node) of merge node via a tensor diagram.
 
 ```{definition, exact-definition-merge-node, name="Merge node"}
-Let $\mathcal{X}$ be a CC. Moreover, let $G_1\colon\mathcal{C}^{i_1}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ and $G_2\colon\mathcal{C}^{i_2}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ be two cochain maps. Given a cochain vector $(\mathbf{H}_{i_1},\mathbf{H}_{i_2}) \in \mathcal{C}^{i_1}\times \mathcal{C}^{i_2}$, a \textbf{merge node} $\mathcal{M}_{G_1,G_2}\colon\mathcal{C}^{i_1} \times \mathcal{C}^{i_2} \to \mathcal{C}^j$ is defined as
+Let $\mathcal{X}$ be a CC. Moreover, let $G_1\colon\mathcal{C}^{i_1}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ and $G_2\colon\mathcal{C}^{i_2}(\mathcal{X})\to\mathcal{C}^j(\mathcal{X})$ be two cochain maps. Given a cochain vector $(\mathbf{H}_{i_1},\mathbf{H}_{i_2}) \in \mathcal{C}^{i_1}\times \mathcal{C}^{i_2}$, a *merge node* $\mathcal{M}_{G_1,G_2}\colon\mathcal{C}^{i_1} \times \mathcal{C}^{i_2} \to \mathcal{C}^j$ is defined as
 \begin{equation}
     \mathcal{M}_{G_1,G_2}(\mathbf{H}_{i_1},\mathbf{H}_{i_2})= \beta\left( \mathcal{F}_{G_1}(\mathbf{H}_{i_1})  \bigotimes \mathcal{F}_{G_2}(\mathbf{H}_{i_2}) \right),
 \end{equation}
@@ -108,4 +108,38 @@ knitr::include_graphics('figures/merge_node_scaled.png', dpi=NA)
 
 ## The main three tensor operations
 
+Any tensor diagram representation of a CCNN can be built from two elementary operations: the push-forward operator and the merge node. In practice, it is convenient to introduce other operations that facilitate building involved neural network architectures more effectively. For example, one useful operation is the dual operation of the merge node, which we call the split node.
+
+```{definition, exact-definition-split-node, name="Split node"}
+Let $\mathcal{X}$ be a CC. Moreover, let $G_1\colon\mathcal{C}^{j}(\mathcal{X})\to\mathcal{C}^{i_1}(\mathcal{X})$ and $G_2\colon\mathcal{C}^{j}(\mathcal{X})\to\mathcal{C}^{i_2}(\mathcal{X})$ be two cochain maps. Given a cochain $\mathbf{H}_{j} \in \mathcal{C}^{j}$, a *split node* $\mathcal{S}_{G_1,G_2}\colon\mathcal{C}^j \to \mathcal{C}^{i_1} \times \mathcal{C}^{i_2}$ is defined as
+\begin{equation}
+\mathcal{S}_{G_1,G_2}(\mathbf{H}_{j})= \left(  \beta_1(\mathcal{F}_{G_1}(\mathbf{H}_{j})) , \beta_2(\mathcal{F}_{G_2}(\mathbf{H}_{j})) \right),
+\end{equation}
+where $\mathcal{F}_{G_i}$ is a push-forward operator induced by $G_i$, and $\beta_i$ is an activation function for $i=1, 2$.
+```
+
+While it is clear from Definition \@ref(def:exact-definition-split-node) that split nodes are simply tuples of push-forward operations, using split nodes allows us to build neural networks more effectively and intuitively. Definition \@ref(def:elem-opers) puts forward a set of elementary tensor operations, including split nodes, to facilitate the formulation of CCNNs in terms of tensor diagrams.
+
+```{definition, elem-opers, name="Elementary tensor operations"}
+We refer collectively to push-forward operations, merge nodes and split nodes as elementary tensor operations.
+```
+
+Figure \@ref(fig:split-merge-pushforward) displays tensor diagrams of elementary tensor operations, and Figure \@ref(fig:prior-work) exemplifies how existing topological neural networks are expressed via tensor diagrams based on elementary tensor operations. For example, the simplicial complex net (SCoNe), a Hodge decomposition-based neural network proposed by [@roddenberry2021principled], can be effectively realized in terms of split and merge nodes, as shown in Figure \@ref(fig:prior-work)(a).
+
+```{r split-merge-pushforward, echo=FALSE, fig.align="center", fig.cap="Tensor diagrams of the elementary tensor operations, namely of push-forward operations, merge nodes and split nodes. These three elementary tensor operations are building blocks for constructing tensor diagrams of general CCNNs. A general tensor diagram can be formed using compositions and horizontal concatenations of the three elementary tensor operations. (a): A tensor diagram of a push-forward operation induced by a cochain map $G\\colon\\mathcal{C}^i \\to \\mathcal{C}^j$. (b): A merge node induced by two cochain maps $G_1\\colon\\mathcal{C}^{i_1} \\to \\mathcal{C}^j$ and $G_2\\colon\\mathcal{C}^{i_2} \\to \\mathcal{C}^j$. (c): A split node induced by two cochain maps $G_1\\colon\\mathcal{C}^{j}\\to\\mathcal{C}^{i_1}$ and $G_2\\colon\\mathcal{C}^{j}\\to\\mathcal{C}^{i_2}$. In this illustration, the function $\\Delta \\colon \\mathcal{C}^{j}\\to \\mathcal{C}^{j}\\times \\mathcal{C}^{j}$ is defined as $\\Delta(\\mathbf{H}_j)= (\\mathbf{H}_j,\\mathbf{H}_j)$."}
+knitr::include_graphics('figures/split_merge_push.png', dpi=NA)
+```
+
+```{r prior-work, echo=FALSE, fig.align="center", fig.cap="Examples of existing neural networks that can be realized in terms of the three elementary tensor operations. Edge labels are dropped to simplify exposition. (a): The simplicial complex net (SCoNe), proposed by [@roddenberry2021principled], can be realized as a composition of a split node that splits an input 1-cochain to three cochains of dimensions zero, one, and two, followed by a merge node that merges these cochains into a 1-cochain. (b): The simplicial neural network (SCN), proposed by [@ebli2020simplicial], can be realized in terms of push-forward operations. (c)--(e): Examples of cell complex neural networks (CXNs); see [@hajijcell]. Note that (e) can be realized in terms of a single merge node that merges the 0 and 2-cochains to a 1-cochain as well as a single split node that splits the 1-cochain to 0- and 2-cochains."}
+knitr::include_graphics('figures/prior_work.png', dpi=NA)
+```
+
+```{remark}
+The elementary tensor operations constitute the only framework needed to define any parameterized topological neural network. Indeed, since tensor diagrams can be built via the three elementary tensor operations, then it suffices to define the push-forward and the merge operators in order to fully define a parameterized class of CCNNs (recall that the split node is completely determined by the push-forward operator). In Sections \@ref(definition-of-combinatorial-complex-convolutional-networks) and \@ref(combinatorial-complex-attention-neural-networks), we build two parameterized classes of CCNNs: the convolutional and attention classes. In both cases, we only define their corresponding parameterized elementary tensor operations. Beyond convolutional and attention versions of CCNNs, the three elementary tensor operations allow us to build arbitrary parameterized tensor diagrams, therefore providing scope to discover novel topological neural network architectures on which our theory remains applicable.
+```
+
+An alternative way of constructing CCNNs draws ideas from topological quantum field theory (TQFT). In Appendix \@ref(ccnn-architecture-search-and-topological-quantum-field-theories), we briefly discuss this relationship in more depth.
+
 ## Definition of combinatorial complex convolutional networks
+
+## Combinatorial complex attention neural networks
