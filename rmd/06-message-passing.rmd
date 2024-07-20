@@ -2,7 +2,9 @@
 
 # Message passing
 
-To be completed.
+In this section, we explain the relation between the notion of the merge node introduced in Section \@ref(push-forward-operator-and-merge-node) and higher-order message passing. In particular, we prove that higher-order message passing on CCs can be realized in terms of the elementary tensor operations introduced in Section \@ref(the-main-three-tensor-operations). Further, we demonstrate the connection between CCANNs (Section \@ref(combinatorial-complex-attention-neural-networks)) and higher-order message passing, and introduce an attention version of higher-order message passing. We first define higher-order message passing on CCs, generalizing notions introduced in [@hajijcell].
+
+We remark that many of the constructions discussed here are presented in their most basic form, but can be extended further. An important aspect in this direction is the construction of message-passing protocols that are invariant or equivariant with respect to the action of a specific group.
 
 ## Definition of higher-order message passing
 
