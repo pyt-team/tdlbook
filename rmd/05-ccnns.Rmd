@@ -103,7 +103,7 @@ where $\bigotimes \colon \mathcal{C}^j \times \mathcal{C}^j \to \mathcal{C}^j$ i
 ```
 
 ```{r merge-node, echo=FALSE, fig.align="center", fig.cap="Visualization of the definition of merge node."}
-knitr::include_graphics('figures/merge_node.png', dpi=NA)
+knitr::include_graphics('figures/merge_node_scaled.png', dpi=NA)
 ```
 
 ## The main three tensor operations
