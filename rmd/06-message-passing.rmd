@@ -106,3 +106,22 @@ it assumes *initial cochains supported on all cells* of all dimensions as input,
 
 In practice, such difficulties in using the higher-order message passing framework can be overcome with ad hoc engineering solutions based on turning on and off iterations on certain cochains or based on introducing auxiliary cochains. The merge node is designed to overcome these limitations. Specifically, from the merge node perspective, we can think of the first layer of Figure \@ref(fig:merge-example) as a function $\mathcal{M}_{B_{0,1}^T,B_{1,2}}\colon \mathcal{C}^0 \times \mathcal{C}^1 \to \mathcal{C}^1$; see Equation \@ref(eq:functional). The function $\mathcal{M}_{B_{0,1}^T,B_{1,2}}$ takes as input the cochain vector $(\mathbf{H}_0,\mathbf{H}_2)$, and computes the 1-chain $\mathbf{H}_1 = \mathcal{M}_{B_{0,1}^T,B_{1,2}} (\mathbf{H}_0,\mathbf{H}_2)$. Similarly, we compute the 3-cochain $\mathbf{H}_3=\mathcal{M}_{B_{1,3}^T, B_{2,3}}(\mathbf{H}_1,\mathbf{H}_2)$ using a merge node $\mathcal{M}_{B_{1,3}^T, B_{2,3}} \colon
 \mathcal{C}^1 \times \mathcal{C}^2 \to \mathcal{C}^3$.
+
+## Attention higher-order message passing and CCANNs
+
+Here, we demonstrate the connection between higher-order message passing (Definition \@ref(def:homp-definition)) and CCANNs (Section \@ref(combinatorial-complex-attention-neural-networks)). Initially, we introduce an attention version of Definition \@ref(def:homp-definition).
+
+```{definition, attention-homp, name="Attention higher-order message passing on a CC"}
+Let $\mathcal{X}$ be a CC. Let $\mathcal{N}=\{ \mathcal{N}_1,\ldots,\mathcal{N}_n\}$ be a set of neighborhood functions defined on  $\mathcal{X}$. Let $x$ be a cell and $y\in \mathcal{N}_k(x)$ for some $\mathcal{N}_k \in \mathcal{N}$. A *message* $m_{x,y}$ between cells $x$ and $y$ is a computation that depends on these two cells or on the data supported on them. Denote by $\mathcal{N}(x)$ the multi-set  $\{\!\!\{ \mathcal{N}_1(x) , \ldots ,  \mathcal{N}_n (x) \}\!\!\}$, and by $\mathbf{h}_x^{(l)}$ some data supported on the cell $x$ at layer $l$. *Attention higher-order message passing* on $\mathcal{X}$, induced by $\mathcal{N}$, is defined via the following four update rules:
+\begin{align}
+m_{x,y} &= \alpha_{\mathcal{N}_k}(\mathbf{h}_x^{(l)},\mathbf{h}_y^{(l)}), (\#eq:ahomp0) \\
+m_{x}^k &=  \bigoplus_{y \in \mathcal{N}_k(x)} a^k(x,y)  m_{x,y}, \; 1\leq k \leq n , (\#eq:ahomp1) \\
+m_{x} &=  \bigotimes_{ \mathcal{N}_k \in \mathcal{N} } b^k m_x^k , (\#eq:ahomp2) \\
+\mathbf{h}_x^{(l+1)} &= \beta (\mathbf{h}_x^{(l)}, m_x) . (\#eq:ahomp3)
+\end{align}
+Here, $a^k \colon \{x\} \times \mathcal{N}_k(x)\to [0,1]$ is a higher-order attention function  (Definition \@ref(hoa}),
+$b^k$ are trainable attention weights satisfying $\sum_{k=1}^n b^k=1$,
+$\bigoplus$ is a permutation-invariant aggregation function, $\bigotimes$ is an aggregation function,  $\alpha_{\mathcal{N}_k}$ and $\beta$ are differentiable functions.
+```
+
+Definition \@ref(def:attention-homp) distinguishes two types of attention weights. The first type is determined by the function $a^k$. The attention weight $a^k(x,y)$ of Equation \@ref(eq:ahomp1) depends on the neighborhood function $\mathcal{N}_k$ and on cells $x$ and $y$. Further, $a^k(x,y)$ determines the attention a cell $x$ pays to its surrounding neighbors $y\in\mathcal{N}_k$, as determined by the neighborhood function $\mathcal{N}_k$. The CC-attention push-forward operations defined in Section \@ref(combinatorial-complex-attention-neural-networks) are a particular parameterized realization of these weights. On the other hand, the weights $b^k$ of Equation \@ref(eq:ahomp2) are only a function of the neighborhood $\mathcal{N}_k$, and therefore determine the attention that cell $x$ pays to the information obtained from each neighborhood function $\mathcal{N}_k$. In our CC-attention push-forward operations given in Section \@ref(combinatorial-complex-attention-neural-networks), we set $b^k$ equal to one. However, the notion of merge node (Definition \@ref(def:exact-definition-merge-node)) can be easily extended to introduce a corresponding notion of *attention merge node*, which in turn can be used to realize Equation \@ref(eq:ahomp2) in practice. Note that the attention determined by weights $b^k$ is unique to higher-order domains, and does not arise in graph-based attention models.
