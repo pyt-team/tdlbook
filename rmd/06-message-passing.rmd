@@ -13,13 +13,13 @@ Higher-order message passing refers to a computational framework that involves e
 ```{definition, homp-definition, name="Higher-order message passing on a CC"}
 Let $\mathcal{X}$ be a CC.  Let $\mathcal{N}=\{ \mathcal{N}_1,\ldots,\mathcal{N}_n\}$ be a set of neighborhood functions defined on  $\mathcal{X}$. Let $x$ be a cell and $y\in \mathcal{N}_k(x)$ for some $\mathcal{N}_k \in \mathcal{N}$. A *message* $m_{x,y}$ between cells $x$ and $y$ is a computation that depends on these two cells or on the data supported on them. Denote by $\mathcal{N}(x)$ the multi-set  $\{\!\!\{ \mathcal{N}_1(x) , \ldots ,  \mathcal{N}_n (x) \}\!\!\}$, and by $\mathbf{h}_x^{(l)}$ some data supported on the cell $x$ at layer $l$. *Higher-order message passing* on $\mathcal{X}$, induced by $\mathcal{N}$, is defined via the following four update rules:
 \begin{align}
-m_{x,y} &= \alpha_{\mathcal{N}_k}(\mathbf{h}_x^{(l)},\mathbf{h}_y^{(l)}), \\ \label{eqn:homp1}
-m_{x}^k &=  \bigoplus_{y \in \mathcal{N}_k(x)}  m_{x,y}, \; 1\leq k \leq n,   \\ \label{eqn:homp2}
-m_{x} &=  \bigotimes_{ \mathcal{N}_k \in \mathcal{N} } m_x^k, \\ \label{eqn:homp3}
+m_{x,y} &= \alpha_{\mathcal{N}_k}(\mathbf{h}_x^{(l)},\mathbf{h}_y^{(l)}), (\#eq:homp0) \\
+m_{x}^k &=  \bigoplus_{y \in \mathcal{N}_k(x)}  m_{x,y}, \; 1\leq k \leq n, (\#eq:homp1) \\
+m_{x} &=  \bigotimes_{ \mathcal{N}_k \in \mathcal{N} } m_x^k, (\#eq:homp2) \\
 \mathbf{h}_x^{(l+1)} &= \beta (\mathbf{h}_x^{(l)}, m_x).
-(\#eq:homp0)
+(\#eq:homp3)
 \end{align}
-Here, $\bigoplus$ is a permutation-invariant aggregation function called the \textbf{intra-neighborhood} of $x$, $\bigotimes$ is an aggregation function called the *inter-neighborhood* of $x$, and $\alpha_{\mathcal{N}_k},\beta$ are differentiable functions.
+Here, $\bigoplus$ is a permutation-invariant aggregation function called the *intra-neighborhood* of $x$, $\bigotimes$ is an aggregation function called the *inter-neighborhood* of $x$, and $\alpha_{\mathcal{N}_k},\beta$ are differentiable functions.
 ```
 
 ```{r homp, echo=FALSE, fig.align="center", fig.cap="An illustration of higher-order message passing. Left-hand side: a collection of neighborhood functions $\\mathcal{N}_1,\\ldots,\\mathcal{N}_k$ are selected. The selection typically depends on the learning task. Right-hand side: for each $\\mathcal{N}_k$, the messages are aggregated using an intra-neighborhood function $\\bigoplus$. The inter-neighborhood function $\\bigotimes$ aggregates the final messages obtained from all neighborhoods."}
@@ -29,7 +29,7 @@ knitr::include_graphics('figures/homp.png', dpi=NA)
 Some remarks on Definition \@ref(def:homp-definition) are as follows. First, the message $m_{x,y}$ in Equation \@ref(eq:homp0) does not depend only on the data $\mathbf{h}_x^{(l)}$, $\mathbf{h}_y^{(l)}$ supported on the cells $x, y$; it also depends on the cells themselves. For instance, if $\mathcal{X}$ is a cell complex, the *orientation* of both $x$ and $y$ factors into the computation of message $m_{x,y}$. Alternatively, $x\cup y$ or $x\cap y$ might be cells in $\mathcal{X}$ and it might be useful to include their data in the computation of message $m_{x,y}$. This unique characteristic only manifests in higher-order domains, and does not occur in graphs-based message-passing frameworks [@gilmer2017neural; @bronstein2021geometric]^[The message 'direction' in $m_{x,y}$ is from $y$ to $x$. In general, $m_{x,y}$ and $m_{y,x}$ are not equal.]. Second, higher-order message passing relies on the choice of a set $\mathcal{N}$ of neighborhood functions. This is also a unique characteristic that only occurs in a higher-order domain, where a neighborhood function is necessarily described by a set of neighborhood relations rather than graph adjacency as in graph-based message passing. Third, in Equation \@ref(eq:homp0), since $y$ is implicitly defined with respect to a neighborhood relation $\mathcal{N}_k \in \mathcal{N},$ the function $\alpha_{\mathcal{N}_k}$ and the message $m_{x,y}$ depend on $\mathcal{N}_k$. Fourth, the inter-neighborhood $\bigotimes$ does not necessarily have to be a permutation-invariant aggregation function. For instance, it is possible to set an order on the multi-set $\mathcal{N}(x)$ and compute $m_x$ with respect to this order. Finally, higher-order message passing relies on two aggregation functions, the intra-neighborhood and inter-neighborhood, whereas graph-based message passing relies on a single aggregation function. The choice of set $\mathcal{N}$, as illustrated in Chapter \@ref(combinatorial-complexes), enables the use of a variety of neighborhood functions in higher-order message passing.
 
 ```{remark}
-The push-forward operator given in Definition \@ref(pushing_exact_definition} is related to the update rule of Equation \@ref(eqn:homp0}. On one hand, Equation \@ref(eqn:homp0} requires two cochains $\mathbf{X}_i= [\mathbf{h}_{x^i_1}^{(l)},\ldots,\mathbf{h}_{x^i_{|\mathcal{X}^i|}}^{(l)}]$  and $\mathbf{Y}_{j}^{(l)}=[\mathbf{h}_{y^{j}_1}^{(l)},\ldots,\mathbf{h}_{y^{j}_{|\mathcal{X}^{j}|}}^{(l)}]$ to compute $\mathbf{X}^{(l+1)}_i = [\mathbf{h}_{x^i_1}^{(l+1)},\ldots,\mathbf{h}_{x^i_{|\mathcal{X}^i|}}^{(l+1)}]$, so signals on both $\mathcal{C}^j$ and $\mathcal{C}^i$ must be present in order to execute Equation \@ref(eqn:homp0}. From this perspective, it is natural and customary to think about this operation as an update rule. On the other hand, the push-forward operator of Definition \@ref(pushing_exact_definition} computes a cochain $\mathbf{K}_{j} \in \mathcal{C}^j$ given a cochain $\mathbf{H}_i\in \mathcal{C}^i$. As a single cochain $\mathbf{H}_i$ is required to perform this computation, it is natural to think about Equation \@ref(functional} as a function. See Section \@ref(merge and message passing} for more details.
+The push-forward operator given in Definition \@ref(pushing_exact_definition} is related to the update rule of Equation \@ref(eq:homp0}. On one hand, Equation \@ref(eq:homp0} requires two cochains $\mathbf{X}_i= [\mathbf{h}_{x^i_1}^{(l)},\ldots,\mathbf{h}_{x^i_{|\mathcal{X}^i|}}^{(l)}]$  and $\mathbf{Y}_{j}^{(l)}=[\mathbf{h}_{y^{j}_1}^{(l)},\ldots,\mathbf{h}_{y^{j}_{|\mathcal{X}^{j}|}}^{(l)}]$ to compute $\mathbf{X}^{(l+1)}_i = [\mathbf{h}_{x^i_1}^{(l+1)},\ldots,\mathbf{h}_{x^i_{|\mathcal{X}^i|}}^{(l+1)}]$, so signals on both $\mathcal{C}^j$ and $\mathcal{C}^i$ must be present in order to execute Equation \@ref(eq:homp0}. From this perspective, it is natural and customary to think about this operation as an update rule. On the other hand, the push-forward operator of Definition \@ref(pushing_exact_definition} computes a cochain $\mathbf{K}_{j} \in \mathcal{C}^j$ given a cochain $\mathbf{H}_i\in \mathcal{C}^i$. As a single cochain $\mathbf{H}_i$ is required to perform this computation, it is natural to think about Equation \@ref(functional} as a function. See Section \@ref(merge and message passing} for more details.
 ```
 
 The higher-order message-passing framework given in Definition \@ref(def:homp-definition) can be used to construct novel neural network architectures on a CC, as we have also alluded in Figure \@ref(fig:tdl). First, a CC $\mathcal{X}$ and cochains $\mathbf{H}_{i_1}\ldots, \mathbf{H}_{i_m}$ supported on $\mathcal{X}$ are given. Second, a collection of neighborhood functions are chosen, taking into account the desired learning task. Third, the update rules of Definition \@ref(def:homp-definition) are executed on the input cochains $\mathbf{H}_{i_1}\ldots, \mathbf{H}_{i_m}$ using the chosen neighborhood functions. The second and the third steps are repeated to obtain the final computations.
@@ -39,3 +39,52 @@ We refer to to any neural network constructed using Definition \@ref(def:homp-de
 ```
 
 ## Higher-order message-passing neural networks are CCNNs
+
+In this section, we show that higher-order message-passing computations can be realized in terms of merge node computations, and therefore that higher-order message-passing neural networks are CCNNs. As a consequence, higher-order message passing unifies message passing on simplicial complexes, cell complexes and hypergraphs through a coherent set of update rules and, alternatively, through the expressive language of tensor diagrams.
+
+```{theorem, mn, name="Merge node computation"}
+The higher-order message-passing computations of Definition \@ref(def:homp-definition) can be realized in terms of merge node computations.
+```
+
+```{proof}
+Let $\mathcal{X}$ be a CC.  Let $\mathcal{N}=\{ \mathcal{N}_1,\ldots,\mathcal{N}_n\}$ be a set of neighborhood functions as specified in Definition \@ref(def:homp-definition). Let $G_k$ be the matrix induced by the neighborhood function $\mathcal{N}_k$. We assume that the cell $x$ given in Definition \@ref(def:homp-definition) is a $j$-cell and the neighbors $y \in \mathcal{N}_k(x)$ are $i_k$-cells. We will show that Equations \@ref(eq:homp0)--\@ref(eq:homp3) can be realized as applications of merge nodes. In what follows, we define the neighborhood function to be $\mathcal{N}_{Id}(x)=\{x\}$ for $x\in \mathcal{X}$. Moreover, we denote the associated neighborhood matrix of $\mathcal{N}_{Id}$ by $Id\colon\mathcal{C}^j\to \mathcal{C}^j$, as it is the identity matrix.
+
+Computing message $m_{x,y}$ of Equation \@ref(eq:homp0) involves two cochains:
+	\begin{equation*}
+		\mathbf{X}_j^{(l)}=
+		[\mathbf{h}_{x^j_1}^{(l)},\ldots,\mathbf{h}_{x^j_{|\mathcal{X}^j|}}^{(l)}],~
+		\mathbf{Y}_{i_k}^{(l)}=
+		[\mathbf{h}_{y^{i_k}_1}^{(l)},\ldots,\mathbf{h}_{y^{i_k}_{|\mathcal{X}^{i_k}|}}^{(l)}].
+	\end{equation*}
+Every message $m_{x^{^j}_t, y^{i_k}_s }$ corresponds to the entry $[G_k]_{st}$ of matrix $G_k$. In other words, there is a one-to-one correspondence between non-zero entries of matrix $G_k$ and messages $m_{x^{^j}_t, y^{i_k}_s }$.
+
+It follows from Section \@ref(push-forward-operator-and-merge-node) that computing $\{m_x^k\}_{k=1}^n$ corresponds to a merge node $\mathcal{M}_{Id_j,G_k}\colon \mathcal{C}^j\times \mathcal{C}^{i_k}\to \mathcal{C}^j$ that performs the computations determined via $\alpha_k$ and $\bigoplus$, and yields
+	\begin{equation*}
+		\mathbf{m}_j^k=[m_{x^j_1}^k,\ldots,m_{x^j_{|\mathcal{X}^j|}}^k]=
+		\mathcal{M}_{Id_j,G_k}(\mathbf{X}_j^{(l)},\mathbf{Y}_{i_k}^{(l)}) \in \mathcal{C}^{j}.
+	\end{equation*}
+At this stage, we have $n$ $j$-cochains $\{\mathbf{m}_j^k\}_{k=1}^n$. Equations \@ref(eq:homp2) and \@ref(eq:homp3) merge these cochains with the input $j$-cochain $\mathbf{X}_j^{(l)}$. Specifically, computing $m_x$ in Equation \@ref(eq:homp2) corresponds to $n-1$ applications of merge nodes of the form $\mathcal{M}_{Id_k,Id_k}\colon\mathcal{C}^j \times \mathcal{C}^j \to \mathcal{C}^j$ on the cochains $\{\mathbf{m}_j^k\}_{k=1}^n$. Explicitly, we first merge $\mathbf{m}_j^1$ and $\mathbf{m}_j^2$ to obtain $\mathbf{n}_j^1=\mathcal{M}_{Id_j,Id_j}(\mathbf{m}_j^1,\mathbf{m}_j^2)$. Next, we merge the $j$-cochain $\mathbf{n}_j^1$ with the $j$-cochain $\mathbf{m}_j^3$, and so on. The final merge node in this stage performs the merge $\mathbf{n}_j^{n-1}=\mathcal{M}_{Id_j,Id_j}(\mathbf{n}_j^{n-2},\mathbf{m}_j^n)$, which is $\mathbf{m}_j = [ m_{x_1^j},\ldots, m_{x_{|\mathcal{X}^j|}^j }]$^[Recall that while we use the same notation $\mathcal{M}_{Id_k,Id_k}$ for all merge nodes, these nodes have in general different parameters.]. Finally, computing $\mathbf{X}_j^{(l+1)}$ is realized by a merge node $\mathcal{M}_{(Id_j,Id_j)}(\mathbf{m}_j, \mathbf{X}_j^{(l)})$ whose computations are determined by function $\beta$ of Equation \@ref(eq:homp3).
+```
+
+Theorem \@ref(thm:mn) shows that higher-order message-passing networks defined on CCs can be constructed from the elementary tensor operations, and hence they are special cases of CCNNs. We state this result formally in Theorem \@ref(thm:thm-unifying).
+
+```{theorem, thm-unifying, name="Higher-order message passing and CCNNs"}
+	A higher-order message-passing neural network is a CCNN.
+```
+
+```{proof}
+The conclusion follows immediately from Definition \@ref(def:hmpsnn) and Theorem \@ref(thm:mn).
+```
+
+It follows from Theorem \@ref(thm:thm-unifying) that higher-order message-passing neural networks defined on higher-order domains that are less general than CCs (such as simplicial complexes, cell complexes and hypergraphs) are also special cases of CCNNs. Thus, tensor diagrams, as introduced in Definition \@ref(def:tdd), form a general diagrammatic method for expressing neural networks defined on commonly studied higher-order domains.
+
+```{theorem, unifying1, name="Message-passing neural networks and tensor diagrams"}
+Message-passing neural networks defined on simplicial complexes, cell complexes or hypergraphs can be expressed in terms of tensor diagrams and their computations can be realized in terms of the three elementary tensor operators.
+```
+
+```{proof}
+The conclusion follows from Theorem \@ref(thm:thm-unifying) and from the fact that simplicial complexes, cell complexes and hypergraphs can be realized as special cases of CCs.
+```
+
+Theorems \@ref(thm:thm-unifying) and \@ref(thm:unifying1) put forward a unifying TDL framework based on tensor diagrams,
+thus providing scope for future developments. For instance, [@mathilde2023] have already used our framework to express existing TDL architectures for simplicial complexes, cell complexes and hypergraphs in terms of tensor diagrams.
