@@ -69,7 +69,7 @@ At this stage, we have $n$ $j$-cochains $\{\mathbf{m}_j^k\}_{k=1}^n$. Equations 
 Theorem \@ref(thm:mn) shows that higher-order message-passing networks defined on CCs can be constructed from the elementary tensor operations, and hence they are special cases of CCNNs. We state this result formally in Theorem \@ref(thm:thm-unifying).
 
 ```{theorem, thm-unifying, name="Higher-order message passing and CCNNs"}
-	A higher-order message-passing neural network is a CCNN.
+A higher-order message-passing neural network is a CCNN.
 ```
 
 ```{proof}
