@@ -1,8 +1,26 @@
 # Push-forward, pooling and unpooling
 
-To be completed.
+This section shows how the push-forward operation of Definition \@ref(def:pushing-exact-definition) can be used to realize (un)pooling operations on CCs, and subsequently introduces (un)pooling operations for CCNNs. Further, this section demonstrates how CC-based pooling provides a unifying framework for image and graph-based pooling, and how shape-preserving pooling on CCs is related to the mapper on graphs.
+
+In particular, we establish yet another unifying mathematical principle: pooling, as message passing, can be fundamentally built from push-forward operations. Thus, push-forward operations form the main fundamental building block from which all higher-order computations can be realized. This realization is important because it establishes a mathematical foundation for a unifying deep learning application programming interface (API) on complexes that combines pooling as well as message passing-based computations as a single operation. Indeed, in [TopoModelX](https://github.com/pyt-team/TopoModelX), one of our contributed Python packages, higher-order message passing and the pooling/unpooling operations are implemented as a single function across various topological domains.
 
 ## CC-pooling and unpooling
+
+We define a CC-based pooling operation that extends the main characteristics of image-based and graph-based pooling operations. Specifically, we build a pooling operation that `downscales' the size of a signal supported on a CC $\mbox{X}$. To this end, we exploit the hierarchical nature of CCs and define the pooling operation as a push-forward operation induced by a cochain map $G\colon\mathcal{C}^{i}(\mathcal{X})\to \mathcal{C}^{j}(\mathcal{X})$ that pushes an $i$-cochain to a $j$-cochain. To obtain a useful pooling operation that downscales the size of its input $i$-cochain, we impose the constraint $j>i$. Definition \@ref(def:pooling-exact-definition) realizes our idea of CC-pooling. Figure \@ref(fig:pooling-hoans) visualizes the intuition behind Definition \@ref(def:pooling-exact-definition). In particular, Figure \@ref(fig:pooling-hoans) shows an example of successive applications of pooling operations on cochains supported on a CC of dimension three.
+
+```{definition, pooling-exact-definition, name="CC-pooling operation"}
+Let $\mbox{X}$ be a CC and $G\colon\mathcal{C}^{i}( \mbox{X})\to \mathcal{C}^{j}( \mbox{X})$ a cochain map. The push-forward operation induced by $G$ is called a *CC-pooling operation* if $j>i$.
+```
+
+```{r pooling-hoans, echo=FALSE, fig.align="center", fig.cap="An example of successive CC-(un)pooling operations. A CC-pooling operation exploits the hierarchical structure of the underlying CC to coarsen a lower-rank cochain by pushing it forward to higher-order cells. CC-pooling operations improve invariance to certain distortions. Pink, blue, and green cells have ranks one, two, and three, respectively. A CC $\\mbox{X}$ of dimension three is shown in (a). On $\\mbox{X}$, we consider three cochain operators: $B_{0,1} \\colon\\mathcal{C}^1\\to \\mathcal{C}^0$, $B_{1,2} \\colon\\mathcal{C}^2\\to \\mathcal{C}^1$ and $B_{2,3}\\colon\\mathcal{C}^3\\to \\mathcal{C}^2$. For the top row in Figures (b), (c), and (d), we assume that we are initially given a 0-cochain $\\mathbf{H}_0$, while for the bottom row in the same figure, we assume that we are initially given a 3-cochain $\\mathbf{H}_3$. For instance, at the top row of Figure (b), the input 0-cochain $\\mathbf{H}_0$ gets pushed forward via the functional $\\mathcal{F}_{B_{0,1}^T} \\colon\\mathcal{C}^0\\to \\mathcal{C}^1$  to a 1-cochain $\\mathbf{H}_1$. This push-forward operator induced by $B_{0,1}^T$ is a CC-pooling operator, since it sends a 0-cochain to a cochain of higher rank. At the bottom row of Figure (b), the push-forward operator $\\mathcal{F}_{B_{0,1}}\\colon \\mathcal{C}^1\\to \\mathcal{C}^0$ induced by $B_{0,1}$ is an unpooling operator that sends a $1$-cochain to a $0$-cochain. Figures (c) and (d) are similar to (b), demonstrating the pooling operators induced by $B_{1,2}^T$ and $B_{2,3}^T$ (top), and the unpooling operators induced by $B_{1,2}$ and $B_{2,3}$ (bottom)."}
+knitr::include_graphics('figures/pooling.png', dpi=NA)
+```
+
+In Definition \@ref(def:unpooling-exact-definition), we introduce an unpooling operation on CCs that pushes forward a cochain to a lower-rank cochain. Figure \@ref(fig:pooling-hoans) shows as example of unpooling on CCs.
+
+```{definition, unpooling-exact-definition, name="CC-unpooling operation"}
+Let $\mbox{X}$ be a CC and $G\colon\mathcal{C}^i( \mbox{X})\to \mathcal{C}^j( \mbox{X})$ a cochain map. The push-forward operation induced by $G$ is called a *CC-unpooling operation* if $j<i$.
+```
 
 ## Formulating common pooling operations as CC-pooling
 
