@@ -24,6 +24,38 @@ Let $\mbox{X}$ be a CC and $G\colon\mathcal{C}^i( \mbox{X})\to \mathcal{C}^j( \m
 
 ## Formulating common pooling operations as CC-pooling
 
+In this section, we formulate common pooling operations in terms of CC-pooling. In particular, we demonstrate that graph and image pooling can be cast as CC-pooling.
+
 ### Graph pooling as CC-pooling
 
+Here, we briefly demonstrate that the CC-pooling operation (Definition \@ref(def:pooling-exact-definition)) is consistent with a graph-based pooling algorithm. Let $\mathbf{H}_0$ be a cochain defined on the vertices and edges of a graph $\mathcal{G}$. Moreover, let $\mathbf{H}^{\prime}_0$ be a cochain defined on the vertices of a coarsened version $\mathcal{G}^{\prime }$ of $\mathcal{G}$. Under such a setup, $\mathbf{H}^{\prime}_0$ represents a coarsened version of $\mathbf{H}_0$. A graph pooling function supported on the pair $(\mathcal{G},\mathbf{H}_0)$ is a function of the form $\mathcal{POOL} \colon (\mathcal{G},\mathbf{H}_0) \to (\mathcal{G}^{\prime},\mathbf{H}^{\prime}_0)$ that sends every vertex in $\mathcal{G}$ to a vertex in $\mathcal{G}^{\prime}$, which corresponds to a cluster of vertices in $\mathcal{G}$. We now elucidate how the function $\mathcal{POOL}$ can be realized in terms of CC-pooling.
+
+```{proposition, pool, name="The role of CC-pooling"}
+The function $\mathcal{POOL}$ can be realized in terms of CC-pooling operations.
+```
+
+```{proof}
+Each vertex in the graph $\mathcal{G}^{\prime}$ represents a cluster of vertices in the original graph $\mathcal{G}$. Using the membership of these clusters, we construct a CC by augmenting $\mathcal{G}$ by a collection of 2-cells, so that each of these cells corresponds to a supernode of $\mathcal{G}^{\prime}$. We denote the resulting CC structure by $\mathcal{X}_{\mathcal{G}}$, consisting of $\mathcal{G}$ augmented by the 2-cells. Hence, any 0-cochain $\mathbf{H}^{\prime}_0$ defined on $\mathcal{G}^{\prime}$ can be written as a 2-cochain $\mathbf{H}_2 \in \mathcal{C}^2(\mathcal{X}_{\mathcal{G}})$. The relation between the vertices of the original graph $\mathcal{G}$ and the vertices of the pooled graph $\mathcal{G}^{\prime}$, or equivalently the CC $\mathcal{X}_{\mathcal{G}}$, is described via the incidence matrix $B_{0,2}^T$. Hence, learning the signal $\mathbf{H}_2$ can be realized in terms of a map $B_{0,2}^T \colon \mathcal{C}^{2} (\mathcal{X}_{\mathcal{G}}) \to \mathcal{C}^{0}(\mathcal{X}_{\mathcal{G}})$ that pushes forward the cochain $\mathbf{H}_0$ to  $\mathbf{H}_2$.
+```
+
+The 2-cells defined on $\mathcal{X}_{\mathcal{G}}$ can be practically constructed using the *mapper on graphs* [@hajij2018mog], a classification tool in TDA. See Section \@ref(mapper-and-the-cc-pooling-operation) for more details of such a construction.
+
 ### Image pooling as CC-pooling
+
+Since images can be realized as lattice graphs, a signal stored on an image grid can be realized as a 0-cochain of the lattice graph that corresponds to the image. See Figures \@ref(fig:image-pooling)(a--b) for an example. Here, we demonstrate that the CC-pooling operation (Definition \@ref(def:pooling-exact-definition)) is consistent with the known image-pooling definition. Indeed, one may augment the lattice graph of Figure \@ref(fig:image-pooling)(b) by 2-cells, as shown in Figure \@ref(fig:image-pooling)(c), to perform the image pooling operation. Usually, these cells have a regular window size. In Figure \@ref(fig:image-pooling)(c), we have chosen the pooling window size, or equivalently the size of the 2-cell, to be $2\times 2$, and the pooling stride to be 1. The image pooling operation in this case can be realized as a CC-pooling operation induced by the cochain map $B_{0,2}^T \colon\mathcal{C}^0 \to \mathcal{C}^2$, as visualized in Figure \@ref(fig:image-pooling)(d). We formally record this in the following proposition.
+
+```{r image-pooling, echo=FALSE, fig.align="center", fig.cap="Realizing image pooling in terms of CC-pooling. (a): An image of size $3\\times3$. (b): The lattice graph that corresponds to the image given in (a). (c): Augmenting the lattice graph with 2-cells. Choosing these particular cells shown in (c) is equivalent to choosing the image-pooling window size to be $2\\times 2$ and the pooling stride to be one. (d): Performing the image-pooling computation is equivalent to performing a CC-pooling operation induced by the cochain map $B_{0,2}^T \\colon\\mathcal{C}^0 \\to \\mathcal{C}^2$, which pushes forward the image signal (the $0$-cochain supported on $\\mathcal{X}^2$) to a signal supported on $\\mathcal{X}^2$."}
+knitr::include_graphics('figures/image_pooling.png', dpi=NA)
+```
+
+```{proposition, image-pool, name="Realization of image ppooling"}
+An image pooling operator can be realized in terms of a push-forward operator from the underlying image domain to a 2-dimensional CC obtained by augmenting the image by appropriate 2-cells where image pooling computations occur.
+\end{proposition}
+
+```{proof}
+The proof is a straightforward conclusion from the definition of image pooling.
+```
+
+## Pooling and unpooling CCNNs
+
+## Mapper and the CC-pooling operation
