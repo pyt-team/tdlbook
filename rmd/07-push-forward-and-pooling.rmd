@@ -58,4 +58,57 @@ The proof is a straightforward conclusion from the definition of image pooling.
 
 ## Pooling and unpooling CCNNs
 
+The pooling operator of Definition \@ref(def:pooling-exact-definition) considers only the special case in which the tensor diagram of a CCNN has a single edge. In what follows, we generalize the notion of pooling by identifying the defining properties that characterize a CCNN as a pooling CCNN. To this end, we start with a CCNN whose tensor diagram has a height of one.
+
+```{definition, height-1-pooling, name="Pooling CCNN of height one"}
+Consider a CCNN represented by a tensor diagram $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ of height one. Let $\mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m}$ be the domain and let $\mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}$ be the codomain of the CCNN. Let $i_{min}=min(i_1,\ldots,i_m)$ and $j_{min}=min(j_1,\ldots,j_n)$. We say that the CCNN is a *pooling CCNN of height one* if
+
+1. $i_{min}< j_{min}$, and
+2. the tensor diagram $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ has an edge labeled by a cochain operator $G\colon \mathcal{C}^{i_{min}} \to \mathcal{C}^{k}$ for some $k\geq j_{min}$.
+```
+
+Intuitively, a CCNN represented by a tensor diagram of height one is a pooling CCNN of height one if it pushes forward its lowest-rank signals to higher-rank cells. Observe that a readout operation can be realized as a pooling CCNN of height one; see Figure \@ref(fig:readout) for an illustration.
+
+```{r readout, echo=FALSE, fig.align="center", fig.cap="Examples of pooling operations. In this example, a CC of dimension three is displayed. A rank cell of rank $3$ (shown in green) has the highest rank among all cells in the CC. (a): A pooling CCNN of height one pools a cochain vector $(\\mathbf{H}_0,\\mathbf{H}_1)$ to a 2-cochain $\\mathbf{H}_2$. (b): A readout operation can be realized as a pooling CCNN of height one by encapsulating the entire CC by a single (green) cell of rank higher than all other cells in the CC, and by pooling (reading out) all signals of lower-order cells to the encapsulating (green) cell."}
+knitr::include_graphics('figures/read_out.png', dpi=NA)
+```
+
+A CCNN may not perform a pooling operation at every layer, and it may preserve the dimensionality of the lowest-rank signal. Before we give the general definition of pooling CCNNs, we first define lowest rank-preserving CCNNs of height one.
+
+```{definition, lowest-rank, name="Lowest rank-preserving CCNN of height one"}
+Consider a CCNN represented by a tensor diagram of height one. Let $\mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m}$ be the domain and let $\mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}$ be the codomain of the CCNN. Let $i_{min}=min(i_1,\ldots,i_m)$ and $j_{min}=min(j_1,\ldots,i_n)$. We say that the CCNN is a *lowest rank-preserving CCNN of height one* if $i_{min}= j_{min}$.
+```
+
+Every CCNN is a composition of CCNNs that are represented by tensor diagrams of height one. Hence, pooling CCNNs can be characterized in terms of tensor diagrams of height one, as elaborated in Definition \@ref(def:general-pooling-hoan).
+
+```{definition, general-pooling-hoan, name="Pooling CCNN"}
+Let $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ be a tensor diagram representation of a CCNN. We decompose the CCNN as
+\begin{equation*}
+\mbox{CCNN}_{\mathbf{G};\mathbf{W}}=
+\mbox{CCNN}_{\mathbf{G}_N;\mathbf{W}_N} \circ \cdots \circ \mbox{CCNN}_{\mathbf{G}_1;\mathbf{W}_1},
+\end{equation*}
+where $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i},i=1,\ldots,N$, is a tensor diagram of height one representing the $i$-th layer of the CCNN, and $\mathbf{G}_i \subseteq \mathbf{G}$. We call the CCNN represented by $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$
+a *pooling CCNN* if
+
+1. every $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i}$ is either a pooling CCNN of height one or a lowest rank-preserving CCNN of height one, and
+2. at least one of the layers $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i}$ is a pooling CCNN of height one.
+\end{enumerate}
+```
+
+Intuitively, a pooling CCNN is a CCNN whose tensor diagram forms a 'ladder' that pushes signals to higher-rank cells at every layer. Figure \@ref(fig:tensor)(d) gives an example of a pooling CCNN of height two.
+
+An unpooling CCNN of height one is defined similarly to a pooling CCNN of height one (Definition \@ref(def:height-1-pooling)), with the only difference being that the inequality $i_{min}<j_{min}$ becomes $i_{min}>j_{min}$. Moreover, an unpooling CCNN (Definition \@ref(def:general-unpooling-hoan)) is defined analogously to a pooling CCNN (Definition \@ref(def:general-pooling-hoan)).
+
+```{definition, general-unpooling-hoan, name="Unpooling CCNN"}
+Let $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ be a tensor diagram representation of a CCNN. We decompose the CCNN as
+\begin{equation*}
+\mbox{CCNN}_{\mathbf{G};\mathbf{W}}=
+\mbox{CCNN}_{\mathbf{G}_N;\mathbf{W}_N} \circ \cdots \circ \mbox{CCNN}_{\mathbf{G}_1;\mathbf{W}_1},
+\end{equation*}
+where $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i},i=1,\ldots,N$, is a tensor diagram of height one representing the $i$-th layer of the CCNN, and $\mathbf{G}_i \subseteq \mathbf{G}$. We call the CCNN represented by $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ an *unpooling CCNN* if
+
+1. every $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i}$ is either an unpooling CCNN of height one or a lowest rank-preserving CCNN of height one, and
+2. at least one of the layers $\mbox{CCNN}_{\mathbf{G}_i;\mathbf{W}_i}$ is an unpooling CCNN of height one.
+```
+
 ## Mapper and the CC-pooling operation
