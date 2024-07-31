@@ -1,0 +1,3 @@
+# A mapper-induced topology-preserving CC-pooling operation
+
+To be completed.
