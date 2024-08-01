@@ -1,3 +1,0 @@
-# Equivariances of CCNNs
-
-To be completed.
