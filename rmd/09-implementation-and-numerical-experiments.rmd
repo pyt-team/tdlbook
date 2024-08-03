@@ -9,3 +9,33 @@ The proposed CCNNs can be used to construct different neural network architectur
 All our software development and experimental analysis have been carried out using Python. We have developed three Python packages, which we have also used to run our experiments: [TopoNetX](https://github.com/pyt-team/TopoNetX), [TopoEmbedX](https://github.com/pyt-team/TopoEmbedX) and [TopoModelX](https://github.com/pyt-team/TopoModelX). TopoNetX supports the construction of several topological structures, including cell complex, simplicial complex, and combinatorial complex classes. These classes provide methods for computing boundary operators, Hodge Laplacians and higher-order adjacency operators on cell, simplicial, and combinatorial complexes, respectively. TopoEmbedX supports representation learning of higher-order relations on cell complexes, simplicial complexes, and combinatorial complexes. TopoModelX supports computing deep learning models defined on these topological domains.
 
 In addition to our software package implementations, we have utilized PyTorch [@paszke2017automatic] for training the neural networks reported in this section. Also, we have utilized Scikit-learn [@scikit-learn] to compute the eigenvectors of the 1-Hodge Laplacians. The normal vectors of point clouds have been computed using the Point Cloud Utils package [@point-cloud-utils]. Finally, we have used NetworkX [@hagberg2008exploring] and HyperNetX [@joslyn2021hypernetwork], both in the development of our software packages as well as in our computations.
+
+## Datasets
+
+In our evaluation of CCNNs, we use four datasets: the Human Body, the COSEG, the SHREC11, and a benchmark dataset for graph classification taken from [@bianchi2020mincutpool]. A summary of these datasets follows.
+
+**Human Body segmentation dataset**. The original Human Body segmentation dataset presented in [@atzmon2018point] contains relatively large meshes with a size up to 12,000 vertices. The segmentation labels provided in this dataset are set per-face, and the segmentation accuracy is defined to be the ratio of the correctly classified faces over the total number of faces in the entire dataset. In this work, we use a simplified version of the original Human Body dataset, as provided by [@hanocka2019meshcnn], in which meshes have less than 1,000 nodes and segmentation labels are remapped to edges. We use this simplified version of the Human Body dataset for the shape analysis (i.e., mesh segmentation) task in Section \@ref(mesh-segmentation).
+
+**COSEG segmentation dataset**. The original COSEG dataset [@wang2012active] contains eleven sets of shapes with ground-truth segmentation. In this work, we use a subset of the original COSEG dataset that contains relatively large sets of aliens, vases, and chairs. These three sets consist of 200, 300, and 400 shapes, respectively. We use this custom subset of the COSEG dataset for the shape analysis (i.e., mesh segmentation) task in Section \@ref(mesh-segmentation).
+
+**SHREC11 classification dataset**. SHREC 2011 [@lian2011shape], abbreviated as SHREC11, is a large-scale dataset that contains 600 nonrigid deformed shapes (watertight triangle meshes) from 30 categories, where each category contains an equal number of objects. Examples of these categories include hand, lamp, woman, man, flamingo, and rabbit. The dataset is available as a training and test set consisting of 480 and 120 shapes, respectively. We use the SHREC11 dataset for the shape analysis tasks in Sections \@ref(mesh-and-point-cloud-classification) and \@ref(pooling-with-mapper-on-graphs-and-data-classification).
+
+**Benchmark dataset for graph classification**. This dataset has graphs belonging to three different classes [@bianchi2020mincutpool]. For each graph, the feature vector on each vertex (the $0$-cochain) is a one-hot vector of size five, and it stores the relative position of the vertices on the graph. This dataset has easy and hard versions. The easy version has highly connected graphs, while the hard version has sparse graphs. We use this dataset for the graph classification task in Section \@ref(graph-classification).
+
+## Shape analysis: mesh segmentation and classification
+
+### Mesh segmentation
+
+### Mesh and point cloud classification
+
+### Graph classification
+
+## Pooling with mapper on graphs and data classification
+
+### Mesh classification: CC-pooling with input vertex and edge features
+
+### Mesh classification: CC-pooling with input vertex features only
+
+### Point cloud classification: CC-pooling with input vertex features only
+
+## Ablation studies
