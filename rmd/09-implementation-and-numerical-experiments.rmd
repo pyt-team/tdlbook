@@ -68,6 +68,8 @@ colnames(domains) <- c('Method', 'Mesh', 'Point cloud')
 knitr::kable(domains, align=c('l', 'c', 'c'), booktabs=TRUE, caption="Predictive accuracy on the SHREC11 test dataset. The left and right column report the mesh and point cloud classification results, respectively. The CCNN for mesh classification is $\\mbox{CCNN}_{SHREC}$, while the CCNN for point cloud classification is $\\mbox{CCNN}_{MOG2}$.")
 ```
 
+**Architecture of $\mbox{CCNN}_{SHREC}$**. The $\mbox{CCNN}_{SHREC}$ has two layers and is chosen as a pooling CCNN in the sense of Definition \@ref(def:general-pooling-hoan), similar to $\mbox{CCNN}_{COSEG}$ and $\mbox{CCNN}_{HB}$. The main difference is that the final layer of $\mbox{CCNN}_{SHREC}$, represented by the grey point in Figure \@ref(fig:mesh-net)(b), is a global pooling function that sums all embeddings of all dimensions (zero, one and two) of the underlying CC after mapping them to the same Euclidean space.
+
 ### Graph classification
 
 ## Pooling with mapper on graphs and data classification
