@@ -24,6 +24,10 @@ In our evaluation of CCNNs, we use four datasets: the Human Body, the COSEG, the
 
 ## Shape analysis: mesh segmentation and classification
 
+The CC structure used for the shape analysis experiments (mesh segmentation and classification) is simply induced by the triangulation of the meshes. Specifically, the $0$-, $1$-, and $2$-cells are the vertices, edges, and faces of the mesh, respectively. The matrices used for the CCNNs are $B_{0,1},~B_{0,2}$, their transpose matrices, and the (co)adjacency matrices $A_{1,1}$, $coA_{1,1}$, and $coA_{2,1}$.
+
+A CCNN takes a vector of cochains as input features. For shape analysis tasks, we consider cochains, whose features are built directly from the vertex coordinates of the underlying mesh. We note that other choices (e.g., spectral-based cochains as in [@mejia2017spectral]) can also be included. Our shape analysis tasks have three input cochains: the vertex, edge and face cochains. Each vertex cochain has two input features: the position and the normal vectors associated with the vertex. Similar to [@hanocka2019meshcnn], each edge cochain consists of five features: the length of the edge, the dihedral angle, two inner angles, and two edge-length ratios for each face. Finally, each input face cochain consists of three input features: the face area, face normal, and the three face angles.
+
 ### Mesh segmentation
 
 ### Mesh and point cloud classification
