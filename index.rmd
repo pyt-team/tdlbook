@@ -3,7 +3,7 @@ title: "Topological Deep Learning: Going Beyond Graph Data"
 author: "Mustafa Hajij, Ghada Zamzmi, Theodore Papamarkou, Nina Miolane, Aldo Guzmán-Sáenz, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen, Michael T. Schaub"
 date: "`r Sys.Date()`"
 documentclass: krantz
-bibliography: [references.bib]
+bibliography: [bib/main.bib, bib/related-work.bib]
 biblio-style: apalike
 fontsize: 11pt
 link-citations: yes
