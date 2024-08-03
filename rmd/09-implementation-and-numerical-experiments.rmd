@@ -30,6 +30,29 @@ A CCNN takes a vector of cochains as input features. For shape analysis tasks, w
 
 ### Mesh segmentation
 
+For the Human Body dataset [@maron2017convolutional], we built a CCNN that produces an edge class. The tensor diagram of the architecture is shown in Figure \@ref(fig:mesh-net)(a). For the COSEG dataset [@wang2012active], we built a CCNN that combines our proposed feature vectors defined on vertices, edges, and faces to learn the final face class. The architecture uses incidence matrices as well as (co)adjacency matrices to construct a signal flow as demonstrated in Figure \@ref(fig:mesh-net)(b). Specifically, the tensor diagram displays three non-squared attention-blocks and three squared attention blocks. The depth of the model is chosen to be two, as indicated in Figure \@ref(fig:mesh-net)(b).
+
+```{r mesh-net, echo=FALSE, fig.align="center", fig.cap="The tensor diagrams of the CCNNs used in our experiments. (a): The CCNNs used in the mesh segmentation tasks. In particular, $\\mbox{CCNN}_{HB}$ and $\\mbox{CCNN}_{COSEG}$ are the architectures used on the Human Body dataset [@atzmon2018point] and on the COSEG dataset [@wang2012active], respectively. (b): The mesh classification CCNN used on the SHREC11 dataset [@lian2011shape]. (c): The graph classification CCNN used on the dataset provided in [@bianchi2020mincutpool]. (d): The mesh/point cloud classification CCNNs used in conjunction with the MOG algorithm on the SHREC11 dataset."}
+knitr::include_graphics('figures/experiment.png', dpi=NA)
+```
+
+Note that the architectures chosen for the COSEG and for the Human Body datasets have the same number and types of building blocks; compare Figures \@ref(fig:mesh-net)(a) and (b). We use a random $85\%-15\%$ train-test split. For both of these architectures, a softmax activation is applied to the output tensor. All our segmentation models are trained for $600$ epochs using a learning rate of $0.0001$ and the standard cross-entropy loss. These results are consistent across Human Body and Shape COSEG datasets.
+
+We test the proposed CCNNs on mesh segmentation using the Human Body [@maron2017convolutional] and the Shape COSEG (vase, chair, and alien) [@wang2012active] datasets. For each mesh in these datasets, the utilized CC structure is the one induced by the triangulation of the meshes, although other variations in the CC structure yield comparable results. Further, three $k$-cochains are constructed for $0\leq k \leq 2$ and are utilized in CCNN training. As shown in Table \@ref(tab:shape-xp), CCNNs outperform three neural networks tailored to mesh analysis (HodgeNet [@smirnov2021hodgenet], PD-MeshNet [@milano2020primal] and MeshCCN [@hanocka2019meshcnn]) on two out of four datasets, and are among the best two neural networks on all four datasets.
+
+```{r shape-xp, echo=FALSE}
+methods <- c('HodgeNet', 'PD-MeshNet', 'MeshCNN', 'CCNN')
+hb <- c('85.03', '85.61', '85.39', '87.30')
+cosegv <- c('90.30', '95.36', '92.36', '93.40')
+cosegc <- c('95.68', '97.23', '92.99', '98.30')
+cosega <- c('96.03', '98.18', '96.26', '93.70')
+domains <- data.frame(methods, hb, cosegv, cosegc, cosega)
+colnames(domains) <- c('Method', 'Human Body', 'COSEG vase', 'COSEG chair', 'COSEG alien')
+knitr::kable(domains, align=c('l', 'c', 'c', 'c', 'c'), booktabs=TRUE, caption="Predictive accuracy on test sets related to shape analysis, namely on Human Body and COSEG (vase, chair, alien) datasets. Red and blue colors indicate best and second best results, respectively. The results reported here are based on the $\\mbox{CCNN}_{COSEG}$ and $\\mbox{CCNN}_{HB}$ architectures. In particular, the result for $\\mbox{CCNN}_{HB}$ is reported in the first column, whereas the results for $\\mbox{CCNN}_{COSEG}$ are reported in the second, third and forth columns.")
+```
+
+**Architecture of $\mbox{CCNN}_{COSEG}$ and  $\mbox{CCNN}_{HB}$**. In $\mbox{CCNN}_{COSEG}$, as shown in Figure \@ref(fig:mesh-net)(a), we choose a CCNN pooling architecture as given in Definition \@ref(def:general-pooling-hoan), which pushes signals from vertices, edges and faces, and aggregates their information towards the final face prediction class. We choose $\mbox{CCNN}_{HB}$ similarly, except that the predicted signal is an edge class. The reason for this choice is that the Human Body dataset [@atzmon2018point] encodes the segmentation information on edges.
+
 ### Mesh and point cloud classification
 
 ### Graph classification
