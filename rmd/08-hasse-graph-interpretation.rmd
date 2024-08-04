@@ -1,3 +1,39 @@
 # Hasse graph interpretation of CCNNs
 
-To be completed.
+In this section, we scrutinize the properties of our topological learning machines by establishing connections to the pre-existing findings regarding GNNs. We begin our inquiry by elucidating the interpretation of CCs as specialized graphs, known as *Hasse graphs*, followed by characterizing their equivariance properties against the actions of permutations and orientations. We further link our definitions of equivariances to the conventional ones under the Hasse graph representation.
+
+## Hasse graph interpretation of CCNNs
+
+We first demonstrate that every CC can be reduced to a unique and special graph known as the *Hasse graph*. This reduction enables us to analyze and understand various computational and conceptual aspects of CCNNs in terms of graph-based models.
+
+### CCs as Hasse graphs
+
+Definition \@ref(def:maps) implies that a CC is a poset, that is a partially ordered set whose partial order relation is the set inclusion relation. It also implies that two CCs are equivalent if and only if their posets are equivalent^[For related structures (e.g., simplicial/cell complexes), this poset is typically called the *face poset* [@wachs2006poset].]. Definition \@ref(def:hg) introduces the *Hasse graph* [@wachs2006poset; @abramenko2008buildings] of a CC, which is a directed graph associated with a finite poset.
+
+```{definition, hg, name="Hasse graph"}
+The *Hasse graph* of a CC $(S, \mathcal{X},\mbox{rk})$ is a directed graph $\mathcal{H}_{\mathcal{X}}= (V (\mathcal{H}_{\mathcal{X}}), E(\mathcal{H}_{\mathcal{X}}) )$ with vertices $V (\mathcal{H}_{\mathcal{X}})=\mathcal{X}$ and edges $E(\mathcal{H}_{\mathcal{X}})=\{ (x,y) : x\subsetneq y, \mbox{rk}(x)=\mbox{rk}(y)-1 \}$.
+```
+
+The vertices of the Hasse graph $\mathcal{H}_{\mathcal{X}}$ of a CC $(S, \mathcal{X},\mbox{rk})$ are the cells of $\mathcal{X}$, while the edges of $\mathcal{H}_{\mathcal{X}}$ are determined by the immediate incidence among these cells. Figure \@ref(fig:hasse-diagram) shows an example of the Hasse graph of a CC.
+
+```{r hasse-diagram, echo=FALSE, fig.align="center", fig.cap="Example of the Hasse graph of a CC. (a): CC of a M\"{o}bius strip. (b): Hasse graph of the CC, describing the poset structure between cells. (c): Hasse graph augmented with the edges defined via $A_{0,1}$ and $coA_{2,1}$."}
+knitr::include_graphics('figures/poset.png', dpi=NA)
+```
+
+The *CC structure class* is the set of CCs determined up to isomorphism, according to Definition \@ref(def:maps). Proposition \@ref(prp:structure) provides sufficient criteria for determining CC structure classes. The proof of Proposition \@ref(prp:structure) relies on the observations that CC structure classes are determined by the underlying Hasse graph representation and that the Hasse graph provides the same information as the incidence matrices $\{B_{k,k+1}\}_{k=0}^{\dim(\mathcal{X})-1}$. Figure \@ref(fig:vis-structure) supports visually the proofs of parts 2 and 3 in Proposition \@ref(prp:structure).
+
+```{proposition, structure, name="Determining a CC structure"}
+Let $(S, \mathcal{X},\mbox{rk})$ be a CC. For the CC structure class indicated by $(S, \mathcal{X},\mbox{rk})$, the following sufficient conditions hold:
+
+1. The CC structure class is determined by the incidence matrices $\{B_{k,k+1}\}_{k=0}^{ \dim(\mathcal{X}) -1}$.
+2. The CC structure class is determined by the adjacency matrices $\{A_{k,1}\}_{k=0}^{\dim(\mathcal{X})-1}$.
+3. The CC structure class is determined by the coadjacency matrices $\{coA_{k,1}\}_{k=1}^{\dim(\mathcal{X})}$.
+```
+
+```{proof}
+The proof of the three parts of the proposition follows by noting that the structure of a CC is determined completely by its Hasse graph representation. The first part of the proposition follows from the fact that the edges in the Hasse graph are precisely the non-zero entries of matrices $\{B_{k,k+1}\}_{k=0}^{\dim(\mathcal{X}-1)}$. The second part follows by observing that two $(k-1)$ cells $x^{k-1}$ and $y^{k-1}$ are 1-adjacent if and only if there exists a $k$-cell $z^k$ that is incident to $x^{k-1}$ and $y^{k-1}$. The third part is confirmed by noting that two $(k+1)$-cells $x^{k+1}$ and $y^{k+1}$ are 1-coadjacent if and only if there exists a $k$-cell $z^k$ that is incident to $x^{k+1}$ and $y^{k+1}$.
+```
+
+```{r vis-structure, echo=FALSE, fig.align="center", fig.cap="Relation between immediate incidence and (co)adjacency on the Hasse graph of a CC. (a): Two $(k-1)$ cells $x^{k-1}$ and $y^{k-1}$ (orange vertices) are 1-adjacent if and only if there exists a $k$-cell $z^k$ (pink vertex) that is incident to $x^{k-1}$ and $y^{k-1}$. (b): Two $(k+1)$ cells $x^{k+1}$ and $y^{k+1}$ (blue vertices) are 1-coadjacent if and only if there exists a $k$-cell $z^k$ (pink vertex) that is incident to $x^{k+1}$ and $y^{k+1}$."}
+knitr::include_graphics('figures/prop_structure.png', dpi=NA)
+```
