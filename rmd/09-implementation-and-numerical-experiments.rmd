@@ -105,6 +105,20 @@ knitr::kable(domains, align=c('l', 'c', 'c', 'c', 'c'), booktabs=TRUE, caption="
 
 ## Pooling with mapper on graphs and data classification
 
+We perform experiments to measure the effectiveness of the MOG pooling strategy discussed in Section \@ref(mapper-and-the-cc-pooling-operation). Recall that the MOG algorithm requires two pieces of input: the 1-skeleton of a CC $\mathcal{X}$, and a scalar function on the vertices of $\mathcal{X}$. Our choice for the input scalar function is the average geodesic distance (AGD) [@KimLipmanChen2010], which is suitable for shape detection as it is invariant to reflection and rotation. For two entities $u$ and $v$ on a graph, the geodesic distance between $u$ and $v$, denoted by $d(v,u)$, is computed using Dijkstra's shortest path algorithm. The AGD is given by the following equation:
+\begin{equation}
+AGD(v)=\frac{1}{|V|}\sum_{u\in V}d(v,u).
+(\#eq:agd)
+\end{equation}
+
+From Equation \@ref(eq:agd), it is immediate that the vertices near the center of the graph are likely to have low function values, while points on the periphery are likely to have high values. This observation has been utilized to study graph symmetry [@KimLipmanChen2010], and it provides a justification for selecting the AGD for the MOG pooling strategy. Figure \@ref(fig:pooling-examples) presents a few examples of applying the MOG pooling strategy using AGD on the SHREC11 dataset.
+
+```{r pooling-examples, echo=FALSE, fig.align="center", fig.cap="Examples of applying the MOG algorithm on the SHREC11 dataset [@lian2011shape]. In each figure, we show the original mesh graph on the left and the mapper graph on the right. The scalar function chosen for the MOG algorithm is the average geodesic distance (AGD). We observe that the pooled mapper graph has similar overall shape to the original graphs."}
+knitr::include_graphics('figures/pooling_examples.png', dpi=NA)
+```
+
+In order to demonstrate the effectiveness of our MOG pooling approach, we conduct three experiments on the SHREC11 dataset: mesh classification based on CC-pooling with input vertex and edge features (Section \@ref(mesh-classification-cc-pooling-with-input-vertex-and-edge-features)), mesh classification based on CC-pooling with input vertex features only (Section \@ref(mesh-classification-cc-pooling-with-input-vertex-features-only)), and point cloud classification based on CC-pooling with input vertex features only (Section \@ref(point-cloud-classification-cc-pooling-with-input-vertex-features-only)). The experiments in Sections \@ref(mesh-classification-cc-pooling-with-input-vertex-and-edge-features) and \@ref(mesh-classification-cc-pooling-with-input-vertex-features-only) utilize the mesh structure in the SHREC11 dataset, whereas the experiment in Section \@ref(point-cloud-classification-cc-pooling-with-input-vertex-features-only) utilizes its own point cloud version. In particular, we choose two simple CCNN architectures shown in Figure \@ref(fig:mesh-net)(d), denoted by $\mbox{CCNN}_{MOG1}$ and $\mbox{CCNN}_{MOG2}$, as opposed to the more complicated architecture of $\mbox{CCNN}_{SHREC}$ in Figure \@ref(fig:mesh-net)(b). The main difference between $\mbox{CCNN}_{MOG1}$ and $\mbox{CCNN}_{MOG2}$ is the choice of the input feature vectors as described next.
+
 ### Mesh classification: CC-pooling with input vertex and edge features
 
 ### Mesh classification: CC-pooling with input vertex features only
