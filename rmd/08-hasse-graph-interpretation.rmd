@@ -86,3 +86,11 @@ provides a computational summary of the associated tensor diagram representation
 ```{r hasse-diagram-examples, echo=FALSE, fig.align="center", fig.cap="Tensor diagrams of two CCNNs and their corresponding augmented Hasse graphs. Edge labels are dropped from the tensor diagrams to avoid clutter, as they can be inferred from the corresponding augmented Hasse graphs. (a): A tensor diagram obtained from a higher-order message-passing scheme. (b): A tensor diagram obtained by using the three elementary tensor operations."}
 knitr::include_graphics('figures/augmented_hasse_graph_examples.png', dpi=NA)
 ```
+
+### Augmented Hasse graphs and CC-pooling
+
+The Hasse graph and its augmented version are graph representations of the poset structure of the underlying CC. It is instructive to interpret the (un)pooling operations (Definitions \@ref(def:pooling-exact-definition) and \@ref(def:unpooling-exact-definition)) with respect to these graphs. The CC-pooling operation of Definition \@ref(def:pooling-exact-definition) maps a signal in the poset structure from lower-rank cells to higher-rank ones. On the other hand, the CC-unpooling operation of Definition \@ref(def:unpooling-exact-definition) maps a signal in the opposite direction. Figure \@ref(fig:hasse-graph-pooling) presents an example of CC (un)-pooling operations visualized over the augmented Hasse graph of the underlying CC.
+
+```{r hasse-graph-pooling, echo=FALSE, fig.align="center", fig.cap="CC (un)-pooling operations viewed on the augmented Hasse graph of a CC. The vertices in the figure represent skeletons in the underlying CC. Black edges represent edges in the Hasse graph between these vertices, whereas red edges represent edges obtained from the augmented Hasse graph structure. CC-pooling corresponds to pushing a signal in the poset structure from lower-rank to higher-rank vertices, whereas CC-unpooling corresponds to pushing a signal in the poset structure from higher-rank to lower-rank vertices."}
+knitr::include_graphics('figures/hasse_graph_pooling_scaled.png', dpi=NA)
+```
