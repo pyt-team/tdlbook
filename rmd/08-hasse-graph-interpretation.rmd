@@ -47,3 +47,42 @@ Let $\mathcal{X}$ be a CC, and let $\mathcal{H}_{\mathcal{X}}$ be its Hasse grap
 ```
 
 It is easier to think of the augmented Hasse graph in Definition \@ref(def:ahg) in terms of the matrices $\mathbf{G}=\{G_1,\ldots,G_n\}$ associated with the neighborhood functions $\mathcal{N}=\{\mathcal{N}_1,\ldots,\mathcal{N}_n\}$. Each augmented edge in $\mathcal{H}_{\mathcal{X}}(\mathcal{N})$ corresponds to a non-zero entry in some $G_i\in \mathbf{G}$. Since $\mathcal{N}$ and $\mathbf{G}$ store equivalent information, we use $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$ to denote the augmented Hasse graph induced by the edges determined by $\mathbf{G}$. For instance, the graph given in Figure \@ref(fig:hasse-diagram)(c) is denoted by $\mathcal{H}_{\mathcal{X}}( A_{0,1},coA_{2,1})$.
+
+### Reducibility of CCNNs to graph-based models
+
+In this section, we show that any CCNN-based computational model can be realized as a message-passing scheme over a subgraph of the augmented Hasse graph of the underlying CC. Every CCNN is determined via a computational tensor diagram, which can be built using the elementary tensor operations, namely push-forward operations, merge nodes and split nodes. Thus, the reducibility of CCNN-based computations to message-passing schemes over graphs can be achieved by proving that these three tensor operations can be executed on an augmented Hasse graph. Proposition \@ref(prp:hasse-pushforward) states that push-forward operations are executable on augmented Hasse graphs.
+
+```{proposition, hasse-pushforward, name="Computation over augmented Hasse graph"}
+Let $\mathcal{X}$ be a CC and let  $\mathcal{F}_G \colon \mathcal{C}^i(\mathcal{X})\to \mathcal{C}^j(\mathcal{X})$ be a push-forward operator induced by a cochain map $G\colon\mathcal{C}^i(\mathcal{X})\to \mathcal{C}^j(\mathcal{X})$. Any computation executed via $\mathcal{F}_G$ can be reduced to a corresponding computation over the augmented Hassed graph $\mathcal{H}_{\mathcal{X}}(G)$ of $\mathcal{X}$.
+```
+
+```{proof}
+Let $\mathcal{X}$ be a CC. Let $\mathcal{H}_{\mathcal{X}}(G)$ be the augmented Hasse graph of $\mathcal{X}$ determined by $G$. The definition of the augmented Hasse graph implies that there is a one-to-one correspondence between the vertices $\mathcal{H}_{\mathcal{X}}(G)$ and the cells in $\mathcal{X}$. Given a cell $x\in \mathcal{X}$, let $x^{\prime}$ be the corresponding vertex in $\mathcal{H}_{\mathcal{X}}(G)$. Let $y$ be a cell in $\mathcal{X}$ with a feature vector $\mathbf{h}_y$ computed via the push-forward operation specified by Equation \@ref(eq:functional). Recall that the vector $\mathbf{h}_y$ is computed by aggregating all vectors $\mathbf{h}_x$ attached to the neighbors $x \in \mathcal{X}^i$ of $y$ with respect to the neighborhood function $\mathcal{N}_{G^T}$. Let $m_{x,y}$ be a computation (message) that is executed between two cells $x$ and $y$ of $\mathcal{X}$ as a part of the computation of push-forward $\mathcal{F}_G$. It follows from the augmented Hasse graph definition that the cells $x$ and $y$ must have a corresponding non-zero entry in matrix $G$. Moreover, this non-zero entry corresponds to an edge in $\mathcal{H}_{\mathcal{X}}(G)$ between $x^{\prime}$ and $y^{\prime}$. Thus, the computation $m_{x,y}$ between the cells $x$ and $y$ of $\mathcal{X}$ can be carried out as the computation (message) $m_{x^{\prime},y^{\prime}}$ between the corresponding vertices $x^{\prime}$ and $y^{\prime}$ of $\mathcal{H}_{\mathcal{X}}(G)$.
+```
+
+Similarly, computations on an arbitrary merge node can be characterized in terms of computations on a subgraph of the augmented Hasse graph of the underlying CC. Proposition \@ref(prp:hasse) formalizes this statement.
+
+```{proposition, hasse, name="Reduction of merge node to augmented Hasse graph"}
+Any computation executed via a merge node $\mathcal{M}_{\mathbf{G},\mathbf{W}}$ as given in Equation \@ref(eq:sum) can be reduced to a corresponding computation over the augmented Hasse graph $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$ of the underlying CC.
+```
+
+```{proof}
+Let $\mathcal{X}$ be a CC. Let $\mathbf{G}=\{ G_1,\ldots,G_n\}$ be a sequence of cochain operators defined on $\mathcal{X}$. Let $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$ be the augmented Hasse graph determined by $\mathbf{G}$. By the augmented Hasse graph definition, there is a one-to-one correspondence between the vertices of $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$  and the cells of $\mathcal{X}$. For each cell $x\in \mathcal{X}$, let $x^{\prime}$ be the corresponding vertex in $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$. Let $m_{x,y}$ be a computation (message) that is executed between two cells $x$ and $y$ of $\mathcal{X}$ as part of the evaluation of function $\mathcal{M}_{\mathbf{G},W}$. Hence, the two cells $x$ and $y$ must have a corresponding non-zero entry in a matrix $G_i\in\mathbf{G}$. By the augmented Hasse graph definition, this non-zero entry corresponds to an edge in $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$ between $x^{\prime}$ and $y^{\prime}$. Thus, the computation $m_{x,y}$ between the cells $x$ and $y$ of $\mathcal{X}$ can be carried out as the computation (message) $m_{x^{\prime},y^{\prime}}$ between the corresponding vertices $x^{\prime}$ and $y^{\prime}$ of $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$.
+```
+
+Propositions \@ref(prp:hasse-pushforward) and \@ref(prp:hasse) ensure that push-forward and merge node computations can be realized on augmented Hasse graphs. Theorem \@ref(thm:hasse-theorem) generalizes Propositions \@ref(prp:hasse-pushforward) and \@ref(prp:hasse), stating that any computation on tensor diagrams is realizable on augmented Hasse graphs.
+
+```{theorem, hasse-theorem, name="Reduction of tensor diagram to augmented Hasse graph"}
+Any computation executed via a tensor diagram $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ can be reduced to a corresponding computation on the augmented Hasse graph $\mathcal{H}_{\mathcal{X}}(\mathbf{G})$.
+```
+
+```{proof}
+The conclusion follows directly from Propositions \@ref(prp:hasse) and \@ref(prp:hasse-pushforward), along with the fact that any tensor diagram can be realized in terms of the three elementary tensor operations.
+```
+
+According to Theorem \@ref(thm:hasse-theorem), a tensor diagram and its corresponding augmented Hasse graph encode the same computations in alternative forms. Figure \@ref(fig:hasse-diagram-examples) illustrates that the augmented Hasse graph
+provides a computational summary of the associated tensor diagram representation of a CCNN.
+
+```{r hasse-diagram-examples, echo=FALSE, fig.align="center", fig.cap="Tensor diagrams of two CCNNs and their corresponding augmented Hasse graphs. Edge labels are dropped from the tensor diagrams to avoid clutter, as they can be inferred from the corresponding augmented Hasse graphs. (a): A tensor diagram obtained from a higher-order message-passing scheme. (b): A tensor diagram obtained by using the three elementary tensor operations."}
+knitr::include_graphics('figures/augmented_hasse_graph_examples.png', dpi=NA)
+```
