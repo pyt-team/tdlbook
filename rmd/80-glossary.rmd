@@ -2,6 +2,6 @@
 
 # (APPENDIX) Appendix {-}
 
-# Related work
+# Glossary
 
 To be completed.
