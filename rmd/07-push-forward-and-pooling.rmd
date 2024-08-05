@@ -50,7 +50,7 @@ knitr::include_graphics('figures/image_pooling.png', dpi=NA)
 
 ```{proposition, image-pool, name="Realization of image ppooling"}
 An image pooling operator can be realized in terms of a push-forward operator from the underlying image domain to a 2-dimensional CC obtained by augmenting the image by appropriate 2-cells where image pooling computations occur.
-\end{proposition}
+```
 
 ```{proof}
 The proof is a straightforward conclusion from the definition of image pooling.
