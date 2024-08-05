@@ -48,7 +48,7 @@ Since images can be realized as lattice graphs, a signal stored on an image grid
 knitr::include_graphics('figures/image_pooling.png', dpi=NA)
 ```
 
-```{proposition, image-pool, name="Realization of image ppooling"}
+```{proposition, image-pool, name="Realization of image pooling"}
 An image pooling operator can be realized in terms of a push-forward operator from the underlying image domain to a 2-dimensional CC obtained by augmenting the image by appropriate 2-cells where image pooling computations occur.
 ```
 

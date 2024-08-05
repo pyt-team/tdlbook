@@ -103,7 +103,7 @@ The difference between constructing a CCNN using the higher-order message passin
 
 The relation between augmented Hasse graphs and CCs given by Theorem \@ref(thm:hasse-theorem) suggests that many graph-based deep learning constructions have analogous constructions for CCs. In this section, we demonstrate how *higher-order representation learning* can be reduced to graph representation learning [@hamilton2017representation], as an application of certain CC computations as augmented Hasse graph computations.
 
-The goal of graph representation is to learn a mapping that embeds the vertices, edges or subgraphs of a graph into a Euclidean space, so that the resulting embedding captures useful information about the graph. Similarly, higher-order representation learning [@hajijcell] involves learning an embedding of various cells in a given topological domain into a Euclidean space, preserving the main structural properties of the topological domain. More precisely, given a complex $\mathcal{X}$, higher-order representation learning refers to learning a pair $(enc, dec)$ of functions, consisting of the *encoder map* $enc \colon \mathcal{X}^k \to \mathbb{R}^d $ and the *decoder map* $dec \colon \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}$. The encoder function associates to every $k$-cell $x^k$ in $\mathcal{X}$ a feature vector $enc(x^k)$, which encodes the structure of $x^k$ with respect to the structures of other cells in $\mathcal{X}$. On the other hand, the decoder function associates to every pair of cell embeddings a measure of similarity, which quantifies some notion of relation between the corresponding cells. We optimize the trainable functions $(enc, dec)$ using a context-specific *similarity measure* $sim \colon \mathcal{X}^k \times \mathcal{X}^k \to \mathbb{R}$ and an objective function
+The goal of graph representation is to learn a mapping that embeds the vertices, edges or subgraphs of a graph into a Euclidean space, so that the resulting embedding captures useful information about the graph. Similarly, higher-order representation learning [@hajijcell] involves learning an embedding of various cells in a given topological domain into a Euclidean space, preserving the main structural properties of the topological domain. More precisely, given a complex $\mathcal{X}$, higher-order representation learning refers to learning a pair $(enc, dec)$ of functions, consisting of the *encoder map* $enc \colon \mathcal{X}^k \to \mathbb{R}^d$ and the *decoder map* $dec \colon \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}$. The encoder function associates to every $k$-cell $x^k$ in $\mathcal{X}$ a feature vector $enc(x^k)$, which encodes the structure of $x^k$ with respect to the structures of other cells in $\mathcal{X}$. On the other hand, the decoder function associates to every pair of cell embeddings a measure of similarity, which quantifies some notion of relation between the corresponding cells. We optimize the trainable functions $(enc, dec)$ using a context-specific *similarity measure* $sim \colon \mathcal{X}^k \times \mathcal{X}^k \to \mathbb{R}$ and an objective function
 \begin{equation}
 \mathcal{L}_k=\sum_{ x^k \in \mathcal{X}^k     } l(  dec(  enc(x^{k}), enc(y^{k})),sim(x^{k},y^k)),
 (\#eq:loss)
@@ -125,3 +125,89 @@ Following our discussion on Hasse graphs, and particularly the ability to transf
 ```
 
 ## On the equivariance of CCNNs
+
+Analogous to their graph counterparts, higher-order deep learning models, and CCNNs in particular, should always be considered in conjunction with their underlying *equivariance* [@bronstein2021geometric]. We now provide novel definitions for *permutation* and *orientation equivariance for CCNNs* and draw attention to their relations with conventional notions of equivariance defined for GNNs.
+
+### Permutation equivariance of CCNNs
+
+Motivated by Proposition \@ref(prp:structure), which characterizes the structure of a CC, this section introduces permutation-equivariant CCNNs. We first define the action of the permutation group on the space of cochain maps.
+
+```{definition, perm, name="Permutation action on space of cochain maps"}
+Let $\mathcal{X}$ be a CC.  Define $\mbox{Sym}(\mathcal{X}) = \prod_{i=0}^{\dim(\mathcal{X})} \mbox{Sym}(\mathcal{X}^k)$ the group of rank-preserving permutations of the cells of $\mathcal{X}$. Let $\mathbf{G}=\{G_k\}$ be a sequence of cochain maps defined on $\mathcal{X}$ with $G_k  \colon \mathcal{C}^{i_k}\to \mathcal{C}^{j_k}$, $0\leq i_k,j_k\leq \dim(\mathcal{X})$. Let $\mathcal{P}=(\mathbf{P}_i)_{i=0}^{\dim(\mathcal{X})} \in \mbox{Sym}(\mathcal{X})$. Define the \textbf{permutation (group) action} of $\mathcal{P}$ on $\mathbf{G}$ by $\mathcal{P}(\mathbf{G}) = (\mathbf{P}_{j_k} G_{k} \mathbf{P}_{i_k}^T )_{i=0}^{\dim(\mathcal{X})}$.
+```
+
+We introduce permutation-equivariant CCNNs in Definition \@ref(def:eqv), using the group action given in Definition \@ref(def:perm). Definition \@ref(def:eqv) generalizes the relevant definitions in [@roddenberry2021principled; @schaub2021signal]. We refer the reader to [@joglwe2022; @velivckovic2022message] for a related discussion. Hereafter, we use $\mbox{Proj}_k \colon \mathcal{C}^1\times \cdots \times \mathcal{C}^m \to \mathcal{C}^k$ to denote the standard $k$-th projection for $1\leq k \leq m$, defined via $\mbox{Proj}_k ( \mathbf{H}_{1},\ldots, \mathbf{H}_{k},\ldots,\mathbf{H}_{m})= \mathbf{H}_{k}$.
+
+```{definition, eqv, name="Permutation-equivariant CCNN"}
+Let $\mathcal{X}$ be a CC and let $\mathbf{G}= \{G_k\}$ be a finite sequence of cochain maps defined on $\mathcal{X}$. Let $\mathcal{P}=(\mathbf{P}_i)_{i=0}^{\dim(\mathcal{X})} \in \mbox{Sym}(\mathcal{X})$. A CCNN of the form
+\begin{equation*}
+\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}
+\end{equation*}
+is called a \textbf{permutation-equivariant CCNN} if
+\begin{equation}
+\mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})=
+\mathbf{P}_{k} \mbox{Proj}_k \circ
+\mbox{CCNN}_{\mathcal{P}(\mathbf{G});\mathbf{W}}(\mathbf{P}_{i_1} \mathbf{H}_{i_1}, \ldots ,\mathbf{P}_{i_m} \mathbf{H}_{i_m})
+\end{equation}
+for all $1 \leq k\leq m$ and for any $(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m}) \in\mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m}$.
+```
+
+Definition \@ref(def:eqv) generalizes the corresponding notion of permutation equivariance of GNNs. Consider a graph with $n$ vertices and adjacency matrix $A$. Denote a GNN on this graph by $\mathrm{GNN}_{A;W}$. Let $H \in \mathbb{R}^{n \times k}$ be vertex features. Then $\mathrm{GNN}_{A;W}$ is permutation equivariant in the sense that for $P \in \mbox{Sym}(n)$ we have $P \,\mathrm{GNN}_{A;W}(H) = \mathrm{GNN}_{PAP^{T};W}(PH)$.
+
+In general, working with Definition \@ref(def:eqv) may be cumbersome. It is easier to characterize the equivariance in terms of merge nodes. To this end, recall that the height of a tensor diagram is the longest path from any source node to any target node. Proposition \@ref(prp:simple) allows us to express tensor diagrams of height one in terms of merge nodes.
+
+```{proposition, simple, name="Tensor diagrams of height one as merge nodes"}
+Let  $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}$ be a CCNN with a tensor diagram of height one. Then
+\begin{equation}
+		\label{merge_lemma}
+		\mbox{CCNN}_{\mathbf{G};\mathbf{W}}=(
+		\mathcal{M}_{\mathbf{G}_{j_1};\mathbf{W}_1},\ldots,
+		\mathcal{M}_{\mathbf{G}_{j_n};\mathbf{W}_n}),
+(\#eq:merge-lemma)
+\end{equation}
+	where $\mathbf{G}_k \subseteq \mathbf{G}$.
+```
+
+```{proof}
+Let $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}$ be a CCNN with a tensor diagram of height one. Since the codomain of the function $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is $\mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \ldots \times \mathcal{C}^{j_n}$, then $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is determined by $n$ functions $F_k\colon  \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_k}$ for $1 \leq k \leq n$. Since the height of the tensor diagram of $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is one, then each function $F_k$ is also of height one and it is thus a merge node by definition. The result follows.
+```
+
+Proposition \@ref(prp:simple) states that every target node $j_k$ in a tensor diagram of height one is a merge node specified by the operators $\mathbf{G}_{j_k}$ formed by the labels of the edges with target $j_k$. Definition \@ref(def:eqv) introduces the general notion of permutation equivariance of CCNNs. Definition \@ref(def:node-equivariance) introduces the notion of permutation-equivariant merge node. Since a merge node is a CCNN, Definition \@ref(def:node-equivariance) is a special case of Definition \@ref(def:eqv).
+
+```{definition, node-equivariance, name="Permutation-equivariant merge node"}
+Let $\mathcal{X}$ be a CC and let $\mathbf{G}= \{G_k\}$ be a finite sequence of cochain operators defined on $\mathcal{X}$ with $G_k\colon C^{i_k}(\mathcal{X})\to C^{j}(\mathcal{X})$. Let $\mathcal{P}=(\mathbf{P}_i)_{i=0}^{\dim(\mathcal{X})} \in \mbox{Sym}(\mathcal{X})$. We say that the merge node given in Equation \@ref(eq:sum) is a *permutation-equivariant merge node* if
+\begin{equation}
+\mathcal{M}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})= \mathbf{P}_{j}  \mathcal{M}_{\mathcal{P}(\mathbf{G});\mathbf{W}}(\mathbf{P}_{i_1} \mathbf{H}_{i_1}, \ldots ,\mathbf{P}_{i_1} \mathbf{H}_{i_m})
+\end{equation}
+for any $(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m}) \in \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m}$.
+```
+
+```{proposition, height1, name="Permutation-equivariant CCNN of height one and merge nodes"}
+Let $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}$ be a CCNN with a tensor diagram of height one. Then $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is permutation equivariant if and only the merge nodes $\mathcal{M}_{\mathbf{G}_{j_k};\mathbf{W}_k}$ given in Equation \@ref(eq:merge-lemma) are permutation equivariant for $1 \leq k \leq n$.
+```
+
+```{proof}
+If a CCNN is of height one, then by Proposition \@ref(prp:simple), $\mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})= \mathcal{M}_{\mathbf{G}_{j_k};\mathbf{W}_k}$. Hence, the result follows from the definition of merge node permutation equivariance (Definition \@ref(node_equivariance}) and the definition of CCNN permutation equivariance (Definition \@ref(def:eqv)).
+```
+
+Finally, Theorem \@ref(thm:height2) characterizes the permutation equivariance of CCNNs in terms of merge nodes. From this point of view, Theorem \@ref(thm:height2) provides a practical version of permutation equivariance for CCNNs.
+
+```{theorem, height2, name="Permutation-equivariant CCNN and merge nodes"}
+A $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is permutation equivariant if and only if every merge node in $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is permutation equivariant.
+```
+
+```{proof}
+Proposition \@ref(prp:height1) proves this fact for CCNNs of height one. For CCNNs of height $n$, it is enough to observe that a CCNN of height $n$ is a composition of $n$ CCNNs of height one and that the composition of two permutation-equivariant networks is a permutation-equivariant network.
+```
+
+```{remark}
+Our permutation equivariance assumes that all cells in each dimension are independently labeled with indices. However, if we label the cells in a CC with subsets of the powerset $\mathcal{P}(S)$ rather than with indices, then we only need to consider permutations of the powerset that are induced by permutations of the 0-cells in order to ensure permutation equivariance.
+```
+
+```{remark}
+A GNN is equivariant in that a permutation of the vertex set of the graph and the input signal over the vertex set yields the same permutation of the GNN output. Applying a standard GNN over the augmented Hasse graph of the underlying CC is thus not equivalent to applying a CCNN. Although the message-passing structures are the same, the weight-sharing and permutation equivariance of the standard GNN and CCNN are different. In particular, Definition \@ref(def:maps) gives additional structure, which is not preserved by an arbitrary permutation of the vertices in the augmented Hasse graph. Thus, care is required in order to reduce message passing over a CCNN to message passing over the associated augmented Hasse graph. Specifically, one need only consider the subgroup of permutations of vertex labels in the augmented Hasse graph which are induced by permutations of 0-cells in the corresponding CC. Thus, there is merit in adopting the rich notions of topology to think about distributed, structured learning architectures, as topological constructions facilitate reasoning about computation in ways that are not within the scope of graph-based approaches.
+```
+
+```{remark}
+Note that Proposition \@ref(prp:convert-graphtocc) does not contradict the previous remark. In fact, the computations described in Proposition \@ref(prp:convert-graphtocc) are conducted on a particular subgraph of the Hasse graph whose vertices are the $k$-cells of the underlying complex. Differences between graph-based networks and TDL networks start to emerge particularly once different dimensions are considered simultaneously during computations.
+```
