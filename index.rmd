@@ -1,6 +1,6 @@
 --- 
 title: "Topological Deep Learning: Going Beyond Graph Data"
-author: "Mustafa Hajij, Ghada Zamzmi, Theodore Papamarkou, Nina Miolane, Aldo Guzmán-Sáenz, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen, Michael T. Schaub"
+author: "Mustafa Hajij, Theodore Papamarkou, Ghada Zamzmi, Nina Miolane, Aldo Guzmán-Sáenz, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen, Michael T. Schaub"
 date: "`r Sys.Date()`"
 documentclass: krantz
 bibliography: [bib/main.bib, bib/related-work.bib, bib/appendix.bib]
@@ -30,25 +30,31 @@ lapply(c('xfun'), function(pkg) {
 
 # Preface {-}
 
-This book is under construction. Chapters will be released incrementally. Feedback is welcome, and it will be acknowledged in the book.
+Topological deep learning is a rapidly growing field that pertains to the development of deep learning models for data supported on topological domains such as simplicial complexes, cell complexes, and hypergraphs, which generalize many domains encountered in scientific computations. In this paper, we present a unifying deep learning framework built upon a richer data structure that includes widely adopted topological domains.
 
-## Why read this book {-}
+Specifically, we first introduce *combinatorial complexes*, a novel type of topological domain. Combinatorial complexes can be seen as generalizations of graphs that maintain certain desirable properties. Similar to hypergraphs, combinatorial complexes impose no constraints on the set of relations. In addition, combinatorial complexes permit the construction of hierarchical higher-order relations, analogous to those found in simplicial and cell complexes. Thus, combinatorial complexes generalize and combine useful traits of both hypergraphs and cell complexes, which have emerged as two promising abstractions that facilitate the generalization of graph neural networks to topological spaces.
 
-To be completed.
+Second, building upon combinatorial complexes and their rich combinatorial and algebraic structure, we develop a general class of message-passing *combinatorial complex neural networks (CCNNs)*, focusing primarily on attention-based CCNNs. We characterize permutation and orientation equivariances of CCNNs, and discuss pooling and unpooling operations within CCNNs in detail.
 
-## Structure of the book {-}
+Third, we evaluate the performance of CCNNs on tasks related to mesh shape analysis and graph learning. Our experiments demonstrate that CCNNs have competitive performance as compared to state-of-the-art deep learning models specifically tailored to the same tasks. Our findings demonstrate the advantages of incorporating higher-order relations into deep learning models in different applications.
 
-To be completed.
+## Compilation {-}
 
-## Software information and conventions {-}
-
-To be completed.
-
-This book has been compiled using the **knitr**\index{knitr} package [@xie2015] and the **bookdown**\index{bookdown} package [@xie2024].
+This book has been compiled using the *knitr* package [@xie2015] and the *bookdown* package [@xie2024]. The source code for the book is available on [the tdlbook GitHub repository](https://github.com/pyt-team/tdlbook).
 
 ## Acknowledgments {-}
 
-To be completed.
+M. H. acknowledges support from the National Science Foundation, award DMS-2134231.
+G. Z. is currently affiliated with National Institutes of Health (NIH), but the core of this research was done while being associated with the University of South Florida (USF). This article reports contributions of the authors and does not represent the views of NIH, or the United States Government.
+N. M. acknowledges support from the National Science Foundation, Award DMS-2134241.
+T. B. acknowledges support from the Engineering and Physical Sciences Research Council [grant EP/X011364/1].
+T. K. D. acknowledges support from the National Science Foundation, Award CCF 2049010.
+N. L. acknowledges support from the Roux Institute and the Harold Alfond Foundation.
+R. W. acknowledges support from the National Science Foundation, Award DMS-2134178.
+P. R. acknowledges support from the National Science Foundation, Award IIS-2316496.
+M. T. S. acknowledges funding by the Ministry of Culture and Science (MKW) of the German State of North Rhine-Westphalia (NRW Rückkehrprogramm) and the European Union (ERC, HIGH-HOPeS, 101039827). Views and opinions expressed are however those of M. T. S. only and do not necessarily reflect those of the European Union or the European Research Council Executive Agency; neither the European Union nor the granting authority can be held responsible for them.
+
+The authors would like to thank Mathilde Papillon and Sophia Sanborn for helping improve Figure \@ref(fig:hon) and for the insightful discussions on the development of tensor diagrams.
 
 ```{block2, type='flushright', html.tag='p'}
 The authors
