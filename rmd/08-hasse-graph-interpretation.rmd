@@ -133,7 +133,7 @@ Analogous to their graph counterparts, higher-order deep learning models, and CC
 Motivated by Proposition \@ref(prp:structure), which characterizes the structure of a CC, this section introduces permutation-equivariant CCNNs. We first define the action of the permutation group on the space of cochain maps.
 
 ```{definition, perm, name="Permutation action on space of cochain maps"}
-Let $\mathcal{X}$ be a CC.  Define $\mbox{Sym}(\mathcal{X}) = \prod_{i=0}^{\dim(\mathcal{X})} \mbox{Sym}(\mathcal{X}^k)$ the group of rank-preserving permutations of the cells of $\mathcal{X}$. Let $\mathbf{G}=\{G_k\}$ be a sequence of cochain maps defined on $\mathcal{X}$ with $G_k  \colon \mathcal{C}^{i_k}\to \mathcal{C}^{j_k}$, $0\leq i_k,j_k\leq \dim(\mathcal{X})$. Let $\mathcal{P}=(\mathbf{P}_i)_{i=0}^{\dim(\mathcal{X})} \in \mbox{Sym}(\mathcal{X})$. Define the \textbf{permutation (group) action} of $\mathcal{P}$ on $\mathbf{G}$ by $\mathcal{P}(\mathbf{G}) = (\mathbf{P}_{j_k} G_{k} \mathbf{P}_{i_k}^T )_{i=0}^{\dim(\mathcal{X})}$.
+Let $\mathcal{X}$ be a CC.  Define $\mbox{Sym}(\mathcal{X}) = \prod_{i=0}^{\dim(\mathcal{X})} \mbox{Sym}(\mathcal{X}^k)$ the group of rank-preserving permutations of the cells of $\mathcal{X}$. Let $\mathbf{G}=\{G_k\}$ be a sequence of cochain maps defined on $\mathcal{X}$ with $G_k  \colon \mathcal{C}^{i_k}\to \mathcal{C}^{j_k}$, $0\leq i_k,j_k\leq \dim(\mathcal{X})$. Let $\mathcal{P}=(\mathbf{P}_i)_{i=0}^{\dim(\mathcal{X})} \in \mbox{Sym}(\mathcal{X})$. Define the *permutation (group) action* of $\mathcal{P}$ on $\mathbf{G}$ by $\mathcal{P}(\mathbf{G}) = (\mathbf{P}_{j_k} G_{k} \mathbf{P}_{i_k}^T )_{i=0}^{\dim(\mathcal{X})}$.
 ```
 
 We introduce permutation-equivariant CCNNs in Definition \@ref(def:eqv), using the group action given in Definition \@ref(def:perm). Definition \@ref(def:eqv) generalizes the relevant definitions in [@roddenberry2021principled; @schaub2021signal]. We refer the reader to [@joglwe2022; @velivckovic2022message] for a related discussion. Hereafter, we use $\mbox{Proj}_k \colon \mathcal{C}^1\times \cdots \times \mathcal{C}^m \to \mathcal{C}^k$ to denote the standard $k$-th projection for $1\leq k \leq m$, defined via $\mbox{Proj}_k ( \mathbf{H}_{1},\ldots, \mathbf{H}_{k},\ldots,\mathbf{H}_{m})= \mathbf{H}_{k}$.
@@ -143,7 +143,7 @@ Let $\mathcal{X}$ be a CC and let $\mathbf{G}= \{G_k\}$ be a finite sequence of 
 \begin{equation*}
 \mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}
 \end{equation*}
-is called a \textbf{permutation-equivariant CCNN} if
+is called a *permutation-equivariant CCNN* if
 \begin{equation}
 \mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})=
 \mathbf{P}_{k} \mbox{Proj}_k \circ
@@ -187,7 +187,7 @@ Let $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C
 ```
 
 ```{proof}
-If a CCNN is of height one, then by Proposition \@ref(prp:simple), $\mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})= \mathcal{M}_{\mathbf{G}_{j_k};\mathbf{W}_k}$. Hence, the result follows from the definition of merge node permutation equivariance (Definition \@ref(node_equivariance}) and the definition of CCNN permutation equivariance (Definition \@ref(def:eqv)).
+If a CCNN is of height one, then by Proposition \@ref(prp:simple), $\mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})= \mathcal{M}_{\mathbf{G}_{j_k};\mathbf{W}_k}$. Hence, the result follows from the definition of merge node permutation equivariance (Definition \@ref(def:node-equivariance)) and the definition of CCNN permutation equivariance (Definition \@ref(def:eqv)).
 ```
 
 Finally, Theorem \@ref(thm:height2) characterizes the permutation equivariance of CCNNs in terms of merge nodes. From this point of view, Theorem \@ref(thm:height2) provides a practical version of permutation equivariance for CCNNs.
