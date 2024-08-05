@@ -211,3 +211,35 @@ A GNN is equivariant in that a permutation of the vertex set of the graph and th
 ```{remark}
 Note that Proposition \@ref(prp:convert-graphtocc) does not contradict the previous remark. In fact, the computations described in Proposition \@ref(prp:convert-graphtocc) are conducted on a particular subgraph of the Hasse graph whose vertices are the $k$-cells of the underlying complex. Differences between graph-based networks and TDL networks start to emerge particularly once different dimensions are considered simultaneously during computations.
 ```
+
+### Orientation equivariance of CCNNs
+
+When CC are reduced to regular cell complexes, then orientation equivariance can also be introduced to CCNNs. Analogous to Definition \@ref(def:perm), we introduce the following definition of orientation actions on CCs.
+
+```{definition, orientation, name="Orientation action on space of diagonal-cochain maps"}
+Let $\mathcal{X}$ be a CC. Let $\mathbf{G}=\{G_k\}$ be a sequence of cochain operators defined on $\mathcal{X}$ with $G_k  \colon \mathcal{C}^{i_k}\to \mathcal{C}^{j_k}$, $0\leq i_k,j_k\leq \dim(\mathcal{X})$. Let $O(\mathcal{X})$ be the group of tuples $\mathcal{D}=(\mathbf{D}_i)_{i=0}^{\dim(\mathcal{X})}$ of diagonal matrices with diagonals $\pm 1$ of size $|\mathcal{X}^k| \times |\mathcal{X}^k|$ such that $\mathbf{D}_0=I$. Define the *orientation (group) action* of $\mathcal{D}$ on $\mathbf{G}$ by $\mathcal{D}(\mathbf{G}) = (\mathbf{D}_{j_k} G_{k} \mathbf{D}_{i_k})_{i=0}^{\dim(\mathcal{X})}$.
+```
+
+We introduce orientation-equivariant CCNNs in Definition \@ref(def:oe), using the group action given in Definition \@ref(def:orientation). Orientation equivariance for CCNNs (Definition \@ref(def:oe)) is put forward in analogous way to permutation equivariance for CCNNs (Definition \@ref(def:eqv)).
+
+```{definition, oe, name="Orientation-equivariant CCNN"}
+Let $\mathcal{X}$ be a CC and let $\mathbf{G}= \{G_k\}$ be a finite sequence of cochain operators defined on $\mathcal{X}$. Let $\mathcal{D} \in O(\mathcal{X})$. A CCNN of the form
+\begin{equation*}
+\mbox{CCNN}_{\mathbf{G};\mathbf{W}}\colon \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m} \to \mathcal{C}^{j_1}\times\mathcal{C}^{j_2}\times \cdots \times \mathcal{C}^{j_n}
+\end{equation*}
+is called an *orientation-equivariant CCNN* if
+\begin{equation}
+\mbox{Proj}_k \circ \mbox{CCNN}_{\mathbf{G};\mathbf{W}}(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m})=\mathbf{D}_{k} \mbox{Proj}_k \circ \mbox{CCNN}_{\mathcal{D}(\mathbf{G});\mathbf{W}}((\mathbf{D}_{i_1} \mathbf{H}_{i_1}, \ldots ,\mathbf{D}_{i_1} \mathbf{H}_{i_m}))
+\end{equation}
+for all $1 \leq k\leq m$ and for any $(\mathbf{H}_{i_1},\ldots ,\mathbf{H}_{i_m}) \in \mathcal{C}^{i_1}\times\mathcal{C}^{i_2}\times \cdots \times  \mathcal{C}^{i_m}$.
+```
+
+Propositions \@ref(prp:simple) and \@ref(prp:height1) can be stated analogously for the orientation equivariance case. We skip stating these facts here, and only state the main theorem that characterizes the orientation equivariance of CCNNs in terms of merge nodes.
+
+```{theorem, height3, name="Orientation-equivariant CCNN and merge nodes"}
+A $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is orientation equivariant if and only if every merge node in $\mbox{CCNN}_{\mathbf{G};\mathbf{W}}$ is orientation equivariant.
+```
+
+```{proof}
+The proof of Theorem \@ref(thm:height3) is similar to the proof of Theorem \@ref(thm:height2).
+```
