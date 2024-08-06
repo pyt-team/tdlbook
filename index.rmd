@@ -1,6 +1,6 @@
 --- 
 title: "Topological Deep Learning: Going Beyond Graph Data"
-author: "Mustafa Hajij, Theodore Papamarkou, Ghada Zamzmi, Nina Miolane, Aldo Guzmán-Sáenz, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen, Michael T. Schaub"
+author: "Mustafa Hajij, Theodore Papamarkou, Ghada Zamzmi, Karthikeyan Natesan Ramamurthy, Tolga Birdal, Michael T. Schaub"
 date: "`r Sys.Date()`"
 documentclass: krantz
 bibliography: [bib/main.bib, bib/related-work.bib, bib/appendix.bib]
@@ -27,6 +27,10 @@ lapply(c('xfun'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 ```
+
+# Contributors {-}
+
+Along with the co-authors, the following contributors have made various contributions to the writing up of this book: *Nina Miolane, Aldo Guzmán-Sáenz, Tamal K. Dey, Soham Mukherjee, Shreyas N. Samaga, Neal Livesay, Robin Walters, Paul Rosen*.
 
 # Preface {-}
 
